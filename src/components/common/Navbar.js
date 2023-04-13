@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+
 import { Link } from "react-router-dom";
 import sectiondata from "../../store/store";
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
+  const [isLoggedIn] = useState(localStorage.getItem("token"));
+  const counter = useSelector((state) => state.counter);
+  const [t, i18n] = useTranslation("common");
 
   useEffect(() => {
     function showResNavMenu() {
@@ -26,8 +32,53 @@ export default function Navbar() {
       },
       false
     );
+    let obj = sectiondata.headermenu.find((item) => item.title === "Profile")
+      ? false
+      : true;
+    if (obj && isLoggedIn) {
+      sectiondata.headermenu.push({
+        title: "Profile",
+        path: "#",
+        dropdown: [
+          {
+            title: "dashboard",
+            path: "/dashboard",
+          },
+        ],
+      });
+      sectiondata.headermenu.push({
+        title: "Chat",
+        path: "/chat",
+      });
+    }
   });
+  // });
+  useEffect(() => {
+    FilterNavbarData();
+  }, [counter]);
 
+  const FilterNavbarData = () => {
+    const result = sectiondata.headermenu.filter(
+      (item) => item.title !== "Profile" && item.title !== "Chat"
+    );
+    console.log(result);
+    if (!isLoggedIn) sectiondata.headermenu = result;
+    // sectiondata.headermenu.push({
+    //   title: "Profile",
+    //   path: "#",
+    //   dropdown: [
+    //     {
+    //       title: "user profile",
+    //       path: "/user-profile",
+    //     },
+
+    //     {
+    //       title: "dashboard",
+    //       path: "/dashboard",
+    //     },
+    //   ],
+    // });
+  };
   return (
     <>
       <div className="main-menu-content">
@@ -37,7 +88,7 @@ export default function Navbar() {
               return (
                 <li key={index}>
                   <Link to={item.path}>
-                    {item.title} {item.dropdown ? <FiChevronDown /> : ""}
+                    {t(item.title)} {item.dropdown ? <FiChevronDown /> : ""}
                   </Link>
                   {item.dropdown ? (
                     <ul className="dropdown-menu-item">
@@ -45,7 +96,7 @@ export default function Navbar() {
                         return (
                           <li key={index2} class="dropdown">
                             <Link to={ditem.path} class="dropbtn">
-                              {ditem.title}
+                              {t(ditem.title)}
                               {"  "}
                               {ditem.dropdown ? <FiChevronDown /> : ""}
                             </Link>
@@ -53,13 +104,15 @@ export default function Navbar() {
                               ditem.dropdown.map((litem, index3) => {
                                 return (
                                   <div class="dropdown-content">
-                                      <li key={index3}>
-                                      <Link to={'/index5'} class="dropbtn">
-                                            {'   '} Sale</Link>
+                                    <li key={index3}>
+                                      <Link to={"/index5"} class="dropbtn">
+                                        {"   "} {t("Sale")}
+                                      </Link>
                                     </li>
                                     <li key={index3}>
-                                      <Link to={'/index6'} class="dropbtn">
-                                      {'   '} Rent</Link>
+                                      <Link to={"/index6"} class="dropbtn">
+                                        {"   "} {t("Rent")}
+                                      </Link>
                                     </li>
                                   </div>
                                 );
@@ -110,12 +163,31 @@ export default function Navbar() {
                         return (
                           <li key={di}>
                             <Link to={ditem.path}>
-                              {ditem.title}
+                              {t(ditem.title)}
                               {"  "}
                               {ditem.dropdown ? <FiChevronDown /> : ""}
-                            
+                              {ditem.dropdown ? (
+                                <ul className="dropdown-menu-item">
+                                  {ditem.dropdown.map((ele, ii) => {
+                                    return (
+                                      <li key={ii}>
+                                        <Link to={ele.path}>
+                                          {t(ele.title)}
+                                          {"  "}
+                                          {ele.dropdown ? (
+                                            <FiChevronDown />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              ) : (
+                                ""
+                              )}
                             </Link>
-                            
                           </li>
                         );
                       })}

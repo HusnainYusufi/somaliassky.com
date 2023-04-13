@@ -9,9 +9,12 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ListingListSidebar from "../../components/sidebars/ListingListSidebar";
 import Button from "../../components/common/Button";
+import Pagination from "@mui/material/Pagination";
+import { useLocation } from "react-router-dom";
+
 import NewsLetter from "../../components/other/cta/NewsLetter";
 import Footer from "../../components/common/footer/Footer";
-import imguser from '../../assets/images/user.png'
+import imguser from "../../assets/images/user.png";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import Select from "react-select";
 import {
@@ -29,10 +32,7 @@ import breadcrumbimg from "../../assets/images/bread-bg.jpg";
 import PlaceGrid from "../../components/places/PlaceGrid";
 import sectiondata from "../../store/store";
 import { ImageUrl, url } from "../../environment";
-import {
-  GiChickenOven,
-
-} from "react-icons/gi";
+import { GiChickenOven, GiMeepleGroup } from "react-icons/gi";
 const state = {
   selectedCatOp: null,
   title: "Showing 1 to 6 of 30 entries",
@@ -98,116 +98,64 @@ const state = {
 };
 function ListRightSidebar() {
   const [AllSubCategories, setAllSubCategories] = useState([]);
+  const [Allpages, setAllpages] = useState(0);
   const [AllListing, setAllListing] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [MinPrice, setMinPrice] = useState();
+  const [MaxPrice, setMaxPrice] = useState();
+  const [Sort, setSort] = useState();
+  const [CategoryId, setCategoryId] = useState("");
 
   const token = localStorage.getItem("token");
+  const location = useLocation();
 
+  const data = JSON.parse(new URLSearchParams(location.search).get("data"));
   useEffect(() => {
-    getAllCategories();
-    getAllListing()
+    if (data) {
+      SearchListing();
+    } else {
+      getAllListing();
+    }
   }, [token]);
 
-  const { id } = useParams();
-  const getAllCategories = () => {
-    setLoading(true)
-    fetch(`${url}/category/getsinglesubsubcategory`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        accept: "application/json",
-        authorization: `bearer ${token}`,
-      },
-      body: JSON.stringify({
-        scid: id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("All sub sub categories", response);
-        if (response.message === "Success") {
-          //   navigate.push("/");
-          // setAllCategories(response.doc)
-          setAllSubCategories(
-            response?.doc.map((item) => ({
-              // icon: <GiChickenOven />,
-              title: item.name,
-              stitle: "12 Listings",
-              // url:   `/list-right-sideba/${item._id}`,
-              // img: img1
-            }))
-          );
-
-          setLoading(false)
-
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getAllListing = () => {
-    // setLoading(true)
-    fetch(`${url}/listing/getAllListings`, {
+  const getAllListing = (e, pagnum) => {
+    setLoading(true);
+    fetch(`${url}/listing/xxx${pagnum ? pagnum : 1}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
         accept: "application/json",
         // authorization: `bearer ${token}`,
       },
-    
     })
       .then((response) => response.json())
       .then((response) => {
         console.log("All Listing", response);
+        setAllpages(response.doc.pages);
         if (response.message === "Success") {
-        console.log( response?.doc.map((item) => ({
-          // icon: <GiChickenOven />,
-          title: item.title,
-          video: item.video,
-          image: item.images  ? ImageUrl + item.images[0] : '' ,
-          stitle: "12 Listings",
-          bedge: "New Open",
-          titleIcon: <IoIosCheckmarkCircle />,
-          titleUrl: "/listing-details",
-          stitle: item.shortDescription,
-          cardType: "Restaurant",
-          cardTypeIcon: <GiChickenOven />,
-          author: '',
-          authorUrl: "#",
-          number: "(492) 492-4828",
-          website: "www.mysitelink.com",
-          date: "Posted 1 month ago",
-          view: "204",
-          ratings: [
-            <IoMdStar />,
-            <IoMdStar />,
-            <IoMdStar />,
-            <IoMdStarHalf />,
-            <IoMdStar className="last-star" />,
-          ],
-          ratingNum: "4.5",
-          // url:   `/list-right-sideba/${item._id}`,
-          // img: img1
-        })))
+          let NewArray = [];
+          NewArray = response?.doc?.promoted?.concat(response?.doc?.listings);
+          console.log(NewArray);
           setAllListing(
-            response?.doc.map((item) => ({
+            NewArray?.map((item) => ({
               // icon: <GiChickenOven />,
               title: item.title,
               video: item.video,
-              image: item.images ? ImageUrl + item.images[0] : '' ,
-              bedge: "New Open",
+              image: item.images ? ImageUrl + item.images[0] : "",
+              bedge: "Posted by " + item.seller?.role,
               titleIcon: <IoIosCheckmarkCircle />,
               titleUrl: `/listing-details/${item._id}`,
+              categoryName: item.category.name,
+              id: item._id,
               stitle: item.shortDescription,
-              cardType: "Restaurant",
-              cardTypeIcon: <GiChickenOven />,
+              cardType: item.category.name,
+              cardTypeIcon: <GiMeepleGroup />,
               author: imguser,
               authorUrl: "#",
-              number: item.seller.phone,
+              isPermoted: item.isPromoted,
+              number: item?.seller?.phone,
               website: "www.mysitelink.com",
-              date: "Posted 1 month ago",
+              date: getTimeStamp(item.createdAt),
               view: "204",
               ratings: [
                 <IoMdStar />,
@@ -222,14 +170,186 @@ function ListRightSidebar() {
             }))
           );
 
-          // setLoading(false)
-
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const getlistingByFilter = (event) => {
+    setLoading(true);
+    fetch(`${url}/listing/filter`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        // authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify({
+        categoryId: CategoryId ? CategoryId : "0000",
+        location: "New york",
+        minPrice: MinPrice ? MinPrice : 0,
+        maxPrice: MaxPrice ? MaxPrice : 999999,
+        sort: Sort ? Sort : "sdasda",
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Filter Listing", response);
+        if (response.message === "Success") {
+          // setAllpages(response.doc.pages);
+          let NewArray = [];
+          NewArray = response?.doc?.promoted?.concat(response?.doc?.listings);
+          console.log(NewArray);
+          // setAllCategories(
+          setAllListing(
+            NewArray?.map((item) => ({
+              // icon: <GiChickenOven />,
+              title: item.title,
+              video: item.video,
+              image: item.images ? ImageUrl + item.images[0] : "",
+              bedge: "Posted by " + item.seller?.role,
+              titleIcon: <IoIosCheckmarkCircle />,
+              titleUrl: `/listing-details/${item._id}`,
+              categoryName: item.category.name,
+              id: item._id,
+              stitle: item.shortDescription,
+              cardType: item.category.name,
+              cardTypeIcon: <GiMeepleGroup />,
+              author: imguser,
+              authorUrl: "#",
+              isPermoted: item.isPromoted,
+              number: item.seller.phone,
+              website: "www.mysitelink.com",
+              date: getTimeStamp(item.createdAt),
+              view: "204",
+              ratings: [
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStarHalf />,
+                <IoMdStar className="last-star" />,
+              ],
+              ratingNum: "4.5",
+              // url:   `/list-right-sideba/${item._id}`,
+              // img: img1
+            }))
+          );
+
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getTimeStamp = (timestamp) => {
+    const timeDifference = Date.parse(new Date()) - Date.parse(timestamp);
+    let timeAgo;
+    console.log(timeDifference, timestamp);
+    if (timeDifference < 1000) {
+      timeAgo = "Just now";
+    } else if (timeDifference < 60000) {
+      timeAgo = `${Math.floor(timeDifference / 1000)} seconds ago`;
+    } else if (timeDifference < 3600000) {
+      timeAgo = `${Math.floor(timeDifference / 60000)} minutes ago`;
+    } else if (timeDifference < 86400000) {
+      timeAgo = `${Math.floor(timeDifference / 3600000)} hours ago`;
+    } else {
+      timeAgo = `${Math.floor(timeDifference / 86400000)} days ago`;
+    }
+
+    return <span>{timeAgo}</span>;
+  };
+
+  const SearchListing = (e) => {
+    // e.preventDefault();
+    // setVistiedLoading(true);
+    setLoading(true);
+
+    fetch(`${url}/listing/searchFilterMain1`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        // authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify({
+        title: data.title ? data.title : "xxx",
+        location: data.location ? data.location : "xxx",
+        category: data.category ? data.category : "xxx",
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("All Search Result", response);
+        if (response.message === "Success") {
+          //   navigate.push("/");
+          // setAllCategories(response.doc)
+          // console.log(response?.doc.categories[0].image);
+          let NewArray = [];
+          NewArray = response?.doc?.promoted?.concat(response?.doc?.listings);
+          console.log(NewArray);
+          // setAllCategories(
+          setAllListing(
+            NewArray?.map((item) => ({
+              // icon: <GiChickenOven />,
+              title: item.title,
+              video: item.video,
+              image: item.images ? ImageUrl + item.images[0] : "",
+              bedge: "Posted by " + item.seller?.role,
+              titleIcon: <IoIosCheckmarkCircle />,
+              titleUrl: `/listing-details/${item._id}`,
+              categoryName: item.category.name,
+              id: item._id,
+              stitle: item.shortDescription,
+              cardType: item.category.name,
+              cardTypeIcon: <GiMeepleGroup />,
+              author: imguser,
+              authorUrl: "#",
+              isPermoted: item.isPromoted,
+              number: item.seller.phone,
+              website: "www.mysitelink.com",
+              date: getTimeStamp(item.createdAt),
+              view: "204",
+              ratings: [
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStarHalf />,
+                <IoMdStar className="last-star" />,
+              ],
+              ratingNum: "4.5",
+              // url:   `/list-right-sideba/${item._id}`,
+              // img: img1
+            }))
+          );
+
+          // setAllListing(NewArray);
+          setLoading(false);
+
+          // {
+          // pathname: "/list-right-sidebar-list",
+          // state: { data },
+          // });
+
+          // );
+          // setVistiedLoading(false);
+          //   localStorage.setItem('token',response.doc)
+          // setTimeout(() => {
+          //   console.log("Hello, World!");
+          //   CheckImage();
+          // }, 6000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <main className="list-right-sidebar">
       {/* Header */}
@@ -241,67 +361,63 @@ function ListRightSidebar() {
         MenuPgTitle="Listings"
         img={state.breadImg}
       />
-       {isLoading ? (
-            <div
-              className="row mt-5 "
-              style={{ justifyContent: "center", alignItems: "center" }}
-            >
-              <CircularProgress />
-            </div>
-          ) : (
-      <div
-        className="hero-catagory after-none text-center mt-4"
-        style={{ background: "#696d85", padding: "20px" }}
-      >
-        <PopularCategoriesTwo
-          catitems={AllSubCategories}
-          title={sectiondata.categories.popularcategories.title}
-        />
-      </div>
-          )}
+
       {/* Place List */}
       <section className="card-area padding-top-40px padding-bottom-100px">
         <div className="container">
           <div className="row align-items-start">
             <div className="col-lg-12">
               <div className="generic-header margin-bottom-30px">
-                <ul className="generic-nav">
-                  {state.navs.map((item, index) => {
-                    return (
-                      <li key={index}>
-                        <Link
-                          to={item.path}
-                          className={item.active ? "active" : " "}
-                        >
-                          <span className="d-inline-block">{item.icon}</span>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <div className="short-option ml-3">
+                <div className=" col-lg-3 col-md-3 col-sm-12 short-option ml-3">
                   <Select placeholder="Short by" options={state.shortby} />
                 </div>
-                <p className="showing__text text-right">{state.title}</p>
+                <div className="col-lg-9 col-md-9 col-sm-12 ">
+                  <p className="showing__text text-right">{state.title}</p>
+                </div>
               </div>
             </div>
-
-            <div className="col-lg-8 row align-items-start">
-              <PlaceGrid griditems={AllListing} />
-            </div>
-
+            {isLoading ? (
+              <div
+                className="col-lg-8 row mt-5 "
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <CircularProgress />
+              </div>
+            ) : AllListing?.length === 0 ? (
+              <div className="col-lg-8 row align-items-center justify-content-center">
+                <h3>No Listing Found</h3>
+              </div>
+            ) : (
+              <div className="col-lg-8 row align-items-start">
+                <PlaceGrid griditems={AllListing} />
+              </div>
+            )}
             <div className="col-lg-4">
-              <ListingListSidebar />
+              <ListingListSidebar
+                getlistingByFilter={() => getlistingByFilter()}
+                setCategoryId={setCategoryId}
+                setMinPrice={setMinPrice}
+                setMaxPrice={setMaxPrice}
+                setSort={setSort}
+              />
             </div>
           </div>
           <div className="row">
             <div className="col-lg-12">
-              <div className="button-shared text-center">
-                <Button text="load more" url="#" className="border-0">
-                  <span className="d-inline-block">
-                    <FiRefreshCw />
-                  </span>
-                </Button>
+              <div
+                className="button-shared text-center"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Pagination
+                  count={Allpages}
+                  variant="outlined"
+                  shape="rounded"
+                  onChange={(e, Value) => getAllListing(e, Value)}
+                />
               </div>
             </div>
           </div>

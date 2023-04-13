@@ -5,17 +5,28 @@ import { FiLock } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useTranslation } from "react-i18next";
+
 import { url } from "../../../environment";
-import { Formik, useFormik, Form, Field, FormikProvider } from "formik";
+import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 function LoginBox({ title, subtitle }) {
+  const [t, i18n] = useTranslation("common");
+
   const [isError, setIsError] = React.useState(false);
   const [userValue, setUserValue] = React.useState({});
+  const [showPassword, setShowPassword] = React.useState(true);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const navigate = useHistory();
 
   // const SignupSchema = Yup.object().shape({
@@ -92,8 +103,8 @@ function LoginBox({ title, subtitle }) {
     <>
       <div className="billing-form-item mb-0">
         <div className="billing-title-wrap border-bottom-0 pr-0 pl-0 pb-0 text-center">
-          <h3 className="widget-title font-size-28 pb-0">{title}</h3>
-          <p className="font-size-16 font-weight-medium">{subtitle}</p>
+          <h3 className="widget-title font-size-28 pb-0">{t(title)}</h3>
+          <p className="font-size-16 font-weight-medium">{t(subtitle)}</p>
         </div>
         <div className="billing-content">
           <div className="contact-form-action">
@@ -102,7 +113,7 @@ function LoginBox({ title, subtitle }) {
             </div>
             <div className="col-lg-12">
               <div className="account-assist mt-4 mb-4 text-center">
-                <p className="account__desc">or</p>
+                <p className="account__desc">{"or"}</p>
               </div>
             </div>
             {isError ? (
@@ -114,7 +125,7 @@ function LoginBox({ title, subtitle }) {
                   setIsError(false);
                 }}
               >
-                User not found
+                {t("User not found")}
               </Alert>
             ) : null}
 
@@ -122,7 +133,9 @@ function LoginBox({ title, subtitle }) {
               <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <div className="col-lg-12">
                   <div className="input-box">
-                    <label className="label-text">Username, or email</label>
+                    <label className="label-text">
+                      {t("Username, or email")}
+                    </label>
                     <div className="form-group">
                       {/* <span className="form-icon">
                         <AiOutlineUser />
@@ -151,7 +164,7 @@ function LoginBox({ title, subtitle }) {
                 ) : null} */}
                 <div className="col-lg-12">
                   <div className="input-box">
-                    <label className="label-text">Password</label>
+                    <label className="label-text">{t("Password")}</label>
                     <div className="form-group">
                       {/* <span className="form-icon">
                         <FiLock />
@@ -159,11 +172,27 @@ function LoginBox({ title, subtitle }) {
                       <TextField
                         fullWidth
                         autoComplete="password"
-                        type="password"
+                        type={showPassword ? "password" : "text"}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
                               <FiLock />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
                             </InputAdornment>
                           ),
                         }}

@@ -20,14 +20,14 @@ import PlaceOne from "../../../components/places/PlaceOne";
 // import BannerThreeSearchInput2 from "./BannerThreeSearchInput2";
 // import BannerThreeSearchInput3 from "./BannerThreeSearchInput3";
 
-function PopularCategoriesTwo({ catitems, title }) {
+function PopularCategoriesTwo({ catitems, title, setSubId }) {
   const [focusedIdx, setFocusedIdx] = React.useState(0);
   return (
     <>
       <ul className="tag-list">
         <div className="App">
-          <div className="col-lg-12 mx-auto mt-4" style={{border: '2px solid white'}}>
-            <PlaceOne places={catitems} />
+          <div className="col-lg-12 mx-auto mt-4">
+            <PlaceOne places={catitems} setSubId={setSubId} />
           </div>
         </div>
       </ul>

@@ -196,6 +196,13 @@ dl, ol, ul {
     color: #fff;
 
   }
+  
+  .MuiTabs-flexContainer{
+justify-content: center !important;
+  }
+  .TabsBackgroud:focus{
+    outline: none !important;
+  }
   .lanuageDrop:focus{
     background: none;
     border: none;

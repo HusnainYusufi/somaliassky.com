@@ -1,69 +1,78 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from "react";
 import HeaderTwo from "../../components/common/HeaderTwo";
 import BannerOneSearchInput from "../../components/banner/banner1/BannerOneSearchInput";
-import Banner4 from "../../components/banner/banner4/Banner4";
-import PopularCategoriesTwo from "../../components/other/categories/PopularCategoriesTwo";
-import SectionsHeading from "../../components/common/SectionsHeading";
-import BrowseCategoriesThree from "../../components/other/categories/BrowseCategoriesThree";
-import PlaceOne from "../../components/places/PlaceOne";
-import InfoBoxOne from "../../components/other/infoboxes/infobox1/InfoBoxOne";
-import FunFactsOne from "../../components/other/funfacts/funfacts1/FunFactsOne";
-import Testimonial from "../../components/sliders/Testimonial";
-import SectionDivider from "../../components/common/SectionDivider";
 import RecommendedPlace from "../../components/places/RecommendedPlace";
-
-import LatestBlog from "../../components/blogs/LatestBlog";
-import CtaOne from "../../components/other/cta/CtaOne";
-import ClientLogo from "../../components/sliders/ClientLogo";
-import Button from "../../components/common/Button";
+import GeneralMap from "../../components/contact/GeneralMap";
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
-import MapViewCluster from "../../components/contact/MapViewCluster";
 import sectiondata from "../../store/store";
-
+import { url } from "../../environment";
 function Home5() {
-    useEffect(() => {
-        window.scrollTo(0, 0)
-      }, [])
-    return (
-        <main className="home-5">
-            {/* Header */}
-            <HeaderTwo />
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getAllCordinate();
+  }, []);
 
-            {/* Mapview */}
-            <MapViewCluster />
+  const [Cordinates, setAllCordinates] = React.useState([]);
+  const getAllCordinate = () => {
+    // setLoading(true)
+    fetch(`${url}/listing/getAllCordinates`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("single Listing------>>>", response);
+        if (response.message === "Success") {
+          let item = response.doc;
 
+          setAllCordinates(item);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <main className="home-5">
+      {/* Header */}
+      <HeaderTwo />
 
-            {/* Popular Categories */}
-            <section className="hero-wrapper5 section-bgNew padding-top-50px padding-bottom-40px">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8">
-                            <BannerOneSearchInput />
+      {/* Mapview */}
+      {/* <div className="title-shape margin-bottom-35px"> */}
+      <GeneralMap marker={Cordinates} />
+      {/* </div> */}
 
-                            
+      {/* Popular Categories */}
+      <section className="hero-wrapper5 section-bgNew padding-top-50px padding-bottom-40px">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <BannerOneSearchInput />
 
-                            <div className="hero-catagory after-none text-center mt-4">
-                           
-                                {/* <PopularCategoriesTwo catitems={sectiondata.categories.popularcategories.lists} title={sectiondata.categories.popularcategories.title} /> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+              <div className="hero-catagory after-none text-center mt-4">
+                {/* <PopularCategoriesTwo catitems={sectiondata.categories.popularcategories.lists} title={sectiondata.categories.popularcategories.title} /> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Browse Categories */}
-            <section className="cat-area padding-top-100px padding-bottom-90px">
-                <div className="container">
-                <RecommendedPlace
+      {/* Browse Categories */}
+      <section className="cat-area padding-top-100px padding-bottom-90px">
+        <div className="container">
+          <RecommendedPlace
             recommendplaces={sectiondata.mostvisitedplaces.places}
           />
-                    {/* <BrowseCategoriesThree catitems={sectiondata.categories.browsecategories4.categories} /> */}
-                </div>
-            </section>
+          {/* <BrowseCategoriesThree catitems={sectiondata.categories.browsecategories4.categories} /> */}
+        </div>
+      </section>
 
-            {/* How it work */}
-            {/* <section className="hiw-area text-center padding-top-100px padding-bottom-80px">
+      {/* How it work */}
+      {/* <section className="hiw-area text-center padding-top-100px padding-bottom-80px">
                 <div className="container">
                     <div className="row section-title-width text-center">
                         <SectionsHeading title={sectiondata.howitworks.hiw6.sectitle} titleClass=" before-none pt-0" desc={sectiondata.howitworks.hiw6.seccontent} />
@@ -75,8 +84,8 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* Most Visited Place */}
-            {/* <section className="card-area text-center padding-top-100px padding-bottom-100px">
+      {/* Most Visited Place */}
+      {/* <section className="card-area text-center padding-top-100px padding-bottom-100px">
                 <div className="container">
                     <div className="row section-title-width text-center">
                         <SectionsHeading title={sectiondata.mostvisitedplaces.sectitle} titleClass=" before-none pt-0" desc={sectiondata.mostvisitedplaces.seccontent} />
@@ -86,8 +95,8 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* FunFacts */}
-            {/* <section className="funfact-area section-bg-2 padding-top-100px padding-bottom-50px text-center">
+      {/* FunFacts */}
+      {/* <section className="funfact-area section-bg-2 padding-top-100px padding-bottom-50px text-center">
                 <div className="container">
                     <div className="row section-title-width">
                         <SectionsHeading title={sectiondata.funfacts.funfact1.sectitle} titleClass=" text-white before-none pt-0" desc={sectiondata.funfacts.funfact1.seccontent} />
@@ -97,8 +106,8 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* Testimonial */}
-            {/* <section className="testimonial-area padding-top-100px padding-bottom-100px text-center">
+      {/* Testimonial */}
+      {/* <section className="testimonial-area padding-top-100px padding-bottom-100px text-center">
                 {sectiondata.testimonialdata.tmimage.map((tmimg, index) => {
                     return (
                         <img key={index} src={tmimg.tmimg} alt="testimonial" className="random-img" />
@@ -116,10 +125,10 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* <SectionDivider /> */}
+      {/* <SectionDivider /> */}
 
-            {/* Blog */}
-            {/* <section className="blog-area padding-top-100px padding-bottom-80px">
+      {/* Blog */}
+      {/* <section className="blog-area padding-top-100px padding-bottom-80px">
                 <div className="container">
                     <div className="row section-title-width text-center">
                         <SectionsHeading title={sectiondata.latestarticles.sectitle} titleClass=" before-none pt-0" desc={sectiondata.latestarticles.seccontent} />
@@ -130,16 +139,16 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* CTA 2 */}
-            {/* <section className="cta-area cta-area3 padding-top-100px padding-bottom-100px section-bg">
+      {/* CTA 2 */}
+      {/* <section className="cta-area cta-area3 padding-top-100px padding-bottom-100px section-bg">
                 <CtaOne />
             </section> */}
 
-            {/* Client Logo */}
-            {/* <ClientLogo logos={sectiondata.clientlogos} /> */}
+      {/* Client Logo */}
+      {/* <ClientLogo logos={sectiondata.clientlogos} /> */}
 
-            {/* Cta Two */}
-            {/* <section className="cta-area cta-area3 column-sm-center section-bg-2 padding-top-70px padding-bottom-70px">
+      {/* Cta Two */}
+      {/* <section className="cta-area cta-area3 column-sm-center section-bg-2 padding-top-70px padding-bottom-70px">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-lg-9 text-left">
@@ -155,13 +164,12 @@ function Home5() {
                 </div>
             </section> */}
 
-            {/* Footer */}
-            <Footer />
+      {/* Footer */}
+      <Footer />
 
-            <ScrollTopBtn />
-
-        </main>
-    );
+      <ScrollTopBtn />
+    </main>
+  );
 }
 
 export default Home5;

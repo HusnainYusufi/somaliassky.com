@@ -3,6 +3,9 @@ import { useDropzone } from "react-dropzone";
 import { BsCloudUpload } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone-uploader";
+import { FaMapSigns } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 import "react-dropzone-uploader/dist/styles.css";
 import { url } from "../../environment";
 const thumbsContainer = {
@@ -38,40 +41,40 @@ const img = {
   height: "auto",
 };
 
-function PhotoUploader({setData,data}) {
-
+function PhotoUploader({ setData, data }) {
   const uploadimage = async (file) => {
-   
-    let SellerId = JSON.parse(localStorage.getItem('user'))
+    let SellerId = JSON.parse(localStorage.getItem("user"));
 
-     const formData = new FormData()
-     formData.append('seller' ,  SellerId.doc._id)
+    const formData = new FormData();
+    formData.append("seller", SellerId.doc._id);
     //  formData.append('files', files );
     // for(var i = 0 ; i<file.length;i++){ file, file.name
-        formData.append('files',file[0]?.file)
-        formData.append('files',file[1]?.file)
-        formData.append('files',file[2]?.file)
-        formData.append('files',file[3]?.file)
-        formData.append('files',file[4]?.file)
-        // formData.append('files',file[1])
+    formData.append("files", file[0]?.file);
+    formData.append("files", file[1]?.file);
+    formData.append("files", file[2]?.file);
+    formData.append("files", file[3]?.file);
+    formData.append("files", file[4]?.file);
+    // formData.append('files',file[1])
     // }
     // console.log('formdata---->>',formData)
     for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+      console.log(pair[0] + ", " + pair[1]);
     }
-    fetch(url+'/listing/addListingPhotos', {
+    fetch(url + "/listing/addListingPhotos", {
       method: "POST",
       body: formData,
-  }).then(res => res.json()).then(result => {
-     console.log('result--->',result)
-  }).catch(err=>err
-    // message.error(err)
-    )
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("result--->", result);
+      })
+      .catch(
+        (err) => err
+        // message.error(err)
+      );
 
-//   message.error('File and Message is required')
-
-    
-  }
+    //   message.error('File and Message is required')
+  };
 
   // const thumbs = files.map(file => (
   //     <div style={thumb} key={file.name}>
@@ -85,17 +88,17 @@ function PhotoUploader({setData,data}) {
   //     </div>
   // ));
 
-  const handleChangeStatus = ({ meta },files, status) => {
+  const handleChangeStatus = ({ meta }, files, status) => {
     console.log(status, meta);
-    setData(status)
+    setData(status);
   };
+  const [t, i18n] = useTranslation("common");
 
-  
   return (
     <>
       <div className="billing-form-item">
         <div className="billing-title-wrap">
-          <h3 className="widget-title pb-0">Video</h3>
+          <h3 className="widget-title pb-0">{t("Video")}</h3>
           <div className="title-shape margin-top-10px"></div>
         </div>
         <div className="billing-content">
@@ -120,6 +123,29 @@ function PhotoUploader({setData,data}) {
                     extra.reject ? { color: "red" } : {},
                 }}
               />
+            </div>
+            <div className="contact-form-action">
+              <div className="row">
+                <div className="col-lg-12 mt-4 ml-3">
+                  <div className="input-box">
+                    <label className="label-text">
+                      {t("Or paste a Youtube link")}
+                    </label>
+                    <div className="form-group">
+                      <span className="la form-icon">
+                        <FaMapSigns />
+                      </span>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="Address_2"
+                        // onChange={(e) => getGeneralFormData(e)}
+                        placeholder={t("Add youtube link")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

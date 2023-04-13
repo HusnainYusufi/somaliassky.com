@@ -4,6 +4,8 @@ import { BsCloudUpload } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone-uploader";
 import "react-dropzone-uploader/dist/styles.css";
+import { useTranslation } from "react-i18next";
+
 import { url } from "../../environment";
 const thumbsContainer = {
   display: "flex",
@@ -38,40 +40,40 @@ const img = {
   height: "auto",
 };
 
-function PhotoUploader({setData,data}) {
-
+function PhotoUploader({ setData, data }) {
   const uploadimage = async (file) => {
-   
-    let SellerId = JSON.parse(localStorage.getItem('user'))
+    let SellerId = JSON.parse(localStorage.getItem("user"));
 
-     const formData = new FormData()
-     formData.append('seller' ,  SellerId.doc._id)
+    const formData = new FormData();
+    formData.append("seller", SellerId.doc._id);
     //  formData.append('files', files );
     // for(var i = 0 ; i<file.length;i++){ file, file.name
-        formData.append('files',file[0]?.file)
-        formData.append('files',file[1]?.file)
-        formData.append('files',file[2]?.file)
-        formData.append('files',file[3]?.file)
-        formData.append('files',file[4]?.file)
-        // formData.append('files',file[1])
+    formData.append("files", file[0]?.file);
+    formData.append("files", file[1]?.file);
+    formData.append("files", file[2]?.file);
+    formData.append("files", file[3]?.file);
+    formData.append("files", file[4]?.file);
+    // formData.append('files',file[1])
     // }
     // console.log('formdata---->>',formData)
     for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+      console.log(pair[0] + ", " + pair[1]);
     }
-    fetch(url+'/listing/addListingPhotos', {
+    fetch(url + "/listing/addListingPhotos", {
       method: "POST",
       body: formData,
-  }).then(res => res.json()).then(result => {
-     console.log('result--->',result)
-  }).catch(err=>err
-    // message.error(err)
-    )
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("result--->", result);
+      })
+      .catch(
+        (err) => err
+        // message.error(err)
+      );
 
-//   message.error('File and Message is required')
-
-    
-  }
+    //   message.error('File and Message is required')
+  };
 
   // const thumbs = files.map(file => (
   //     <div style={thumb} key={file.name}>
@@ -85,23 +87,25 @@ function PhotoUploader({setData,data}) {
   //     </div>
   // ));
 
-  const handleChangeStatus = ({ meta } ,files,status) => {
-    console.log(status, meta,files);
-    setData(status)
+  const handleChangeStatus = ({ meta }, files, status) => {
+    console.log(status, meta, files);
+    setData(status);
   };
 
-//   const handleSubmit = (files, allFiles) => {
-//     console.log(files.map((f) => f.meta));
-//     // setFiles(files.map((f) => f.meta))
-//     uploadimage(files)
-//     console.log(files)
-//     allFiles.forEach((f) => f.remove());
-//   };
+  //   const handleSubmit = (files, allFiles) => {
+  //     console.log(files.map((f) => f.meta));
+  //     // setFiles(files.map((f) => f.meta))
+  //     uploadimage(files)
+  //     console.log(files)
+  //     allFiles.forEach((f) => f.remove());
+  //   };
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="billing-form-item">
         <div className="billing-title-wrap">
-          <h3 className="widget-title pb-0">Photo</h3>
+          <h3 className="widget-title pb-0">{t("Photo")}</h3>
           <div className="title-shape margin-top-10px"></div>
         </div>
         <div className="billing-content">

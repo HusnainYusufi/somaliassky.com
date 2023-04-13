@@ -1,37 +1,50 @@
 import React, { useEffect } from "react";
 import HeaderTwo from "../../components/common/HeaderTwo";
-import BannerOne from "../../components/banner/banner1/BannerOne";
 import RecommendedPlace from "../../components/places/RecommendedPlace";
 
 import BannerOneSearchInput from "../../components/banner/banner1/SearchFilterSale";
-import PopularCategoriesTwo from "../../components/other/categories/PopularCategoriesTwo";
-import SectionsHeading from "../../components/common/SectionsHeading";
-import BrowseCategoriesThree from "../../components/other/categories/BrowseCategoriesThree";
 import PlaceOne from "../../components/places/PlaceOne";
-import InfoBoxOne from "../../components/other/infoboxes/infobox1/InfoBoxOne";
-import FunFactsOne from "../../components/other/funfacts/funfacts1/FunFactsOne";
-import Testimonial from "../../components/sliders/Testimonial";
-import SectionDivider from "../../components/common/SectionDivider";
-import LatestBlog from "../../components/blogs/LatestBlog";
-import CtaOne from "../../components/other/cta/CtaOne";
-import ClientLogo from "../../components/sliders/ClientLogo";
-import Button from "../../components/common/Button";
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import MapViewCluster from "../../components/contact/MapViewCluster";
 import sectiondata from "../../store/store";
-
+import { url } from "../../environment";
 function RealState() {
   useEffect(() => {
     window.scrollTo(0, 0);
+    getAllCordinate();
   }, []);
+
+  const [Cordinates, setAllCordinates] = React.useState([]);
+  const getAllCordinate = () => {
+    // setLoading(true)
+    fetch(`${url}/listing/getAllCordinates`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("single Listing------>>>", response);
+        if (response.message === "Success") {
+          let item = response.doc;
+
+          setAllCordinates(item);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <main className="home-5">
       {/* Header */}
       <HeaderTwo />
 
       {/* Mapview */}
-      <MapViewCluster />
+      <MapViewCluster marker={Cordinates} />
 
       {/* Popular Categories */}
       <section
@@ -59,14 +72,13 @@ function RealState() {
       <section className="card-area text-center padding-top-100px padding-bottom-100px">
         <div className="container">
           <div className="row section-title-width text-center">
-          <RecommendedPlace
-            recommendplaces={sectiondata.mostvisitedplaces.places}
-          />
+            <RecommendedPlace
+              recommendplaces={sectiondata.mostvisitedplaces.places}
+            />
           </div>
         </div>
       </section>
 
- 
       {/* Footer */}
       <Footer />
 

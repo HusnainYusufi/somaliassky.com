@@ -1,15 +1,21 @@
-import React, { Component, useRef } from "react";
+import React, { useRef } from "react";
 import { FiMap } from "react-icons/fi";
 import { FaMapSigns } from "react-icons/fa";
-import { BsFileCode } from "react-icons/bs";
 import Select from "react-select";
-import SelectCountry from "../common/SelectCountry";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Fab from "@mui/material/Fab";
+import NavigationIcon from "@mui/icons-material/Navigation";
 import Geocode from "react-geocode";
-import geolib from "geolib";
+import LocationMap from "./LocationMap";
+import LocationFormMap from "./LocationFormMap";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
-import Sectiondata from '../../store/store'
-import Autocomplete from "react-google-autocomplete";
+import { useTranslation } from "react-i18next";
+import Sectiondata from "../../store/store";
 Geocode.setApiKey("AIzaSyBm-xt-zBBtvE_AreqkHODWIsNvkrsU1Qw");
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const cities = [
   {
@@ -17,43 +23,43 @@ const cities = [
     label: "Select a City",
   },
   {
-    value: 'New York',
+    value: "New York",
     label: "New York",
   },
   {
-    value: 'Los Angeles',
+    value: "Los Angeles",
     label: "Los Angeles",
   },
   {
-    value: 'Chicago',
+    value: "Chicago",
     label: "Chicago",
   },
   {
-    value: 'Phoenix',
+    value: "Phoenix",
     label: "Phoenix",
   },
   {
-    value: 'Washington',
+    value: "Washington",
     label: "Washington",
   },
   {
-    value: 'Boston',
+    value: "Boston",
     label: "Boston",
   },
   {
-    value:'Philadelphia',
+    value: "Philadelphia",
     label: "Philadelphia",
   },
   {
-    value: 'Baltimore',
+    value: "Baltimore",
     label: "Baltimore",
   },
   {
-    value: 'Seattle',
+    value: "Seattle",
     label: "Seattle",
   },
   {
-    value: 'San Francisco',
+    value: "San Francisco",
     label: "San Francisco",
   },
 ];
@@ -63,11 +69,11 @@ const states = [
     label: "Select a State",
   },
   {
-    value: 'California',
+    value: "California",
     label: "California",
   },
   {
-    value: 'Florida',
+    value: "Florida",
     label: "Florida",
   },
   {
@@ -103,19 +109,35 @@ const states = [
     value: "Montana",
   },
 ];
-const LocationDetailed = ({data,setData}) => {
+const LocationForm = ({ Address_1Error, setAddress_1, data, setData }) => {
   const inputRef = useRef(null);
   const [coordinates, setCoordinates] = React.useState({});
+  const [open, setOpen] = React.useState(false);
+  const [t, i18n] = useTranslation("common");
+
+  const handleClick = () => {
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleChange = (e) => {
     console.log("ABBBBBBB", inputRef.current.value);
-    data.address_1 = inputRef.current.value
+    data.address_1 = inputRef.current.value;
     Geocode.fromAddress(inputRef.current.value).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng);
-        data.lat=lat;
-        data.lng=lng;
+
         // setLattitude(JSON.stringify(lat))
         // setLongitude(JSON.stringify(lng))
       },
@@ -124,27 +146,32 @@ const LocationDetailed = ({data,setData}) => {
       }
     );
   };
-const getCurrentCoordinates = () => {
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      setCoordinates({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      });
-      console.log(position.coords)
-    },
-    error => console.error(error),
-    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-  );
-  
-} 
+
+  const getCurrentCoordinates = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        data.lat = position.coords.latitude;
+        data.lng = position.coords.longitude;
+        setCoordinates({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        console.log(position.coords);
+        handleClick();
+      },
+      (error) => console.error(error),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  };
+
   const getGeneralFormData = (e) => {
     let obj = data;
     obj[e.target.name] = e.target.value;
     setData(obj);
     console.log(obj);
   };
-  const getSelectValue = (e,name) => {
+
+  const getSelectValue = (e, name) => {
     let obj = data;
     obj[name] = e.value;
     setData(obj);
@@ -152,37 +179,32 @@ const getCurrentCoordinates = () => {
   };
   return (
     <>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          {t("Current coordinates get SuccessFully!")}
+        </Alert>
+      </Snackbar>
       <div className="billing-form-item">
         <div className="billing-title-wrap">
-          <h3 className="widget-title pb-0">{states.title}</h3>
+          <h3 className="widget-title pb-0">{t(states.title)}</h3>
           <div className="title-shape margin-top-10px"></div>
         </div>
         <div className="billing-content">
           <div className="contact-form-action">
             <form method="post">
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-12 ">
                   <div className="input-box">
-                    <label className="label-text">Address</label>
-                    <div className="form-group">
-                      <span className="la form-icon">
-                        <FiMap />
-                      </span>
-
-                      <ReactGoogleAutocomplete
-                        className="Location_input"
-                        apiKey={"AIzaSyCvyBRaARkJ7h9nNDFxWYuXXvAjBzpP0To"}
-                        ref={inputRef}
-                        onPlaceSelected={(place) => {
-                          handleChange(place);getCurrentCoordinates()
-                        }}
-                      />
-                    </div>
+                    <label className="label-text">{"Address"}</label>
+                    <LocationFormMap
+                      Address_1Error={Address_1Error}
+                      setAddress_1={setAddress_1}
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="input-box">
-                    <label className="label-text">Address 2</label>
+                    <label className="label-text">{t("Address 2")}</label>
                     <div className="form-group">
                       <span className="la form-icon">
                         <FaMapSigns />
@@ -191,20 +213,20 @@ const getCurrentCoordinates = () => {
                         className="form-control"
                         type="text"
                         name="Address_2"
-                        onChange={(e)=>getGeneralFormData(e)}
-                        placeholder="Temporary address"
+                        onChange={(e) => getGeneralFormData(e)}
+                        placeholder={t("Temporary address")}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="input-box">
-                    <label className="label-text">City</label>
+                    <label className="label-text">{t("City")}</label>
                     <div className="form-group">
                       <Select
-                      name="city"
-                        onChange={(e)=>getSelectValue(e,'city')}
-                        placeholder="Select a City"
+                        name="city"
+                        onChange={(e) => getSelectValue(e, "city")}
+                        placeholder={t("Select a City")}
                         options={cities}
                       />
                     </div>
@@ -212,26 +234,39 @@ const getCurrentCoordinates = () => {
                 </div>
                 <div className="col-lg-6">
                   <div className="input-box">
-                    <label className="label-text">State</label>
+                    <label className="label-text">{t("State")}</label>
                     <div className="form-group">
                       <Select
-                          name="city"
-                          onChange={(e)=>getSelectValue(e,'state')}
-                        placeholder="Select a State"
+                        name="city"
+                        onChange={(e) => getSelectValue(e, "state")}
+                        placeholder={t("Select a State")}
                         options={states}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <label className="label-text">Country</label>
+                  <label className="label-text">{t("Country")}</label>
                   <div className="form-group">
-                  <Select
-                   name="country"
-                   onChange={(e)=>getSelectValue(e,'country')}
-                    placeholder="Select a Location"
-                    options={Sectiondata.countries}
-                />
+                    <Select
+                      name="country"
+                      onChange={(e) => getSelectValue(e, "country")}
+                      placeholder={t("Select a Location")}
+                      options={Sectiondata.countries}
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12 mb-4">
+                  <div className="input-box">
+                    <Fab
+                      onClick={() => getCurrentCoordinates()}
+                      style={{ zIndex: "inherit" }}
+                      color="primary"
+                      variant="extended"
+                    >
+                      <NavigationIcon sx={{ mr: 1 }} />
+                      {t("Navigate Current Location")}
+                    </Fab>
                   </div>
                 </div>
               </div>
@@ -243,4 +278,4 @@ const getCurrentCoordinates = () => {
   );
 };
 
-export default LocationDetailed;
+export default LocationForm;

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { BsPencilSquare, BsQuestion, BsPencil } from "react-icons/bs";
-import { AiOutlineTags } from "react-icons/ai";
+import { BsPencilSquare, BsPencil } from "react-icons/bs";
 import Select from "react-select";
 import { url, ImageUrl } from "../../environment";
+import { useTranslation } from "react-i18next";
 
 const state = {
   title: "General Information",
@@ -47,13 +47,23 @@ const state = {
     },
   ],
 };
-function GeneralInfo({setAdfield, setData, data }) {
+function GeneralInfo({
+  ShortdesError,
+  setAdfield,
+  TitleError,
+  SubCategoriesError,
+  setData,
+  data,
+  CategoriesError,
+}) {
   const [AllSubCategories, setAllSubCategories] = useState([]);
   const [AllCategories, setAllCategories] = useState([]);
   const [FormFields, setFormFields] = useState([]);
+  const [t, i18n] = useTranslation("common");
 
   const [isLoading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     getAllCategories();
     window.scrollTo(0, 0);
@@ -76,13 +86,11 @@ function GeneralInfo({setAdfield, setData, data }) {
         if (response.message === "Success") {
           //   navigate.push("/");
           // setAllCategories(response.doc)
-          console.log(response?.doc[0].image);
           let Array = [];
 
           // setAllCategories(
-          response?.doc.map((item) => {
+          response?.doc.categories?.map((item) => {
             // if (item.type === "Home1") {
-            console.log(ImageUrl + item.image);
             Array.push({
               label: item.name,
               value: item.name,
@@ -107,7 +115,7 @@ function GeneralInfo({setAdfield, setData, data }) {
 
   const getSubCategories = (id) => {
     setLoading(true);
-    data.categories=id
+    data.categories = id;
     fetch(`${url}/category/getsinglesubcategory`, {
       method: "POST",
       headers: {
@@ -141,7 +149,7 @@ function GeneralInfo({setAdfield, setData, data }) {
   };
 
   const getFormFields = (id) => {
-    data.subCategories=id
+    data.subCategories = id;
 
     setLoading(true);
     fetch(`${url}/category/getFormFields`, {
@@ -172,18 +180,17 @@ function GeneralInfo({setAdfield, setData, data }) {
 
   const addtionalFormField = (e, index) => {
     let obj = FormFields;
-    obj[index]['value'] = e.target.value;
+    obj[index]["value"] = e.target.value;
     console.log(obj);
     setFormFields(obj);
-    setAdfield(obj)
+    setAdfield(obj);
   };
-  const addtionalFormSelect = (e, index,name) => {
+  const addtionalFormSelect = (e, index, name) => {
     let obj = FormFields;
-    obj[index]['value'] = e.value;
+    obj[index]["value"] = e.value;
     console.log(obj);
     setFormFields(obj);
-    setAdfield(obj)
-
+    setAdfield(obj);
   };
   const getGeneralFormData = (e) => {
     let obj = data;
@@ -191,6 +198,7 @@ function GeneralInfo({setAdfield, setData, data }) {
     setData(obj);
     console.log(obj);
   };
+
   return (
     <>
       <div className="billing-form-item">
@@ -204,7 +212,7 @@ function GeneralInfo({setAdfield, setData, data }) {
               <div className="row">
                 <div className="col-lg-6">
                   <div className="input-box">
-                    <label className="label-text">Listing Title</label>
+                    <label className="label-text">{t("Listing")}</label>
                     <div className="form-group">
                       <span className="la form-icon">
                         <BsPencilSquare />
@@ -214,15 +222,20 @@ function GeneralInfo({setAdfield, setData, data }) {
                         type="text"
                         name="title"
                         onChange={(e) => getGeneralFormData(e)}
-                        placeholder="Enter your listing title"
+                        placeholder={t("Enter your listing title")}
                       />
+                      {TitleError && (
+                        <div style={{ color: "red", fontSize: "12px" }}>
+                          {t("Enter your Title")}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="input-box">
                     <label className="label-text d-flex align-items-center ">
-                      Short Description{" "}
+                      {t("Short Description")}{" "}
                     </label>
                     <div className="form-group">
                       <span className="la form-icon">
@@ -233,14 +246,19 @@ function GeneralInfo({setAdfield, setData, data }) {
                         type="text"
                         name="short_description"
                         onChange={(e) => getGeneralFormData(e)}
-                        placeholder="Enter short descrition here"
+                        placeholder={t("Enter short descrition here")}
                       />
+                      {ShortdesError && (
+                        <div style={{ color: "red", fontSize: "12px" }}>
+                          {t("Please add short description")}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-12">
                   <div className="input-box">
-                    <label className="label-text">Description</label>
+                    <label className="label-text">{t("Description")}</label>
                     <div className="form-group">
                       <span className="la form-icon">
                         <BsPencil />
@@ -249,33 +267,43 @@ function GeneralInfo({setAdfield, setData, data }) {
                         className="message-control form-control"
                         name="Description"
                         onChange={(e) => getGeneralFormData(e)}
-                        placeholder="Write your listing description"
+                        placeholder={t("Write your listing description")}
                       ></textarea>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-12">
                   <div className="input-box">
-                    <label className="label-text">Category</label>
+                    <label className="label-text">{t("Category")}</label>
                     <div className="form-group mb-0">
                       <Select
-                        placeholder="Select a Category"
+                        placeholder={t("Select a Category")}
                         options={AllCategories}
                         onChange={(e) => getSubCategories(e.id)}
                       />
+                      {CategoriesError && (
+                        <div style={{ color: "red", fontSize: "12px" }}>
+                          {t("Please Select Category")}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
                 {AllSubCategories.length > 0 && (
                   <div className="col-lg-12">
                     <div className="input-box">
-                      <label className="label-text">Sub Category</label>
+                      <label className="label-text">{t("Sub Category")}</label>
                       <div className="form-group mb-0">
                         <Select
-                          placeholder="Select a Sub Category"
+                          placeholder={t("Select a Sub Category")}
                           options={AllSubCategories}
                           onChange={(e) => getFormFields(e.id)}
                         />
+                        {SubCategoriesError && (
+                          <div style={{ color: "red", fontSize: "12px" }}>
+                            {t("Please Select Sub Category")}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -285,12 +313,16 @@ function GeneralInfo({setAdfield, setData, data }) {
                     return item.component === "dropdown" ? (
                       <div className="col-lg-12">
                         <div className="input-box">
-                          <label className="label-text">{item.fieldName}</label>
+                          <label className="label-text">
+                            {t(item.fieldName)}
+                          </label>
                           <div className="form-group mb-0">
                             <Select
                               placeholder="Select "
                               options={item.options}
-                              onChange={(e)=>addtionalFormSelect(e,index,item.fieldName)}
+                              onChange={(e) =>
+                                addtionalFormSelect(e, index, item.fieldName)
+                              }
                             />
                           </div>
                         </div>
@@ -300,14 +332,14 @@ function GeneralInfo({setAdfield, setData, data }) {
                         <div className="col-lg-12">
                           <div className="input-box">
                             <label className="label-text">
-                              {item.fieldName}
+                              {t(item.fieldName)}
                             </label>
                             <div className="form-group mb-0">
                               <input
                                 onChange={(e) => addtionalFormField(e, index)}
                                 className="form-control"
                                 type="text"
-                                name={item.fieldName}
+                                name={t(item.fieldName)}
                                 // onChange={(e) => getGeneralFormData(e)}
                                 placeholder="Enter here"
                               />

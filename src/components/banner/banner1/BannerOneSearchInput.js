@@ -5,14 +5,14 @@ import Select, { components } from "react-select";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FaRegDotCircle } from "react-icons/fa";
 import { FaRegFlushed } from "react-icons/fa";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Chip from "@mui/material/Chip";
 import ButtonGroupCheckbox from "../../common/buttonCheckboxes";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 const { Option } = components;
 const CustomSelectOption = (props) => (
   <Option {...props}>
@@ -1040,15 +1040,22 @@ const state = {
 };
 export default function BannerOneSearchInput() {
   const options = [
-    { value: "chocolate", label: "Villas" , icon: <FcSalesPerformance />},
-    { value: "strawberry", label: "Terraced house" , icon: <FcSalesPerformance />},
+    { value: "chocolate", label: "Villas", icon: <FcSalesPerformance /> },
+    {
+      value: "strawberry",
+      label: "Terraced house",
+      icon: <FcSalesPerformance />,
+    },
     { value: "vanilla", label: "Apartments", icon: <FcSalesPerformance /> },
-    { value: "sd", label: "Farms/Forest" , icon: <FcSalesPerformance />},
+    { value: "sd", label: "Farms/Forest", icon: <FcSalesPerformance /> },
 
-    { value: "vaassanilla", label: "Leisure accommodation", icon: <FcSalesPerformance /> },
-    { value: "sas", label: "plots" , icon: <FcSalesPerformance />},
-    { value: "A", label: "Others" , icon: <FcSalesPerformance />},
- 
+    {
+      value: "vaassanilla",
+      label: "Leisure accommodation",
+      icon: <FcSalesPerformance />,
+    },
+    { value: "sas", label: "plots", icon: <FcSalesPerformance /> },
+    { value: "A", label: "Others", icon: <FcSalesPerformance /> },
   ];
 
   const [selected, setSelected] = React.useState([]);
@@ -1120,218 +1127,220 @@ export default function BannerOneSearchInput() {
                 </div> */}
         </div>
         <div className="row mt-2 mb-4">
-        <Button
-        size="large"
-        className='mr-2 mb-2'
-          // key={option.value}
-          variant={selected === []? 'contained' : 'outlined'}
-          color={selected ? 'primary' : 'default'}
-          onClick={() =>  setSelected([])}
-          startIcon={<FcSalesPerformance />}
-        >
-        All
-        </Button>
-        <ButtonGroupCheckbox
-          options={options}
-          selected={selected}
-          onChange={(value) =>{
-            setSelected(
-              selected.includes(value)
-                ? selected.filter((v) => v !== value)
-                : [...selected, value]
-            );
-            console.log(selected.includes(value)
-            ? selected.filter((v) => v !== value)
-            : [...selected, value])
-            
-          }
-          }
-        />
+          <Button
+            size="large"
+            className="mr-2 mb-2"
+            // key={option.value}
+            variant={selected === [] ? "contained" : "outlined"}
+            color={selected ? "primary" : "default"}
+            onClick={() => setSelected([])}
+            startIcon={<FcSalesPerformance />}
+          >
+            All
+          </Button>
+          <ButtonGroupCheckbox
+            options={options}
+            selected={selected}
+            onChange={(value) => {
+              setSelected(
+                selected.includes(value)
+                  ? selected.filter((v) => v !== value)
+                  : [...selected, value]
+              );
+              console.log(
+                selected.includes(value)
+                  ? selected.filter((v) => v !== value)
+                  : [...selected, value]
+              );
+            }}
+          />
         </div>
         <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography> ------------------------------------</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-        <div className="row mt-2 mb-4 ml-2 mr-2">
-          <div className="main-search-input-item category">
-            {/* <label style={{color:'black',fontWeight:'600',fontWeight:600}}>Types</label> */}
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography m={2} color={"skyblue"}>
+              {" "}
+              Click here to more
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className="row mt-2 mb-4 ml-2 mr-2">
+              <div className="main-search-input-item category">
+                {/* <label style={{color:'black',fontWeight:'600',fontWeight:600}}>Types</label> */}
 
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "grey" : "green",
-                }),
-              }}
-              isMulti
-              placeholder="Select Types"
-              options={[
-                { value: "chocolate", label: "Villas" },
-                { value: "strawberry", label: "Terraced house" },
-                { value: "vanilla", label: "Apartments" },
-                { value: "sd", label: "Farms/Forest" },
+                <Select
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "grey" : "green",
+                    }),
+                  }}
+                  isMulti
+                  placeholder="Select Types"
+                  options={[
+                    { value: "chocolate", label: "Villas" },
+                    { value: "strawberry", label: "Terraced house" },
+                    { value: "vanilla", label: "Apartments" },
+                    { value: "sd", label: "Farms/Forest" },
 
-                { value: "vaassanilla", label: "Leisure accommodation" },
-                { value: "sas", label: "plots" },
-                { value: "sd", label: "Farms/Forest" },
-                { value: "A", label: "Others" },
-              ]}
-            />
-          </div>
-          <div className="main-search-input-item location">
-            {/* <label style={{color:'black',fontWeight:'600'}}>Minimum Number of rooms</label> */}
+                    { value: "vaassanilla", label: "Leisure accommodation" },
+                    { value: "sas", label: "plots" },
+                    { value: "sd", label: "Farms/Forest" },
+                    { value: "A", label: "Others" },
+                  ]}
+                />
+              </div>
+              <div className="main-search-input-item location">
+                {/* <label style={{color:'black',fontWeight:'600'}}>Minimum Number of rooms</label> */}
 
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "grey" : "green",
-                }),
-              }}
-              // defaultValue={[colourOptions[2], colourOptions[3]]}
-              placeholder="Minimum number of rooms"
-              name="colors"
-              options={[
-                { value: "chocolate", label: "at least 1 room" },
-                { value: "strawberry", label: "at least 2 room" },
-                { value: "vanilla", label: "at least 3 room" },
-                { value: "vaassanilla", label: "at least 4 room" },
-                { value: "sas", label: "at least 5 room" },
-                { value: "sd", label: "at least  6 room" },
-                { value: "A", label: "at least 7 room" },
-              ]}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            />
-          </div>
-          {/* <div className="main-search-input-btn">
+                <Select
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "grey" : "green",
+                    }),
+                  }}
+                  // defaultValue={[colourOptions[2], colourOptions[3]]}
+                  placeholder="Minimum number of rooms"
+                  name="colors"
+                  options={[
+                    { value: "chocolate", label: "at least 1 room" },
+                    { value: "strawberry", label: "at least 2 room" },
+                    { value: "vanilla", label: "at least 3 room" },
+                    { value: "vaassanilla", label: "at least 4 room" },
+                    { value: "sas", label: "at least 5 room" },
+                    { value: "sd", label: "at least  6 room" },
+                    { value: "A", label: "at least 7 room" },
+                  ]}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              {/* <div className="main-search-input-btn">
                     <button className="button theme-btn" type="submit">Search</button>
                 </div> */}
-        </div>
-        <div className="row mt-2 mb-4 ml-2 mr-2">
-          <div className="main-search-input-item select">
-            {/* <label style={{color:'black',fontWeight:'600'}}>Living Area</label> */}
-
-            <Select
-              placeholder="Living Area"
-              options={[
-                { value: "chocolate", label: "at least 20m" },
-                { value: "strawberry", label: "at least 30m" },
-                { value: "vanilla", label: "at least 40m" },
-                { value: "vaassanilla", label: "at least 50m" },
-                { value: "sas", label: "at least 60m" },
-                { value: "sd", label: "at least 70m" },
-                { value: "A", label: "at least 80m" },
-              ]}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "grey" : "green",
-                }),
-              }}
-            />
-          </div>
-          <div className="main-search-input-item select">
-            {/* <label style={{color:'black',fontWeight:'600'}}>Highest price</label> */}
-
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "grey" : "green",
-                }),
-              }}
-              placeholder="Highest Price"
-              options={[
-                { value: "chocolate", label: "1 million" },
-                { value: "strawberry", label: "2 million" },
-                { value: "vanilla", label: "3 million" },
-                { value: "vaassanilla", label: "4 million" },
-                { value: "sas", label: "5 million" },
-                { value: "sd", label: "6 million" },
-                { value: "A", label: "7 million" },
-              ]}
-            />
-          </div>
-          <div className="main-search-input-item location">
-            {/* <label style={{color:'black',fontWeight:'600'}}>New Production</label> */}
-
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "grey" : "green",
-                }),
-              }}
-              // defaultValue={[colourOptions[2], colourOptions[3]]}
-              placeholder="New Production"
-              name="colors"
-              options={[
-                { value: "chocolate", label: "Show only new production" },
-                { value: "strawberry", label: "Show new production" },
-                { value: "strawberry", label: "Hide new production" },
-              ]}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            />
-          </div>
-
-          {/* <div className="main-search-input-btn">
-                    <button className="button theme-btn" type="submit">Search</button>
-                </div> */}
-        </div>
-        <div className="row mt-2 mb-4 ml-2 mr-2">
-          <div className="main-search-input-item">
-            {/* <label style={{color:'black',fontWeight:'600'}}>Keywords</label> */}
-
-            <div className="contact-form-action">
-              <form action="#">
-                <div className="form-group mb-0">
-                  <span className="form-icon">
-                    <FiSearch />
-                  </span>
-                  <input
-                    styles={{
-                      height: "40px !important",
-                      border: "1px solid green !important",
-                    }}
-                    className="form-control"
-                    type="text"
-                    placeholder="Keywords"
-                  />
-                </div>
-              </form>
             </div>
-          </div>
+            <div className="row mt-2 mb-4 ml-2 mr-2">
+              <div className="main-search-input-item select">
+                {/* <label style={{color:'black',fontWeight:'600'}}>Living Area</label> */}
 
-          {/* <div className="main-search-input-btn">
+                <Select
+                  placeholder="Living Area"
+                  options={[
+                    { value: "chocolate", label: "at least 20m" },
+                    { value: "strawberry", label: "at least 30m" },
+                    { value: "vanilla", label: "at least 40m" },
+                    { value: "vaassanilla", label: "at least 50m" },
+                    { value: "sas", label: "at least 60m" },
+                    { value: "sd", label: "at least 70m" },
+                    { value: "A", label: "at least 80m" },
+                  ]}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "grey" : "green",
+                    }),
+                  }}
+                />
+              </div>
+              <div className="main-search-input-item select">
+                {/* <label style={{color:'black',fontWeight:'600'}}>Highest price</label> */}
+
+                <Select
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "grey" : "green",
+                    }),
+                  }}
+                  placeholder="Highest Price"
+                  options={[
+                    { value: "chocolate", label: "1 million" },
+                    { value: "strawberry", label: "2 million" },
+                    { value: "vanilla", label: "3 million" },
+                    { value: "vaassanilla", label: "4 million" },
+                    { value: "sas", label: "5 million" },
+                    { value: "sd", label: "6 million" },
+                    { value: "A", label: "7 million" },
+                  ]}
+                />
+              </div>
+              <div className="main-search-input-item location">
+                {/* <label style={{color:'black',fontWeight:'600'}}>New Production</label> */}
+
+                <Select
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "grey" : "green",
+                    }),
+                  }}
+                  // defaultValue={[colourOptions[2], colourOptions[3]]}
+                  placeholder="New Production"
+                  name="colors"
+                  options={[
+                    { value: "chocolate", label: "Show only new production" },
+                    { value: "strawberry", label: "Show new production" },
+                    { value: "strawberry", label: "Hide new production" },
+                  ]}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+
+              {/* <div className="main-search-input-btn">
                     <button className="button theme-btn" type="submit">Search</button>
                 </div> */}
-        </div>
-        <div className="row mt-3" style={{ justifyContent: "center" }}>
-          <div className="main-search-input-btn">
-            <button
-              style={{
-                maxWidth: "330px",
-                maxHeight: "30px",
-                minWidth: "230px",
-                minHeight: "50px",
-              }}
-              className="button theme-btn"
-              type="submit"
-            >
-              Search
-            </button>
-          </div>
-        </div>
-        </AccordionDetails>
-      </Accordion>
-     
+            </div>
+            <div className="row mt-2 mb-4 ml-2 mr-2">
+              <div className="main-search-input-item">
+                {/* <label style={{color:'black',fontWeight:'600'}}>Keywords</label> */}
+
+                <div className="contact-form-action">
+                  <form action="#">
+                    <div className="form-group mb-0">
+                      <span className="form-icon">
+                        <FiSearch />
+                      </span>
+                      <input
+                        styles={{
+                          height: "40px !important",
+                          border: "1px solid green !important",
+                        }}
+                        className="form-control"
+                        type="text"
+                        placeholder="Keywords"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              {/* <div className="main-search-input-btn">
+                    <button className="button theme-btn" type="submit">Search</button>
+                </div> */}
+            </div>
+            <div className="row mt-3" style={{ justifyContent: "center" }}>
+              <div className="main-search-input-btn">
+                <button
+                  style={{
+                    maxWidth: "330px",
+                    maxHeight: "30px",
+                    minWidth: "230px",
+                    minHeight: "50px",
+                  }}
+                  className="button theme-btn"
+                  type="submit"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </AccordionDetails>
+        </Accordion>
       </div>
     </>
   );

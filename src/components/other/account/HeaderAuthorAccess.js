@@ -1,31 +1,56 @@
 import React, { useState, useEffect } from "react";
-import { FiPlus, FiPlusCircle, FiBookmark, FiSearch } from "react-icons/fi";
+import { FiPlus, FiPlusCircle, FiArchive, FiSearch } from "react-icons/fi";
+import { increment } from "../../../Redux/Action";
+import ReactCountryFlag from "react-country-flag";
+import classNames from "classnames";
+
 import { BsListCheck, BsQuestion, BsGear, BsPower } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { AiOutlineGlobal } from "react-icons/ai";
 
 import { Link } from "react-router-dom";
 import Button from "../../common/Button";
+import { useSelector, useDispatch } from "react-redux";
+
 import userimg from "../../../assets/images/team1.jpg";
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import {url} from '../../../environment'
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-const options = [
-  'Somalia',
-  'Saudi Arabia',
-  'UK',
-  'Iran',
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import { useTranslation } from "react-i18next";
 
+import i18next from "i18next";
+import cookies from "js-cookie";
+import MenuItem from "@mui/material/MenuItem";
+import { url } from "../../../environment";
+const options = ["Somalia", "Saudi Arabia", "UK", "Iran"];
+const languages = [
+  {
+    code: "en",
+    name: "English",
+    dir: "ltl",
+    country_code: "en",
+  },
+  {
+    code: "ar",
+    name: "العربية",
+    dir: "rtl",
+    country_code: "sa",
+  },
+  {
+    code: "so",
+    name: "Somalia",
+    dir: "ltl",
+    country_code: "so",
+  },
 ];
-
 const ITEM_HEIGHT = 48;
 export default function HeaderAuthorAccess() {
   const [AuthorAccessOpen, setAuthorAccessOpen] = useState(false);
   const [UserDetails, setUserDetails] = useState({});
   const [isLoggedIn] = useState(localStorage.getItem("token"));
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const currentLanguageCode = cookies.get("i18next") || "en";
+  const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,58 +62,60 @@ export default function HeaderAuthorAccess() {
     setUserDetails(JSON.parse(localStorage.getItem("user")));
     // getUserDetails()
   }, []);
-  
 
-    const getUserDetails = (ID,token) => {
-      fetch(`${url}/user/userDetails`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          accept: "application/json",
-          authorization : `bearer ${token}`
-        },
-        body: JSON.stringify({
-          uid: ID,
-        }),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log('UserDetails',response);
-          if (response.message === "Success") {
+  const getUserDetails = (ID, token) => {
+    fetch(`${url}/user/userDetails`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify({
+        uid: ID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("UserDetails", response);
+        if (response.message === "Success") {
           //   navigate.push("/");
-            localStorage.setItem('UserDetails',JSON.stringify(response.doc))
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+          localStorage.setItem("UserDetails", JSON.stringify(response.doc));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const [t, i18n] = useTranslation("common");
+
   const logOut = () => {
     localStorage.clear();
+    dispatch(increment());
   };
+
   return (
     <>
       <div className="logo-right-content">
         <ul className="author-access-list">
           {!isLoggedIn && (
             <li>
-              <Link to="/login">login</Link>
-              <span className="or-text">or</span>
-              <Link to="/sign-up">Sign up</Link>
+              <Link to="/login">{t("Login")}</Link>
+              <span className="or-text">{t("or")}</span>
+              <Link to="/sign-up">{t("Sign Up")}</Link>
             </li>
           )}
           <li>
-          {isLoggedIn ? (
-            <Button text="add listing" url="/add-listing/new">
-              <FiPlusCircle />
-            </Button>
-          ) : (
-            <Button text="add listing" url="/login">
-            <FiPlusCircle />
-          </Button>
-          )}
+            {isLoggedIn ? (
+              <Button text={t("Sell")} url="/add-listing/new">
+                <FiPlusCircle />
+              </Button>
+            ) : (
+              <Button text={t("Sell")} url="/login">
+                <FiPlusCircle />
+              </Button>
+            )}
           </li>
-
         </ul>
         {isLoggedIn && (
           <div
@@ -101,35 +128,43 @@ export default function HeaderAuthorAccess() {
             <AiOutlineUser />
           </div>
         )}
-        
       </div>
       {/* <div> */}
-      <IconButton
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-        className='lanuageDrop'
-        aria-label="Open to show more"
-        title="Open to show more"
+
+      <div
+        class="dropdown"
+        style={{ display: "flex", alignItems: "center", marginRight: "9px" }}
       >
-        <div style={{color:'white'}}>
-        <AiOutlineGlobal/>
-        </div>
-      </IconButton>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {options.map(item => (
-          <MenuItem onClick={handleClose} key={item} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </Menu>
-    {/* </div> */}
+        <a
+          class="btn btn-secondary dropdown-toggle d-flex align-items-center GlobalIconNew"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <div>
+            <AiOutlineGlobal sx={{ width: 50, height: 50 }} />
+          </div>
+        </a>
+        <ul class="dropdown-menu">
+          {languages.map((item) => (
+            <li>
+              <a
+                class="dropdown-item"
+                onClick={() => {
+                  i18next.changeLanguage(item.code);
+
+                  document.body.dir = i18n.dir();
+                  handleClose();
+                }}
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* Side User panel */}
       <div
         className={
@@ -179,7 +214,7 @@ export default function HeaderAuthorAccess() {
             </li>
             <li>
               <Link to="/dashboard">
-                <FiBookmark className="user-icon" /> My Bookmarks
+                <FiArchive className="user-icon" /> Archived
               </Link>
             </li>
             <li>
@@ -200,7 +235,12 @@ export default function HeaderAuthorAccess() {
                 <BsGear className="user-icon" /> Settings
               </Link>
             </li>
-            <li onClick={logOut}>
+            <li
+              onClick={() => {
+                logOut();
+                dispatch(increment());
+              }}
+            >
               <Link to="/login">
                 <BsPower className="user-icon" /> Sign Out
               </Link>

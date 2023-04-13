@@ -1,22 +1,15 @@
-import React, { useEffect , useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderTwo from "../../components/common/HeaderTwo";
 import Banner3 from "../../components/banner/banner3/Banner3";
 import SectionsHeading from "../../components/common/SectionsHeading";
 import BrowseCategories from "../../components/other/categories/BrowseCategories";
-import PlaceOne from "../../components/places/PlaceOne";
 import SectionDivider from "../../components/common/SectionDivider";
-import DreamPlaces from "../../components/places/DreamPlaces";
 import Button from "../../components/common/Button";
-import { RiRefreshLine } from "react-icons/ri";
+import { IoIosCheckmarkCircle, IoMdStar, IoMdStarHalf } from "react-icons/io";
+import imguser from "../../assets/images/user.png";
 import CircularProgress from "@mui/material/CircularProgress";
-import InfoBox4 from "../../components/other/infoboxes/InfoBox4";
 import RecommendedPlace from "../../components/places/RecommendedPlace";
 import { GiChickenOven } from "react-icons/gi";
-import HowItWork3 from "../../components/hiw/HowItWork3";
-import CtaOne from "../../components/other/cta/CtaOne";
-import Testimonial from "../../components/sliders/Testimonial";
-import LatestBlog from "../../components/blogs/LatestBlog";
-import ClientLogo from "../../components/sliders/ClientLogo";
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import sectiondata from "../../store/store";
@@ -26,11 +19,64 @@ function Home3() {
   const [AllCategories, setAllCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const [AllVistedPlaces, setAllVistedPlaces] = useState([]);
 
   useEffect(() => {
     getAllCategories();
     window.scrollTo(0, 0);
   }, [token]);
+
+  const getMostVisted = () => {
+    setLoading(true);
+    fetch(`${url}/listing/getPromotedListingJobs`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("All Companies Recommend", response);
+        if (response.message === "Success") {
+          let Array = [];
+
+          response?.doc?.map((item, index) => {
+            Array?.push({
+              title: item.title,
+              video: item.video,
+              image: item.images ? ImageUrl + item.images[0] : "",
+              bedge: "New Open",
+              titleIcon: <IoIosCheckmarkCircle />,
+              titleUrl: `/listing-details/${item._id}`,
+              stitle: item.shortDescription,
+              cardType: item.category.name,
+              cardTypeIcon: <GiChickenOven />,
+              author: imguser,
+              authorUrl: "#",
+              number: item.seller.phone,
+              website: "www.mysitelink.com",
+              date: "Posted 1 month ago",
+              view: "204",
+              ratings: [
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStarHalf />,
+                <IoMdStar className="last-star" />,
+              ],
+              ratingNum: "4.5",
+            });
+          });
+
+          setAllVistedPlaces(Array);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getAllCategories = () => {
     setLoading(true);
@@ -46,45 +92,41 @@ function Home3() {
       .then((response) => {
         console.log("All categories", response);
         if (response.message === "Success") {
-          console.log(response?.doc[0].image);
           let Array = [];
 
-          // setAllCategories(
-          response?.doc.map((item) => {
-            // if (item.type === "Resturant") {
-              Array.push({
-                id: 1,
-                icon: <GiChickenOven />,
-                title: item.name,
-                listingsNum: 42 + 1,
-                cardLink: `/all-categories/${item._id}`,
-              });
-            // }
+          response?.doc?.categories?.map((item) => {
+            Array.push({
+              id: 1,
+              icon: <GiChickenOven />,
+              title: item.name,
+              listingsNum: 42 + 1,
+              cardLink: `/all-categories/${item._id}`,
+            });
           });
 
           setAllCategories(Array);
-          // );
           setLoading(false);
-          //   localStorage.setItem('token',response.doc)
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <main className="home-3">
-      {/* Header */}
+      {}
       <HeaderTwo />
 
-      {/* Banner Three */}
+      {}
+
       <Banner3
         bgImg={home3}
         herotitle={sectiondata.herobanners.banner3.title}
         herocontent={sectiondata.herobanners.banner3.content}
       />
 
-      {/* Browse Categories */}
+      {}
       <section className="hero-catagory section-bg padding-top-100px padding-bottom-80px text-center">
         <div className="container">
           <div className="row section-title-width text-center">
@@ -101,14 +143,12 @@ function Home3() {
               <CircularProgress />
             </div>
           ) : (
-          <BrowseCategories
-            categories={AllCategories}
-          />
+            <BrowseCategories categories={AllCategories} />
           )}
         </div>
       </section>
 
-      {/* Most Visited Place */}
+      {}
       <section className="card-area text-center padding-top-100px padding-bottom-100px">
         <div className="container">
           <div className="row section-title-width text-center">
@@ -126,96 +166,36 @@ function Home3() {
 
       <SectionDivider />
 
-      {/* Dream Places */}
-      {/* <section className="cat-area destination-area padding-top-100px padding-bottom-100px">
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.dreamplaces.sectitle} desc={sectiondata.dreamplaces.seccontent} />
-                    </div>
-
-                    <DreamPlaces places={sectiondata.dreamplaces.places} />
-
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="button-shared mt-4 text-center">
-                                <Button text={sectiondata.dreamplaces.loadmoretext} url="#">
-                                    <RiRefreshLine />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> */}
+      {}
+      {}
 
       <SectionDivider />
 
-      {/* How it work 1 */}
-      {/* <section className="hiw-area choose-area padding-top-100px padding-bottom-80px after-none">
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.howitworks.hiw4.sectitle} desc={sectiondata.howitworks.hiw4.seccontent} />
-                    </div>
+      {}
+      {}
 
-                    <InfoBox4 infoitems={sectiondata.howitworks.hiw4.items} />
-                </div>
-            </section> */}
+      {}
+      {}
 
-      {/* How it work 2 */}
-      {/* <HowItWork3 /> */}
-
-      {/* CTA 2 */}
-      {/* <section className="cta-area cta-area3 padding-top-60px padding-bottom-100px">
-                <CtaOne />
-            </section> */}
+      {}
+      {}
 
       <SectionDivider />
 
-      {/* Testimonial */}
-      {/* <section className="testimonial-area padding-top-100px padding-bottom-100px text-center">
-                {sectiondata.testimonialdata.tmimage.map((tmimg, index) => {
-                    return (
-                        <img key={index} src={tmimg.tmimg} alt="testimonial" className="random-img" />
-                    )
-                })}
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.testimonialdata.sectitle} desc={sectiondata.testimonialdata.seccontent} />
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-8 mx-auto mt-4">
-                            <Testimonial slideitems={sectiondata.testimonialdata.sliders} />
-                        </div>
-                    </div>
-                </div>
-            </section> */}
+      {}
+      {}
 
       <SectionDivider />
 
-      {/* Blog */}
-      {/* <section className="blog-area padding-top-100px padding-bottom-80px">
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                            <SectionsHeading title={sectiondata.latestarticles.sectitle} desc={sectiondata.latestarticles.seccontent} />
-                    </div>
-
-                    <LatestBlog latestarticles={sectiondata.latestarticles.items} />
-
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="btn-box text-center mt-4">
-                                <Button text="browse posts" url="/blog-grid" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> */}
+      {}
+      {}
 
       <SectionDivider />
 
-      {/* Client Logo */}
-      {/* <ClientLogo logos={sectiondata.clientlogos} /> */}
+      {}
+      {}
 
-      {/* Cta Two */}
+      {}
       <section className="cta-area cta-area3 column-sm-center section-bg-2 padding-top-70px padding-bottom-70px">
         <div className="container">
           <div className="row align-items-center">
@@ -240,7 +220,7 @@ function Home3() {
         </div>
       </section>
 
-      {/* Footer */}
+      {}
       <Footer />
 
       <ScrollTopBtn />

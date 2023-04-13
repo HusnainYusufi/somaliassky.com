@@ -15,6 +15,8 @@ import { FaRegEnvelope } from "react-icons/fa";
 import { FiLock } from "react-icons/fi";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import SignUpUserBox from "./signUpUser";
+import { useTranslation } from "react-i18next";
+
 const state = {
   selectedCatOp: null,
   categories: [
@@ -1020,6 +1022,8 @@ const state = {
 };
 function SignUpBox({ title, subtitle }) {
   const navigate = useHistory();
+  const [t, i18n] = useTranslation("common");
+
   const [userValue, setUserValue] = React.useState({});
   const [ComValue, setComValue] = React.useState({});
 
@@ -1028,14 +1032,13 @@ function SignUpBox({ title, subtitle }) {
       .email("Email must be a valid email address")
       .required("Email is required"),
     password: Yup.string()
-    .min(8, 'Password must be 8 characters long')
-    .matches(/[0-9]/, 'Password requires a number')
-    .matches(/[a-z]/, 'Password requires a lowercase letter')
-    .matches(/[A-Z]/, 'Password requires an uppercase letter')
-    .matches(/[^\w]/, 'Password requires a symbol'),
-      confirmPassword: Yup
-      .string()
-      .required('Confirm password is required')
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
+    confirmPassword: Yup.string()
+      .required("Confirm password is required")
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
     username: Yup.string().required("Password is required"),
     // country: Yup.string().min(6, "Too Short!").required("Country is required"),
@@ -1048,7 +1051,7 @@ function SignUpBox({ title, subtitle }) {
     initialValues: {
       email: "",
       password: "",
-      confirmPassword : '' ,
+      confirmPassword: "",
       username: "",
       // country: "",
       companyName: "",
@@ -1066,8 +1069,6 @@ function SignUpBox({ title, subtitle }) {
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
 
-
-    
   const AllComselectform = (e) => {
     console.log(e);
     let obj = ComValue;
@@ -1124,7 +1125,7 @@ function SignUpBox({ title, subtitle }) {
                     <span>
                       <BiUser />
                     </span>{" "}
-                    User
+                    {t("User")}
                   </div>
                 </Tab>
                 <Tab>
@@ -1135,10 +1136,9 @@ function SignUpBox({ title, subtitle }) {
                     <span>
                       <BiUser />
                     </span>{" "}
-                    Company
+                    {t("Company")}
                   </div>
                 </Tab>
-                
                 ,
               </TabList>
             </div>
@@ -1163,7 +1163,9 @@ function SignUpBox({ title, subtitle }) {
                         </div>
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Username</label>
+                            <label className="label-text">
+                              {t("Username")}
+                            </label>
                             <div className="form-group">
                               {/* <span className="form-icon">
                             <FiLock />
@@ -1190,7 +1192,9 @@ function SignUpBox({ title, subtitle }) {
                         </div>
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Company name</label>
+                            <label className="label-text">
+                              {t("Company name")}
+                            </label>
                             <div className="form-group">
                               {/* <span className="form-icon"> */}
                               <TextField
@@ -1217,7 +1221,9 @@ function SignUpBox({ title, subtitle }) {
                         </div>
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Phone Number</label>
+                            <label className="label-text">
+                              {t("Phone Number")}
+                            </label>
                             <div className="form-group">
                               <TextField
                                 fullWidth
@@ -1240,7 +1246,7 @@ function SignUpBox({ title, subtitle }) {
 
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Email</label>
+                            <label className="label-text">{t("Email")}</label>
                             <div className="form-group">
                               {/* <span className="form-icon">
                                 <FaRegEnvelope />
@@ -1265,7 +1271,9 @@ function SignUpBox({ title, subtitle }) {
                         </div>
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Password</label>
+                            <label className="label-text">
+                              {t("Password")}
+                            </label>
                             <div className="form-group">
                               <TextField
                                 fullWidth
@@ -1289,7 +1297,9 @@ function SignUpBox({ title, subtitle }) {
                         </div>
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Confirm Password</label>
+                            <label className="label-text">
+                              {t("Confirm Password")}
+                            </label>
                             <div className="form-group">
                               <TextField
                                 fullWidth
@@ -1304,9 +1314,13 @@ function SignUpBox({ title, subtitle }) {
                                 }}
                                 {...getFieldProps("confirmPassword")}
                                 error={Boolean(
-                                  touched.confirmPassword && errors.confirmPassword
+                                  touched.confirmPassword &&
+                                    errors.confirmPassword
                                 )}
-                                helperText={touched.confirmPassword && errors.confirmPassword}
+                                helperText={
+                                  touched.confirmPassword &&
+                                  errors.confirmPassword
+                                }
                               />
                             </div>
                           </div>
@@ -1314,12 +1328,14 @@ function SignUpBox({ title, subtitle }) {
                         <div className="col-lg-12">
                           <div className="form-group">
                             <div className="main-search-input-item select">
-                              <label style={{ color: "black" }}>Country</label>
+                              <label style={{ color: "black" }}>
+                                {t("Country")}
+                              </label>
 
                               <Select
                                 onChange={(e) => AllComselectform(e)}
                                 name="country"
-                                placeholder="Select a Location"
+                                placeholder={t("Select a Location")}
                                 options={state.countries}
                                 // {...getFieldProps("country")}
                               />
@@ -1329,15 +1345,15 @@ function SignUpBox({ title, subtitle }) {
                         <div className="col-lg-12">
                           <div className="btn-box margin-top-20px margin-bottom-20px">
                             <button className="theme-btn border-0">
-                              Register account
+                              {t("Register account")}
                             </button>
                           </div>
                         </div>
                         <div className="col-lg-12">
                           <p className="font-weight-medium">
-                            Already have an account?{" "}
+                            {t("Already have an account?")}{" "}
                             <Link to="/login" className="color-text">
-                              Login
+                              {t("Login")}
                             </Link>
                           </p>
                         </div>
@@ -1348,7 +1364,6 @@ function SignUpBox({ title, subtitle }) {
                 </div>
               </div>
             </TabPanel>
-           
           </Tabs>
         </div>
       </div>

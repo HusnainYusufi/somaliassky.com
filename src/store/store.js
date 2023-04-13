@@ -2,6 +2,7 @@ import React from "react";
 import {
   RiBuilding4Line,
   RiHotelBedLine,
+  RiPsychotherapyLine,
   RiPlaneLine,
   RiReplyLine,
 } from "react-icons/ri";
@@ -142,969 +143,966 @@ import userimage from "../assets/images/team1.jpg"; // 368*331
 import ABDimage from "../assets/images/abdullahj.jpg"; // 368*331
 import imgboximg from "../assets/images/img10.jpg"; // 570*345
 import about2img1 from "../assets/images/1.png"; //389*259
-import about2img2 from "../assets/images/2.png"
-import about2img3 from "../assets/images/About-us.jpg"
-import about2img4 from "../assets/images/4.jpg"
+import about2img2 from "../assets/images/2.png";
+import about2img3 from "../assets/images/About-us.jpg";
+import about2img4 from "../assets/images/4.jpg";
 import mainimage from "../assets/images/video-img.jpg"; // 750*500
 
 const sectiondata = {
-
-  
-    countries: [
-        {
-            value: 'select..',
-            label: 'Select a Location'
-        },
-        {
-            value: 'AF',
-            label: 'Afghanistan'
-        },
-        {
-            value: 'AX',
-            label: 'Åland Islands'
-        },
-        {
-            value: 'AL',
-            label: 'Albania'
-        },
-        {
-            value: 'DZ',
-            label: 'Algeria'
-        },
-        {
-            prefix: 'AD',
-            label: 'Andorra'
-        },
-        {
-            prefix: 'AO',
-            label: 'Angola'
-        },
-        {
-            prefix: 'AI',
-            label: 'Anguilla'
-        },
-        {
-            prefix: 'AQ',
-            label: 'Antarctica'
-        },
-        {
-            prefix: 'AG',
-            label: 'Antigua & Barbuda'
-        },
-        {
-            prefix: 'AR',
-            label: 'Argentina'
-        },
-        {
-            prefix: 'AM',
-            label: 'Armenia'
-        },
-        {
-            prefix: 'AW',
-            label: 'Aruba'
-        },
-        {
-            prefix: 'AC',
-            label: 'Ascension Island'
-        },
-        {
-            prefix: 'AU',
-            label: 'Australia'
-        },
-        {
-            prefix: 'AT',
-            label: 'Austria'
-        },
-        {
-            prefix: 'AZ',
-            label: 'Azerbaijan'
-        },
-        {
-            prefix: 'BS',
-            label: 'Bahamas'
-        },
-        {
-            prefix: 'BH',
-            label: 'Bahrain'
-        },
-        {
-            prefix: 'BD',
-            label: 'Bangladesh'
-        },
-        {
-            prefix: 'BB',
-            label: 'Barbados'
-        },
-        {
-            prefix: 'BY',
-            label: 'Belarus'
-        },
-        {
-            prefix: 'BE',
-            label: 'Belgium'
-        },
-        {
-            prefix: 'BZ',
-            label: 'Belize'
-        },
-        {
-            prefix: 'BJ',
-            label: 'Benin'
-        },
-        {
-            prefix: 'BM',
-            label: 'Bermuda'
-        },
-        {
-            prefix: 'BT',
-            label: 'Bhutan'
-        },
-        {
-            prefix: 'BO',
-            label: 'Bolivia'
-        },
-        {
-            prefix: 'BA',
-            label: 'Bosnia & Herzegovina'
-        },
-        {
-            prefix: 'BW',
-            label: 'Botswana'
-        },
-        {
-            prefix: 'BV',
-            label: 'Bouvet Island'
-        },
-        {
-            prefix: 'BR',
-            label: 'Brazil'
-        },
-        {
-            prefix: 'IO',
-            label: 'British Indian Ocean Territory'
-        },
-        {
-            prefix: 'VG',
-            label: 'British Virgin Islands'
-        },
-        {
-            prefix: 'BN',
-            label: 'Brunei'
-        },
-        {
-            prefix: 'BG',
-            label: 'Bulgaria'
-        },
-        {
-            prefix: 'BF',
-            label: 'Burkina Faso'
-        },
-        {
-            prefix: 'BI',
-            label: 'Burundi'
-        },
-        {
-            prefix: 'KH',
-            label: 'Cambodia'
-        },
-        {
-            prefix: 'CH',
-            label: 'Cameroon'
-        },
-        {
-            prefix: 'CA',
-            label: 'Canada'
-        },
-        {
-            prefix: 'CV',
-            label: 'Cape Verde'
-        },
-        {
-            prefix: 'BQ',
-            label: 'Caribbean Netherlands'
-        },
-        {
-            prefix: 'KY',
-            label: 'Cayman Islands'
-        },
-        {
-            prefix: 'CF',
-            label: 'Central African Republic'
-        },
-        {
-            prefix: 'TD',
-            label: 'Chad'
-        },
-        {
-            prefix: 'CL',
-            label: 'Chile'
-        },
-        {
-            prefix: 'CN',
-            label: 'China'
-        },
-        {
-            prefix: 'CO',
-            label: 'Colombia'
-        },
-        {
-            prefix: 'KM',
-            label: 'Comoros'
-        },
-        {
-            prefix: 'CG',
-            label: 'Congo - Brazzaville'
-        },
-        {
-            prefix: 'CD',
-            label: 'Congo - Kinshasa'
-        },
-        {
-            prefix: 'CK',
-            label: 'Cook Islands'
-        },
-        {
-            prefix: 'CR',
-            label: 'Costa Rica'
-        },
-        {
-            prefix: 'CI',
-            label: 'Côte d’Ivoire'
-        },
-        {
-            prefix: 'HR',
-            label: 'Croatia'
-        },
-        {
-            prefix: 'CW',
-            label: 'Curaçao'
-        },
-        {
-            prefix: 'CY',
-            label: 'Cyprus'
-        },
-        {
-            prefix: 'CZ',
-            label: 'Czechia'
-        },
-        {
-            prefix: 'DK',
-            label: 'Denmark'
-        },
-        {
-            prefix: 'DJ',
-            label: 'Djibouti'
-        },
-        {
-            prefix: 'DM',
-            label: 'Dominica'
-        },
-        {
-            prefix: 'DO',
-            label: 'Dominican Republic'
-        },
-        {
-            prefix: 'EC',
-            label: 'Ecuador'
-        },
-        {
-            prefix: 'EG',
-            label: 'Egypt'
-        },
-        {
-            prefix: 'SV',
-            label: 'El Salvador'
-        },
-        {
-            prefix: 'GQ',
-            label: 'Equatorial Guinea'
-        },
-        {
-            prefix: 'ER',
-            label: 'Eritrea'
-        },
-        {
-            prefix: 'EE',
-            label: 'Estonia'
-        },
-        {
-            prefix: 'SZ',
-            label: 'Eswatini'
-        },
-        {
-            prefix: 'ET',
-            label: 'Ethiopia'
-        },
-        {
-            prefix: 'FK',
-            label: 'Falkland Islands'
-        },
-        {
-            prefix: 'FO',
-            label: 'Faroe Islands'
-        },
-        {
-            prefix: 'FJ',
-            label: 'Fiji'
-        },
-        {
-            prefix: 'FI',
-            label: 'Finland'
-        },
-        {
-            prefix: 'FR',
-            label: 'France'
-        },
-        {
-            prefix: 'GF',
-            label: 'French Guiana'
-        },
-        {
-            prefix: 'PF',
-            label: 'French Polynesia'
-        },
-        {
-            prefix: 'TF',
-            label: 'French Southern Territories'
-        },
-        {
-            prefix: 'GA',
-            label: 'Gabon'
-        },
-        {
-            prefix: 'GM',
-            label: 'Gambia'
-        },
-        {
-            prefix: 'GE',
-            label: 'Georgia'
-        },
-        {
-            prefix: 'DE',
-            label: 'Germany'
-        },
-        {
-            prefix: 'GH',
-            label: 'Ghana'
-        },
-        {
-            prefix: 'GI',
-            label: 'Gibraltar'
-        },
-        {
-            prefix: 'GR',
-            label: 'Greece'
-        },
-        {
-            prefix: 'GL',
-            label: 'Greenland'
-        },
-        {
-            prefix: 'GD',
-            label: 'Grenada'
-        },
-        {
-            prefix: 'GP',
-            label: 'Guadeloupe'
-        },
-        {
-            prefix: 'GU',
-            label: 'Guam'
-        },
-        {
-            prefix: 'GT',
-            label: 'Guatemala'
-        },
-        {
-            prefix: 'GG',
-            label: 'Guernsey'
-        },
-        {
-            prefix: 'GN',
-            label: 'Guinea'
-        },
-        {
-            prefix: 'GW',
-            label: 'Guinea-Bissau'
-        },
-        {
-            prefix: 'GY',
-            label: 'Guyana'
-        },
-        {
-            prefix: 'HT',
-            label: 'Haiti'
-        },
-        {
-            prefix: 'HN',
-            label: 'Honduras'
-        },
-        {
-            prefix: 'HK',
-            label: 'Hong Kong SAR China'
-        },
-        {
-            prefix: 'HU',
-            label: 'Hungary'
-        },
-        {
-            prefix: 'IS',
-            label: 'Iceland'
-        },
-        {
-            prefix: 'IN',
-            label: 'India'
-        },
-        {
-            prefix: 'ID',
-            label: 'Indonesia'
-        },
-        {
-            prefix: 'IR',
-            label: 'Iran'
-        },
-        {
-            prefix: 'IQ',
-            label: 'Iraq'
-        },
-        {
-            prefix: 'IE',
-            label: 'Ireland'
-        },
-        {
-            prefix: 'IM',
-            label: 'Isle of Man'
-        },
-        {
-            prefix: 'IL',
-            label: 'Israel'
-        },
-        {
-            prefix: 'IT',
-            label: 'Italy'
-        },
-        {
-            prefix: 'JM',
-            label: 'Jamaica'
-        },
-        {
-            prefix: 'JP',
-            label: 'Japan'
-        },
-        {
-            prefix: 'JE',
-            label: 'Jersey'
-        },
-        {
-            prefix: 'JO',
-            label: 'Jordan'
-        },
-        {
-            prefix: 'KZ',
-            label: 'Kazakhstan'
-        },
-        {
-            prefix: 'KE',
-            label: 'Kenya'
-        },
-        {
-            prefix: 'KI',
-            label: 'Kiribati'
-        },
-        {
-            prefix: 'XK',
-            label: 'Kosovo'
-        },
-        {
-            prefix: 'KW',
-            label: 'Kuwait'
-        },
-        {
-            prefix: 'KG',
-            label: 'Kyrgyzstan'
-        },
-        {
-            prefix: 'LA',
-            label: 'Laos'
-        },
-        {
-            prefix: 'LV',
-            label: 'Latvia'
-        },
-        {
-            prefix: 'LB',
-            label: 'Lebanon'
-        },
-        {
-            prefix: 'LS',
-            label: 'Lesotho'
-        },
-        {
-            prefix: 'LR',
-            label: 'Liberia'
-        },
-        {
-            prefix: 'LY',
-            label: 'Libya'
-        },
-        {
-            prefix: 'LI',
-            label: 'Liechtenstein'
-        },
-        {
-            prefix: 'LT',
-            label: 'Lithuania'
-        },
-        {
-            prefix: 'LU',
-            label: 'Luxembourg'
-        },
-        {
-            prefix: 'MO',
-            label: 'Macao SAR China'
-        },
-        {
-            prefix: 'MG',
-            label: 'Madagascar'
-        },
-        {
-            prefix: 'MW',
-            label: 'Malawi'
-        },
-        {
-            prefix: 'MY',
-            label: 'Malaysia'
-        },
-        {
-            prefix: 'MV',
-            label: 'Maldives'
-        },
-        {
-            prefix: 'ML',
-            label: 'Mali'
-        },
-        {
-            prefix: 'MT',
-            label: 'Malta'
-        },
-        {
-            prefix: 'MQ',
-            label: 'Martinique'
-        },
-        {
-            prefix: 'MR',
-            label: 'Mauritania'
-        },
-        {
-            prefix: 'MU',
-            label: 'Mauritius'
-        },
-        {
-            prefix: 'YT',
-            label: 'Mayotte'
-        },
-        {
-            prefix: 'MX',
-            label: 'Mexico'
-        },
-        {
-            prefix: 'MD',
-            label: 'Moldova'
-        },
-        {
-            prefix: 'MC',
-            label: 'Monaco'
-        },
-        {
-            prefix: 'MN',
-            label: 'Mongolia'
-        },
-        {
-            prefix: 'ME',
-            label: 'Montenegro'
-        },
-        {
-            prefix: 'MS',
-            label: 'Montserrat'
-        },
-        {
-            prefix: 'MA',
-            label: 'Morocco'
-        },
-        {
-            prefix: 'MZ',
-            label: 'Mozambique'
-        },
-        {
-            prefix: 'MM',
-            label: 'Myanmar (Burma)'
-        },
-        {
-            prefix: 'NA',
-            label: 'Namibia'
-        },
-        {
-            prefix: 'NR',
-            label: 'Nauru'
-        },
-        {
-            prefix: 'NP',
-            label: 'Nepal'
-        },
-        {
-            prefix: 'NL',
-            label: 'Netherlands'
-        },
-        {
-            prefix: 'NC',
-            label: 'New Caledonia'
-        },
-        {
-            prefix: 'NZ',
-            label: 'New Zealand'
-        },
-        {
-            prefix: 'NI',
-            label: 'Nicaragua'
-        },
-        {
-            prefix: 'NE',
-            label: 'Niger'
-        },
-        {
-            prefix: 'NG',
-            label: 'Nigeria'
-        },
-        {
-            prefix: 'NU',
-            label: 'Niue'
-        },
-        {
-            prefix: 'MK',
-            label: 'North Macedonia'
-        },
-        {
-            prefix: 'NO',
-            label: 'Norway'
-        },
-        {
-            prefix: 'OM',
-            label: 'Oman'
-        },
-        {
-            prefix: 'PK',
-            label: 'Pakistan'
-        },
-        {
-            prefix: 'PS',
-            label: 'Palestinian Territories'
-        },
-        {
-            prefix: 'PA',
-            label: 'Panama'
-        },
-        {
-            prefix: 'PG',
-            label: 'Papua New Guinea'
-        },
-        {
-            prefix: 'PY',
-            label: 'Paraguay'
-        },
-        {
-            prefix: 'PE',
-            label: 'Peru'
-        },
-        {
-            prefix: 'PH',
-            label: 'Philippines'
-        },
-        {
-            prefix: 'PN',
-            label: 'Pitcairn Islands'
-        },
-        {
-            prefix: 'PL',
-            label: 'Poland'
-        },
-        {
-            prefix: 'PT',
-            label: 'Portugal'
-        },
-        {
-            prefix: 'PR',
-            label: 'Puerto Rico'
-        },
-        {
-            prefix: 'QA',
-            label: 'Qatar'
-        },
-        {
-            prefix: 'RE',
-            label: 'Réunion'
-        },
-        {
-            prefix: 'RO',
-            label: 'Romania'
-        },
-        {
-            prefix: 'RU',
-            label: 'Russia'
-        },
-        {
-            prefix: 'RW',
-            label: 'Rwanda'
-        },
-        {
-            prefix: 'WS',
-            label: 'Samoa'
-        },
-        {
-            prefix: 'SM',
-            label: 'San Marino'
-        },
-        {
-            prefix: 'ST',
-            label: 'São Tomé & Príncipe'
-        },
-        {
-            prefix: 'SA',
-            label: 'Saudi Arabia'
-        },
-        {
-            prefix: 'SN',
-            label: 'Senegal'
-        },
-        {
-            prefix: 'RS',
-            label: 'Serbia'
-        },
-        {
-            prefix: 'SC',
-            label: 'Seychelles'
-        },
-        {
-            prefix: 'SL',
-            label: 'Sierra Leone'
-        },
-        {
-            prefix: 'SG',
-            label: 'Singapore'
-        },
-        {
-            prefix: 'SX',
-            label: 'Sint Maarten'
-        },
-        {
-            prefix: 'SK',
-            label: 'Slovakia'
-        },
-        {
-            prefix: 'SI',
-            label: 'Slovenia'
-        },
-        {
-            prefix: 'SB',
-            label: 'Solomon Islands'
-        },
-        {
-            prefix: 'SO',
-            label: 'Somalia'
-        },
-        {
-            prefix: 'ZA',
-            label: 'South Africa'
-        },
-        {
-            prefix: 'GS',
-            label: 'South Georgia & South Sandwich Islands'
-        },
-        {
-            prefix: 'KR',
-            label: 'South Korea'
-        },
-        {
-            prefix: 'SS',
-            label: 'South Sudan'
-        },
-        {
-            prefix: 'ES',
-            label: 'Spain'
-        },
-        {
-            prefix: 'LK',
-            label: 'Sri Lanka'
-        },
-        {
-            prefix: 'BL',
-            label: 'St. Barthélemy'
-        },
-        {
-            prefix: 'SH',
-            label: 'St. Helena'
-        },
-        {
-            prefix: 'KN',
-            label: 'St. Kitts & Nevis'
-        },
-        {
-            prefix: 'LC',
-            label: 'St. Lucia'
-        },
-        {
-            prefix: 'MF',
-            label: 'St. Martin'
-        },
-        {
-            prefix: 'PM',
-            label: 'St. Pierre & Miquelon'
-        },
-        {
-            prefix: 'VC',
-            label: 'St. Vincent & Grenadines'
-        },
-        {
-            prefix: 'SR',
-            label: 'Suriname'
-        },
-        {
-            prefix: 'SJ',
-            label: 'Svalbard & Jan Mayen'
-        },
-        {
-            prefix: 'SE',
-            label: 'Sweden'
-        },
-        {
-            prefix: 'CH',
-            label: 'Switzerland'
-        },
-        {
-            prefix: 'TW',
-            label: 'Taiwan'
-        },
-        {
-            prefix: 'TJ',
-            label: 'Tajikistan'
-        },
-        {
-            prefix: 'TZ',
-            label: 'Tanzania'
-        },
-        {
-            prefix: 'TH',
-            label: 'Thailand'
-        },
-        {
-            prefix: 'TL',
-            label: 'Timor-Leste'
-        },
-        {
-            prefix: 'TG',
-            label: 'Togo'
-        },
-        {
-            prefix: 'TK',
-            label: 'Tokelau'
-        },
-        {
-            prefix: 'TO',
-            label: 'Tonga'
-        },
-        {
-            prefix: 'TT',
-            label: 'Trinidad & Tobago'
-        },
-        {
-            prefix: 'TA',
-            label: 'Tristan da Cunha'
-        },
-        {
-            prefix: 'TN',
-            label: 'Tunisia'
-        },
-        {
-            prefix: 'TR',
-            label: 'Turkey'
-        },
-        {
-            prefix: 'TM',
-            label: 'Turkmenistan'
-        },
-        {
-            prefix: 'TC',
-            label: 'Turks & Caicos Islands'
-        },
-        {
-            prefix: 'TV',
-            label: 'Tuvalu'
-        },
-        {
-            prefix: 'UG',
-            label: 'Uganda'
-        },
-        {
-            prefix: 'UA',
-            label: 'Ukraine'
-        },
-        {
-            prefix: 'AE',
-            label: 'United Arab Emirates'
-        },
-        {
-            prefix: 'UK',
-            label: 'United Kingdom'
-        },
-        {
-            prefix: 'US',
-            label: 'United States'
-        },
-        {
-            prefix: 'UY',
-            label: 'Uruguay'
-        },
-        {
-            prefix: 'UZ',
-            label: 'Uzbekistan'
-        },
-        {
-            prefix: 'VU',
-            label: 'Vanuatu'
-        },
-        {
-            prefix: 'VA',
-            label: 'Vatican City'
-        },
-        {
-            prefix: 'VE',
-            label: 'Venezuela'
-        },
-        {
-            prefix: 'VN',
-            label: 'Vietnam'
-        },
-        {
-            prefix: 'WF',
-            label: 'Wallis & Futuna'
-        },
-        {
-            prefix: 'EH',
-            label: 'Western Sahara'
-        },
-        {
-            prefix: 'YE',
-            label: 'Yemen'
-        },
-        {
-            prefix: 'ZM',
-            label: 'Zambia'
-        },
-        {
-            prefix: 'ZW',
-            label: 'Zimbabwe'
-        },
-    ]
-,
+  countries: [
+    {
+      value: "select..",
+      label: "Select a Location",
+    },
+    {
+      value: "AF",
+      label: "Afghanistan",
+    },
+    {
+      value: "AX",
+      label: "Åland Islands",
+    },
+    {
+      value: "AL",
+      label: "Albania",
+    },
+    {
+      value: "DZ",
+      label: "Algeria",
+    },
+    {
+      prefix: "AD",
+      label: "Andorra",
+    },
+    {
+      prefix: "AO",
+      label: "Angola",
+    },
+    {
+      prefix: "AI",
+      label: "Anguilla",
+    },
+    {
+      prefix: "AQ",
+      label: "Antarctica",
+    },
+    {
+      prefix: "AG",
+      label: "Antigua & Barbuda",
+    },
+    {
+      prefix: "AR",
+      label: "Argentina",
+    },
+    {
+      prefix: "AM",
+      label: "Armenia",
+    },
+    {
+      prefix: "AW",
+      label: "Aruba",
+    },
+    {
+      prefix: "AC",
+      label: "Ascension Island",
+    },
+    {
+      prefix: "AU",
+      label: "Australia",
+    },
+    {
+      prefix: "AT",
+      label: "Austria",
+    },
+    {
+      prefix: "AZ",
+      label: "Azerbaijan",
+    },
+    {
+      prefix: "BS",
+      label: "Bahamas",
+    },
+    {
+      prefix: "BH",
+      label: "Bahrain",
+    },
+    {
+      prefix: "BD",
+      label: "Bangladesh",
+    },
+    {
+      prefix: "BB",
+      label: "Barbados",
+    },
+    {
+      prefix: "BY",
+      label: "Belarus",
+    },
+    {
+      prefix: "BE",
+      label: "Belgium",
+    },
+    {
+      prefix: "BZ",
+      label: "Belize",
+    },
+    {
+      prefix: "BJ",
+      label: "Benin",
+    },
+    {
+      prefix: "BM",
+      label: "Bermuda",
+    },
+    {
+      prefix: "BT",
+      label: "Bhutan",
+    },
+    {
+      prefix: "BO",
+      label: "Bolivia",
+    },
+    {
+      prefix: "BA",
+      label: "Bosnia & Herzegovina",
+    },
+    {
+      prefix: "BW",
+      label: "Botswana",
+    },
+    {
+      prefix: "BV",
+      label: "Bouvet Island",
+    },
+    {
+      prefix: "BR",
+      label: "Brazil",
+    },
+    {
+      prefix: "IO",
+      label: "British Indian Ocean Territory",
+    },
+    {
+      prefix: "VG",
+      label: "British Virgin Islands",
+    },
+    {
+      prefix: "BN",
+      label: "Brunei",
+    },
+    {
+      prefix: "BG",
+      label: "Bulgaria",
+    },
+    {
+      prefix: "BF",
+      label: "Burkina Faso",
+    },
+    {
+      prefix: "BI",
+      label: "Burundi",
+    },
+    {
+      prefix: "KH",
+      label: "Cambodia",
+    },
+    {
+      prefix: "CH",
+      label: "Cameroon",
+    },
+    {
+      prefix: "CA",
+      label: "Canada",
+    },
+    {
+      prefix: "CV",
+      label: "Cape Verde",
+    },
+    {
+      prefix: "BQ",
+      label: "Caribbean Netherlands",
+    },
+    {
+      prefix: "KY",
+      label: "Cayman Islands",
+    },
+    {
+      prefix: "CF",
+      label: "Central African Republic",
+    },
+    {
+      prefix: "TD",
+      label: "Chad",
+    },
+    {
+      prefix: "CL",
+      label: "Chile",
+    },
+    {
+      prefix: "CN",
+      label: "China",
+    },
+    {
+      prefix: "CO",
+      label: "Colombia",
+    },
+    {
+      prefix: "KM",
+      label: "Comoros",
+    },
+    {
+      prefix: "CG",
+      label: "Congo - Brazzaville",
+    },
+    {
+      prefix: "CD",
+      label: "Congo - Kinshasa",
+    },
+    {
+      prefix: "CK",
+      label: "Cook Islands",
+    },
+    {
+      prefix: "CR",
+      label: "Costa Rica",
+    },
+    {
+      prefix: "CI",
+      label: "Côte d’Ivoire",
+    },
+    {
+      prefix: "HR",
+      label: "Croatia",
+    },
+    {
+      prefix: "CW",
+      label: "Curaçao",
+    },
+    {
+      prefix: "CY",
+      label: "Cyprus",
+    },
+    {
+      prefix: "CZ",
+      label: "Czechia",
+    },
+    {
+      prefix: "DK",
+      label: "Denmark",
+    },
+    {
+      prefix: "DJ",
+      label: "Djibouti",
+    },
+    {
+      prefix: "DM",
+      label: "Dominica",
+    },
+    {
+      prefix: "DO",
+      label: "Dominican Republic",
+    },
+    {
+      prefix: "EC",
+      label: "Ecuador",
+    },
+    {
+      prefix: "EG",
+      label: "Egypt",
+    },
+    {
+      prefix: "SV",
+      label: "El Salvador",
+    },
+    {
+      prefix: "GQ",
+      label: "Equatorial Guinea",
+    },
+    {
+      prefix: "ER",
+      label: "Eritrea",
+    },
+    {
+      prefix: "EE",
+      label: "Estonia",
+    },
+    {
+      prefix: "SZ",
+      label: "Eswatini",
+    },
+    {
+      prefix: "ET",
+      label: "Ethiopia",
+    },
+    {
+      prefix: "FK",
+      label: "Falkland Islands",
+    },
+    {
+      prefix: "FO",
+      label: "Faroe Islands",
+    },
+    {
+      prefix: "FJ",
+      label: "Fiji",
+    },
+    {
+      prefix: "FI",
+      label: "Finland",
+    },
+    {
+      prefix: "FR",
+      label: "France",
+    },
+    {
+      prefix: "GF",
+      label: "French Guiana",
+    },
+    {
+      prefix: "PF",
+      label: "French Polynesia",
+    },
+    {
+      prefix: "TF",
+      label: "French Southern Territories",
+    },
+    {
+      prefix: "GA",
+      label: "Gabon",
+    },
+    {
+      prefix: "GM",
+      label: "Gambia",
+    },
+    {
+      prefix: "GE",
+      label: "Georgia",
+    },
+    {
+      prefix: "DE",
+      label: "Germany",
+    },
+    {
+      prefix: "GH",
+      label: "Ghana",
+    },
+    {
+      prefix: "GI",
+      label: "Gibraltar",
+    },
+    {
+      prefix: "GR",
+      label: "Greece",
+    },
+    {
+      prefix: "GL",
+      label: "Greenland",
+    },
+    {
+      prefix: "GD",
+      label: "Grenada",
+    },
+    {
+      prefix: "GP",
+      label: "Guadeloupe",
+    },
+    {
+      prefix: "GU",
+      label: "Guam",
+    },
+    {
+      prefix: "GT",
+      label: "Guatemala",
+    },
+    {
+      prefix: "GG",
+      label: "Guernsey",
+    },
+    {
+      prefix: "GN",
+      label: "Guinea",
+    },
+    {
+      prefix: "GW",
+      label: "Guinea-Bissau",
+    },
+    {
+      prefix: "GY",
+      label: "Guyana",
+    },
+    {
+      prefix: "HT",
+      label: "Haiti",
+    },
+    {
+      prefix: "HN",
+      label: "Honduras",
+    },
+    {
+      prefix: "HK",
+      label: "Hong Kong SAR China",
+    },
+    {
+      prefix: "HU",
+      label: "Hungary",
+    },
+    {
+      prefix: "IS",
+      label: "Iceland",
+    },
+    {
+      prefix: "IN",
+      label: "India",
+    },
+    {
+      prefix: "ID",
+      label: "Indonesia",
+    },
+    {
+      prefix: "IR",
+      label: "Iran",
+    },
+    {
+      prefix: "IQ",
+      label: "Iraq",
+    },
+    {
+      prefix: "IE",
+      label: "Ireland",
+    },
+    {
+      prefix: "IM",
+      label: "Isle of Man",
+    },
+    {
+      prefix: "IL",
+      label: "Israel",
+    },
+    {
+      prefix: "IT",
+      label: "Italy",
+    },
+    {
+      prefix: "JM",
+      label: "Jamaica",
+    },
+    {
+      prefix: "JP",
+      label: "Japan",
+    },
+    {
+      prefix: "JE",
+      label: "Jersey",
+    },
+    {
+      prefix: "JO",
+      label: "Jordan",
+    },
+    {
+      prefix: "KZ",
+      label: "Kazakhstan",
+    },
+    {
+      prefix: "KE",
+      label: "Kenya",
+    },
+    {
+      prefix: "KI",
+      label: "Kiribati",
+    },
+    {
+      prefix: "XK",
+      label: "Kosovo",
+    },
+    {
+      prefix: "KW",
+      label: "Kuwait",
+    },
+    {
+      prefix: "KG",
+      label: "Kyrgyzstan",
+    },
+    {
+      prefix: "LA",
+      label: "Laos",
+    },
+    {
+      prefix: "LV",
+      label: "Latvia",
+    },
+    {
+      prefix: "LB",
+      label: "Lebanon",
+    },
+    {
+      prefix: "LS",
+      label: "Lesotho",
+    },
+    {
+      prefix: "LR",
+      label: "Liberia",
+    },
+    {
+      prefix: "LY",
+      label: "Libya",
+    },
+    {
+      prefix: "LI",
+      label: "Liechtenstein",
+    },
+    {
+      prefix: "LT",
+      label: "Lithuania",
+    },
+    {
+      prefix: "LU",
+      label: "Luxembourg",
+    },
+    {
+      prefix: "MO",
+      label: "Macao SAR China",
+    },
+    {
+      prefix: "MG",
+      label: "Madagascar",
+    },
+    {
+      prefix: "MW",
+      label: "Malawi",
+    },
+    {
+      prefix: "MY",
+      label: "Malaysia",
+    },
+    {
+      prefix: "MV",
+      label: "Maldives",
+    },
+    {
+      prefix: "ML",
+      label: "Mali",
+    },
+    {
+      prefix: "MT",
+      label: "Malta",
+    },
+    {
+      prefix: "MQ",
+      label: "Martinique",
+    },
+    {
+      prefix: "MR",
+      label: "Mauritania",
+    },
+    {
+      prefix: "MU",
+      label: "Mauritius",
+    },
+    {
+      prefix: "YT",
+      label: "Mayotte",
+    },
+    {
+      prefix: "MX",
+      label: "Mexico",
+    },
+    {
+      prefix: "MD",
+      label: "Moldova",
+    },
+    {
+      prefix: "MC",
+      label: "Monaco",
+    },
+    {
+      prefix: "MN",
+      label: "Mongolia",
+    },
+    {
+      prefix: "ME",
+      label: "Montenegro",
+    },
+    {
+      prefix: "MS",
+      label: "Montserrat",
+    },
+    {
+      prefix: "MA",
+      label: "Morocco",
+    },
+    {
+      prefix: "MZ",
+      label: "Mozambique",
+    },
+    {
+      prefix: "MM",
+      label: "Myanmar (Burma)",
+    },
+    {
+      prefix: "NA",
+      label: "Namibia",
+    },
+    {
+      prefix: "NR",
+      label: "Nauru",
+    },
+    {
+      prefix: "NP",
+      label: "Nepal",
+    },
+    {
+      prefix: "NL",
+      label: "Netherlands",
+    },
+    {
+      prefix: "NC",
+      label: "New Caledonia",
+    },
+    {
+      prefix: "NZ",
+      label: "New Zealand",
+    },
+    {
+      prefix: "NI",
+      label: "Nicaragua",
+    },
+    {
+      prefix: "NE",
+      label: "Niger",
+    },
+    {
+      prefix: "NG",
+      label: "Nigeria",
+    },
+    {
+      prefix: "NU",
+      label: "Niue",
+    },
+    {
+      prefix: "MK",
+      label: "North Macedonia",
+    },
+    {
+      prefix: "NO",
+      label: "Norway",
+    },
+    {
+      prefix: "OM",
+      label: "Oman",
+    },
+    {
+      prefix: "PK",
+      label: "Pakistan",
+    },
+    {
+      prefix: "PS",
+      label: "Palestinian Territories",
+    },
+    {
+      prefix: "PA",
+      label: "Panama",
+    },
+    {
+      prefix: "PG",
+      label: "Papua New Guinea",
+    },
+    {
+      prefix: "PY",
+      label: "Paraguay",
+    },
+    {
+      prefix: "PE",
+      label: "Peru",
+    },
+    {
+      prefix: "PH",
+      label: "Philippines",
+    },
+    {
+      prefix: "PN",
+      label: "Pitcairn Islands",
+    },
+    {
+      prefix: "PL",
+      label: "Poland",
+    },
+    {
+      prefix: "PT",
+      label: "Portugal",
+    },
+    {
+      prefix: "PR",
+      label: "Puerto Rico",
+    },
+    {
+      prefix: "QA",
+      label: "Qatar",
+    },
+    {
+      prefix: "RE",
+      label: "Réunion",
+    },
+    {
+      prefix: "RO",
+      label: "Romania",
+    },
+    {
+      prefix: "RU",
+      label: "Russia",
+    },
+    {
+      prefix: "RW",
+      label: "Rwanda",
+    },
+    {
+      prefix: "WS",
+      label: "Samoa",
+    },
+    {
+      prefix: "SM",
+      label: "San Marino",
+    },
+    {
+      prefix: "ST",
+      label: "São Tomé & Príncipe",
+    },
+    {
+      prefix: "SA",
+      label: "Saudi Arabia",
+    },
+    {
+      prefix: "SN",
+      label: "Senegal",
+    },
+    {
+      prefix: "RS",
+      label: "Serbia",
+    },
+    {
+      prefix: "SC",
+      label: "Seychelles",
+    },
+    {
+      prefix: "SL",
+      label: "Sierra Leone",
+    },
+    {
+      prefix: "SG",
+      label: "Singapore",
+    },
+    {
+      prefix: "SX",
+      label: "Sint Maarten",
+    },
+    {
+      prefix: "SK",
+      label: "Slovakia",
+    },
+    {
+      prefix: "SI",
+      label: "Slovenia",
+    },
+    {
+      prefix: "SB",
+      label: "Solomon Islands",
+    },
+    {
+      prefix: "SO",
+      label: "Somalia",
+    },
+    {
+      prefix: "ZA",
+      label: "South Africa",
+    },
+    {
+      prefix: "GS",
+      label: "South Georgia & South Sandwich Islands",
+    },
+    {
+      prefix: "KR",
+      label: "South Korea",
+    },
+    {
+      prefix: "SS",
+      label: "South Sudan",
+    },
+    {
+      prefix: "ES",
+      label: "Spain",
+    },
+    {
+      prefix: "LK",
+      label: "Sri Lanka",
+    },
+    {
+      prefix: "BL",
+      label: "St. Barthélemy",
+    },
+    {
+      prefix: "SH",
+      label: "St. Helena",
+    },
+    {
+      prefix: "KN",
+      label: "St. Kitts & Nevis",
+    },
+    {
+      prefix: "LC",
+      label: "St. Lucia",
+    },
+    {
+      prefix: "MF",
+      label: "St. Martin",
+    },
+    {
+      prefix: "PM",
+      label: "St. Pierre & Miquelon",
+    },
+    {
+      prefix: "VC",
+      label: "St. Vincent & Grenadines",
+    },
+    {
+      prefix: "SR",
+      label: "Suriname",
+    },
+    {
+      prefix: "SJ",
+      label: "Svalbard & Jan Mayen",
+    },
+    {
+      prefix: "SE",
+      label: "Sweden",
+    },
+    {
+      prefix: "CH",
+      label: "Switzerland",
+    },
+    {
+      prefix: "TW",
+      label: "Taiwan",
+    },
+    {
+      prefix: "TJ",
+      label: "Tajikistan",
+    },
+    {
+      prefix: "TZ",
+      label: "Tanzania",
+    },
+    {
+      prefix: "TH",
+      label: "Thailand",
+    },
+    {
+      prefix: "TL",
+      label: "Timor-Leste",
+    },
+    {
+      prefix: "TG",
+      label: "Togo",
+    },
+    {
+      prefix: "TK",
+      label: "Tokelau",
+    },
+    {
+      prefix: "TO",
+      label: "Tonga",
+    },
+    {
+      prefix: "TT",
+      label: "Trinidad & Tobago",
+    },
+    {
+      prefix: "TA",
+      label: "Tristan da Cunha",
+    },
+    {
+      prefix: "TN",
+      label: "Tunisia",
+    },
+    {
+      prefix: "TR",
+      label: "Turkey",
+    },
+    {
+      prefix: "TM",
+      label: "Turkmenistan",
+    },
+    {
+      prefix: "TC",
+      label: "Turks & Caicos Islands",
+    },
+    {
+      prefix: "TV",
+      label: "Tuvalu",
+    },
+    {
+      prefix: "UG",
+      label: "Uganda",
+    },
+    {
+      prefix: "UA",
+      label: "Ukraine",
+    },
+    {
+      prefix: "AE",
+      label: "United Arab Emirates",
+    },
+    {
+      prefix: "UK",
+      label: "United Kingdom",
+    },
+    {
+      prefix: "US",
+      label: "United States",
+    },
+    {
+      prefix: "UY",
+      label: "Uruguay",
+    },
+    {
+      prefix: "UZ",
+      label: "Uzbekistan",
+    },
+    {
+      prefix: "VU",
+      label: "Vanuatu",
+    },
+    {
+      prefix: "VA",
+      label: "Vatican City",
+    },
+    {
+      prefix: "VE",
+      label: "Venezuela",
+    },
+    {
+      prefix: "VN",
+      label: "Vietnam",
+    },
+    {
+      prefix: "WF",
+      label: "Wallis & Futuna",
+    },
+    {
+      prefix: "EH",
+      label: "Western Sahara",
+    },
+    {
+      prefix: "YE",
+      label: "Yemen",
+    },
+    {
+      prefix: "ZM",
+      label: "Zambia",
+    },
+    {
+      prefix: "ZW",
+      label: "Zimbabwe",
+    },
+  ],
   realState: [
     { name: "CountrySide" },
     { name: "Lake" },
@@ -1166,7 +1164,7 @@ const sectiondata = {
   headermenu: [
     {
       title: "Home",
-      path: "/",
+      // path: "/",
       dropdown: [
         {
           title: "Home",
@@ -1202,27 +1200,28 @@ const sectiondata = {
     },
 
     {
-      title: "categories",
-      path: "/all-categories",
-      dropdown: [
-        // {
-        //     title: 'all categories',
-        //     path: '/all-categories'
-        // },
-        {
-          title: "all locations",
-          path: "/all-locations",
-        },
-        {
-          title: "top places",
-          path: "/top-place",
-        },
-      ],
+      title: "Explore",
+      path: "/list-right-sidebar-list",
+      // dropdown: [
+      //   // {
+      //   //     title: 'all categories',
+      //   //     path: '/all-categories'
+      //   // },
+      //   {
+      //     title: "Explore",
+      //     path: "/list-right-sidebar-list",
+      //   },
+      //   // {
+      //   //   title: "top places",
+      //   //   path: "/top-place",
+      //   // },
+      // ],
     },
     {
       title: "Contact",
       path: "/contact",
     },
+
     {
       title: "About",
       path: "/about",
@@ -1269,23 +1268,7 @@ const sectiondata = {
     //         }
     //     ]
     // },
-    {
-            title: 'Profile',
-            path: '#',
-            dropdown: [
-                {
-                    title: 'user profile',
-                    path: '/user-profile'
-                },
-             
-                {
-                    title: 'dashboard',
-                    path: '/dashboard'
-                },
-             
-             
-            ]
-        },
+
     // {
     //     title: 'pages',
     //     path: '/user-profile',
@@ -1342,7 +1325,7 @@ const sectiondata = {
     // },
     {
       title: "blog",
-      path: "/blog-full-width",
+      path: "#",
       dropdown: [
         {
           title: "All blogs",
@@ -1362,11 +1345,14 @@ const sectiondata = {
         // }
       ],
     },
-    
+    {
+      title: "FAQ",
+      path: "/faq",
+    },
   ],
   herobanners: {
     banner1: {
-      title: "What are you interested in ",
+      title: "What Are You Interested In ",
       titleHighlight: [
         {
           active: true,
@@ -1491,12 +1477,16 @@ const sectiondata = {
           title: "Animals",
           icon: <RiHotelBedLine />,
         },
+        {
+          path: "all-categories",
+          title: "Others",
+          icon: <RiPsychotherapyLine />,
+        },
       ],
     },
     browsecategories: {
       sectitle: "  Categories",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       items: [
         {
           id: 1,
@@ -1586,8 +1576,7 @@ const sectiondata = {
     },
     browsecategories2: {
       sectitle: "Browse by Categories",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       categories: [
         {
           img: img1,
@@ -1611,8 +1600,7 @@ const sectiondata = {
     },
     browsecategories4: {
       sectitle: "Browse by Categories",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       categories: [
         {
           img: img1,
@@ -1726,8 +1714,7 @@ const sectiondata = {
     },
     browsecategories3: {
       sectitle: "Categories",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       categories: [
         {
           img: img1,
@@ -2058,8 +2045,7 @@ const sectiondata = {
   howitworks: {
     hiw1: {
       sectitle: "Plan The Vacation of Your Dreams",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       items: [
         {
           id: 1,
@@ -2086,8 +2072,7 @@ const sectiondata = {
     },
     hiw2: {
       sectitle: "What We Offer",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       items: [
         {
           active: false,
@@ -2149,8 +2134,7 @@ const sectiondata = {
     },
     hiw4: {
       sectitle: "Why Choose Us",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       items: [
         {
           icon: <FiCheck />,
@@ -2210,8 +2194,7 @@ const sectiondata = {
     },
     hiw6: {
       sectitle: "How Dirto Works",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       items: [
         {
           id: 1,
@@ -2798,17 +2781,10 @@ const sectiondata = {
         title: "Sort by",
         items: [
           {
-            id: 1,
-            title: "Best sellers",
-          },
-          {
             id: 2,
             title: "Newest",
           },
-          {
-            id: 3,
-            title: "Best Rated",
-          },
+
           {
             id: 4,
             title: "Oldest",
@@ -2819,13 +2795,10 @@ const sectiondata = {
         title: "Posted by",
         items: [
           {
-            title: "Dealer",
+            title: "Company",
           },
           {
-            title: "individual",
-          },
-          {
-            title: "Reseller",
+            title: "User",
           },
         ],
       },
@@ -3555,7 +3528,6 @@ const sectiondata = {
           },
         ],
       },
-     
     ],
   },
   pricingplan: [
@@ -3738,8 +3710,7 @@ const sectiondata = {
       },
     ],
     aboutst2: {
-      title:
-        "Welcome to Somalia Sky",
+      title: "Welcome to Somalia Sky",
       content1:
         "Somaliasky company is a Somalian company founded by three young leaders who live outside Somalia, Because of their inability to get Somali products and services.  ",
       content2:
@@ -3766,8 +3737,7 @@ const sectiondata = {
   },
   mostvisitedplaces: {
     sectitle: "Most Visited Places",
-    seccontent:
-      "Somalia sky is the one stop for all the businesses ",
+    seccontent: "Somalia sky is the one stop for all the businesses ",
     places: [
       {
         bedge: "New Open",
@@ -3966,8 +3936,7 @@ const sectiondata = {
   },
   mostvisitedplacesRes: {
     sectitle: "Most Visited Places",
-    seccontent:
-      "Somalia sky is the one stop for all the businesses ",
+    seccontent: "Somalia sky is the one stop for all the businesses ",
     places: [
       {
         bedge: "New Open",
@@ -4166,8 +4135,7 @@ const sectiondata = {
   },
   recommendedplaces: {
     sectitle: "Companies we recommend",
-    seccontent:
-      "Somalia Sky recommended companies",
+    seccontent: "Somalia Sky recommended companies",
     items: [
       {
         bedge: "New Open",
@@ -4299,8 +4267,7 @@ const sectiondata = {
   funfacts: {
     funfact1: {
       sectitle: "Numbers Say Everything",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       counteritems: [
         {
           id: "1",
@@ -4350,8 +4317,7 @@ const sectiondata = {
     },
     funfact2: {
       sectitle: "Numbers Say Everything",
-      seccontent:
-        "Somalia sky is the one stop for all the businesses ",
+      seccontent: "Somalia sky is the one stop for all the businesses ",
       counteritems: [
         {
           id: "1",
@@ -4456,8 +4422,7 @@ const sectiondata = {
   },
   accordions: {
     sectitle: "Listing faqs",
-    seccontent:
-      "Somalia sky is the one stop for all the businesses ",
+    seccontent: "Somalia sky is the one stop for all the businesses ",
     items: [
       {
         title: "What is a novel coronavirus?",
@@ -4541,9 +4506,9 @@ const sectiondata = {
   },
   calltoactions: {
     cta1: {
-      title: "SomaliaSky is the best way to find & discover the great local businesses",
-      content:
-        "Somalia sky is the one stop for all the businesses  ",
+      title:
+        "SomaliaSky is the best way to find & discover the great local businesses",
+      content: "Somalia sky is the one stop for all the businesses  ",
       btntext: "Create Account",
       btnurl: "/sign-up",
       shapes: [
@@ -4569,7 +4534,7 @@ const sectiondata = {
       featurelists: [
         {
           icon: <GoFile />,
-          text: "Real Time Listing",
+          text: "Maps",
         },
         {
           icon: <FiFilter />,
@@ -4577,7 +4542,7 @@ const sectiondata = {
         },
         {
           icon: <AiOutlineQuestionCircle />,
-          text: "Notification Price Reduction",
+          text: "Make an offer",
         },
       ],
       shapes: [
@@ -4596,9 +4561,9 @@ const sectiondata = {
       ],
     },
     cta3: {
-      title: "SomaliaSky is the best way to find & discover the great local businesses",
-      content:
-        "Somalia sky is the one stop for all the businesses  ",
+      title:
+        "SomaliaSky is the best way to find & discover the great local businesses",
+      content: "Somalia sky is the one stop for all the businesses  ",
       btntext: "Create Account",
       btnurl: "/sign-up",
     },
@@ -4637,8 +4602,7 @@ const sectiondata = {
   },
   testimonialdata: {
     sectitle: "What Our Users Said",
-    seccontent:
-      "Somalia sky is the one stop for all the businesses ",
+    seccontent: "Somalia sky is the one stop for all the businesses ",
     sliders: [
       {
         id: 1,
@@ -5090,8 +5054,7 @@ const sectiondata = {
   },
   latestarticles: {
     sectitle: "Latest Tips & Articles",
-    seccontent:
-      "Somalia sky is the one stop for all the businesses ",
+    seccontent: "Somalia sky is the one stop for all the businesses ",
     btntext: "View All Post",
     btnurl: "/blog-grid",
     items: [
@@ -5299,7 +5262,7 @@ const sectiondata = {
         },
         {
           path: "/index5",
-          text: "Sales",
+          text: "Sale",
         },
         {
           path: "/index6",

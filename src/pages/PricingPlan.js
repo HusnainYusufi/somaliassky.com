@@ -1,42 +1,91 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import GeneralHeader from "../components/common/GeneralHeader";
 import Breadcrumb from "../components/common/Breadcrumb";
 import Plans from "../components/other/plans/Plans";
 import NewsLetter from "../components/other/cta/NewsLetter";
 import Footer from "../components/common/footer/Footer";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
-import breadcrumbimg from '../assets/images/bread-bg.jpg'
+import breadcrumbimg from "../assets/images/bread-bg.jpg";
 import sectiondata from "../store/store";
-
+import { MdClose } from "react-icons/md";
+import { IoMdPaperPlane } from "react-icons/io";
+import { FiCheck } from "react-icons/fi";
+import { url } from "../environment";
 const state = {
-    breadcrumbimg: breadcrumbimg,
-}
+  breadcrumbimg: breadcrumbimg,
+};
 function PricingPlan() {
-    return (
-        <main className="pricing-plan-page">
-            {/* Header */}
-            <GeneralHeader />
+  const [AllPlans, setAllPlans] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  useEffect(() => {
+    getAllplans();
+  }, []);
+  const getAllplans = () => {
+    setIsLoading(true);
+    fetch(`${url}/rocket/getRocketPlans`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("All Plans ----->>>", response);
+        if (response.message === "Success") {
+          let Array = [];
+          response.doc?.map((item) => {
+            Array.push({
+              icon: <IoMdPaperPlane />,
+              title: item.type,
+              price: item.price,
+              _id: item._id,
+              currency: "$",
+              mo: "Per Month",
+              rockets: item.noOfRockets,
+              features: item.description,
+              buttonTxt: "Continue",
+              buttonUrl: "#",
+              active: false,
+            });
+          });
+          setAllPlans(Array);
+          // setAllPages(response.doc.pages);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <main className="pricing-plan-page">
+      {/* Header */}
+      <GeneralHeader />
 
-            {/* Breadcrumb */}
-            <Breadcrumb CurrentPgTitle="Pricing Plans" MenuPgTitle="pages" img={state.breadcrumbimg}/>
+      {/* Breadcrumb */}
+      <Breadcrumb
+        CurrentPgTitle="Pricing Plans"
+        MenuPgTitle="pages"
+        img={state.breadcrumbimg}
+      />
 
-            {/* Pricing Plan */}
-            <section className="pricing-area padding-top-70px padding-bottom-90px">
-                <div className="container">
-                    <Plans plans={sectiondata.pricingplan} />
-                </div>
-            </section>
+      {/* Pricing Plan */}
+      <section className="pricing-area padding-top-70px padding-bottom-90px">
+        <div className="container">
+          <Plans plans={AllPlans} />
+        </div>
+      </section>
 
-            {/* Newsletter */}
-            <NewsLetter newsLetterContent={sectiondata.calltoactions.newsletters} />
+      {/* Newsletter */}
+      <NewsLetter newsLetterContent={sectiondata.calltoactions.newsletters} />
 
-            {/* Footer */}
-            <Footer />
+      {/* Footer */}
+      <Footer />
 
-            <ScrollTopBtn />
-
-        </main>
-    );
+      <ScrollTopBtn />
+    </main>
+  );
 }
 
 export default PricingPlan;

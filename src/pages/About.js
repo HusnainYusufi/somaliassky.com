@@ -15,8 +15,11 @@ import NewsLetter from "../components/other/cta/NewsLetter";
 import Footer from "../components/common/footer/Footer";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import sectiondata from "../store/store";
+import { useTranslation } from "react-i18next";
 
 function About() {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <main className="about-page">
       {/* Header */}
@@ -68,7 +71,7 @@ function About() {
                   <i className="la">
                     <FiPlus />
                   </i>{" "}
-                  Add Your Business
+                  {t("Add Your Business")}
                 </Link>
               </div>
             </div>

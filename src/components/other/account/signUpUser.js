@@ -2,18 +2,19 @@ import React from "react";
 import SignInOptions from "./SignInOptions";
 import { Link, useHistory } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
-import { FacebookAuthProvider } from "firebase/auth";
-import { BiUser } from "react-icons/bi";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import IconButton from "@mui/material/IconButton";
+
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { url } from "../../../environment";
-import { Formik, useFormik, Form, Field, FormikProvider } from "formik";
+import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 
 import Select from "react-select";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiLock } from "react-icons/fi";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 const state = {
   selectedCatOp: null,
   categories: [
@@ -1022,56 +1023,62 @@ function SignUpUserBox({ title, subtitle }) {
   const [userValue, setUserValue] = React.useState({});
   const [ComValue, setComValue] = React.useState({});
 
-  
+  const [showPassword, setShowPassword] = React.useState(true);
+  const [showPassword1, setShowPassword1] = React.useState(true);
 
-    const SignUpUserSchema = Yup.object().shape({
-      email: Yup.string()
-        .email("Email must be a valid email address")
-        .required("Email is required"),
-        password: Yup.string()
-        .min(8, 'Password must be 8 characters long')
-        .matches(/[0-9]/, 'Password requires a number')
-        .matches(/[a-z]/, 'Password requires a lowercase letter')
-        .matches(/[A-Z]/, 'Password requires an uppercase letter')
-        .matches(/[^\w]/, 'Password requires a symbol'),
-        confirmPassword: Yup
-        .string() 
-        .required('Confirm password is required')
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
-      username: Yup.string().required("Username is required"),
-      // country: Yup.string().min(6, "Too Short!").required("Country is required"),
-  
-      // password: Yup.string().required('Password is required'),
-    });
-    const formikUser = useFormik({
-      initialValues: {
-        email: "",
-        password: "",
-        username: "",
-        confirmPassword : '' ,
-        // country: "",
-        phone: "",
-  
-        // remember: true,
-      },
-      validationSchema: SignUpUserSchema,
-      onSubmit: () => {
-        console.log(formikUser.values)
-        // postSignUpCompany();
-        postSignUpUser()
-      },
-    });
-  
-    const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const SignUpUserSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Email must be a valid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
+    confirmPassword: Yup.string()
+      .required("Confirm password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    username: Yup.string().required("Username is required"),
+    // country: Yup.string().min(6, "Too Short!").required("Country is required"),
+
+    // password: Yup.string().required('Password is required'),
+  });
+  const formikUser = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      username: "",
+      confirmPassword: "",
+      // country: "",
+      phone: "",
+
+      // remember: true,
+    },
+    validationSchema: SignUpUserSchema,
+    onSubmit: () => {
+      console.log(formikUser.values);
+      // postSignUpCompany();
+      postSignUpUser();
+    },
+  });
+
+  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formikUser;
-  
+
   const getAllform = (e) => {
     let obj = userValue;
     obj[e.target.name] = e.target.value;
     console.log(obj);
     setUserValue(obj);
   };
- 
+
   const getAllselectform = (e) => {
     console.log(e);
     let obj = userValue;
@@ -1079,7 +1086,6 @@ function SignUpUserBox({ title, subtitle }) {
     console.log(obj);
     setUserValue(obj);
   };
-
 
   const postSignUpUser = () => {
     fetch(`${url}/user/userSignupForm`, {
@@ -1107,168 +1113,191 @@ function SignUpUserBox({ title, subtitle }) {
         console.log(err);
       });
   };
-  
+
   return (
     <>
-     
-              <div className="billing-content">
-                <div className="contact-form-action">
-                  {/* <form> */}
+      <div className="billing-content">
+        <div className="contact-form-action">
+          {/* <form> */}
 
-                  <div className="">
-                    <div className="row">
-                    <SignInOptions check="signUpUser" />
-</div>
-                    <div className="col-lg-12">
-                      <div className="account-assist mt-4 mb-4 text-center">
-                        <p className="account__desc">or</p>
-                      </div>
-                    </div>
-                    <FormikProvider value={formikUser}>
-                    <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                    <div className="col-lg-12">
-                      <div className="input-box">
-                        <label className="label-text">Username</label>
-                        <div className="form-group">
-                          {/* <span className="form-icon">
+          <div className="">
+            <div className="row">
+              <SignInOptions check="signUpUser" />
+            </div>
+            <div className="col-lg-12">
+              <div className="account-assist mt-4 mb-4 text-center">
+                <p className="account__desc">or</p>
+              </div>
+            </div>
+            <FormikProvider value={formikUser}>
+              <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                <div className="col-lg-12">
+                  <div className="input-box">
+                    <label className="label-text">Username</label>
+                    <div className="form-group">
+                      {/* <span className="form-icon">
                             <AiOutlineUser />
                           </span> */}
-                          <TextField
-                                fullWidth
-                                autoComplete="email"
-                                type="text"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <AiOutlineUser />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                {...getFieldProps("username")}
-                                error={Boolean(
-                                  touched.username && errors.username
-                                )}
-                                helperText={touched.username && errors.username}
-                              />
-                        </div>
-                      </div>
+                      <TextField
+                        fullWidth
+                        autoComplete="email"
+                        type="text"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <AiOutlineUser />
+                            </InputAdornment>
+                          ),
+                        }}
+                        {...getFieldProps("username")}
+                        error={Boolean(touched.username && errors.username)}
+                        helperText={touched.username && errors.username}
+                      />
                     </div>
-
-                    <div className="col-lg-12">
-                      <div className="input-box">
-                        <label className="label-text">Email</label>
-                        <div className="form-group">
-                        
-                          <TextField
-                                fullWidth
-                                autoComplete="email"
-                                type="text"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <FaRegEnvelope />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                {...getFieldProps("email")}
-                                error={Boolean(
-                                  touched.email && errors.email
-                                )}
-                                helperText={touched.email && errors.email}
-                              />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12">
-                      <div className="input-box">
-                        <label className="label-text">Password</label>
-                        <div className="form-group">
-                       
-                          <TextField
-                                fullWidth
-                                autoComplete="email"
-                                type="password"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <FiLock />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                {...getFieldProps("password")}
-                                error={Boolean(
-                                  touched.password && errors.password
-                                )}
-                                helperText={touched.password && errors.password}
-                              />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12">
-                          <div className="input-box">
-                            <label className="label-text">Confirm Password</label>
-                            <div className="form-group">
-                              <TextField
-                                fullWidth
-                                autoComplete="email"
-                                type="password"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      <FiLock />
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                {...getFieldProps("confirmPassword")}
-                                error={Boolean(
-                                  touched.confirmPassword && errors.confirmPassword
-                                )}
-                                helperText={touched.confirmPassword && errors.confirmPassword}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                    <div className="col-lg-12">
-                      <div className="form-group">
-                        <div className="main-search-input-item select">
-                          <label style={{ color: "black" }}>Country</label>
-
-                          <Select
-                            onChange={(e) => getAllselectform(e)}
-                            placeholder="Select a Location"
-                            name="country"
-                            options={state.countries}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    
-              
-                    <div className="col-lg-12">
-                      <div className="btn-box margin-top-20px margin-bottom-20px">
-                        <button
-                        //   onClick={() => postSignUpUser()}
-                          className="theme-btn border-0"
-                        >
-                          Register account
-                        </button>
-                      </div>
-                    </div>
-                    <div className="col-lg-12">
-                      <p className="font-weight-medium">
-                        Already have an account?{" "}
-                        <Link to="/login" className="color-text">
-                          Login
-                        </Link>
-                      </p>
-                    </div>
-                    </Form>
-                    </FormikProvider>
                   </div>
-                  {/* </form> */}
                 </div>
-              </div>
-         
+
+                <div className="col-lg-12">
+                  <div className="input-box">
+                    <label className="label-text">Email</label>
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        autoComplete="email"
+                        type="text"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <FaRegEnvelope />
+                            </InputAdornment>
+                          ),
+                        }}
+                        {...getFieldProps("email")}
+                        error={Boolean(touched.email && errors.email)}
+                        helperText={touched.email && errors.email}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="input-box">
+                    <label className="label-text">Password</label>
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        autoComplete="email"
+                        type={showPassword1 ? "password" : "text"}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <FiLock />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword1}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword1 ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        {...getFieldProps("password")}
+                        error={Boolean(touched.password && errors.password)}
+                        helperText={touched.password && errors.password}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="input-box">
+                    <label className="label-text">Confirm Password</label>
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        autoComplete="email"
+                        type={showPassword ? "password" : "text"}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <FiLock />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        {...getFieldProps("confirmPassword")}
+                        error={Boolean(
+                          touched.confirmPassword && errors.confirmPassword
+                        )}
+                        helperText={
+                          touched.confirmPassword && errors.confirmPassword
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-group">
+                    <div className="main-search-input-item select">
+                      <label style={{ color: "black" }}>Country</label>
+
+                      <Select
+                        onChange={(e) => getAllselectform(e)}
+                        placeholder="Select a Location"
+                        name="country"
+                        options={state.countries}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-12">
+                  <div className="btn-box margin-top-20px margin-bottom-20px">
+                    <button
+                      //   onClick={() => postSignUpUser()}
+                      className="theme-btn border-0"
+                    >
+                      Register account
+                    </button>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <p className="font-weight-medium">
+                    Already have an account?{" "}
+                    <Link to="/login" className="color-text">
+                      Login
+                    </Link>
+                  </p>
+                </div>
+              </Form>
+            </FormikProvider>
+          </div>
+          {/* </form> */}
+        </div>
+      </div>
     </>
   );
 }

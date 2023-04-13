@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GeneralHeader from "../../components/common/GeneralHeader";
 import Banner4 from "../../components/banner/banner4/Banner4";
 import SectionsHeading from "../../components/common/SectionsHeading";
 import BrowseCategoriesTwo from "../../components/other/categories/BrowseCategoriesTwo";
-import PlaceOne from "../../components/places/PlaceOne";
-import FunFactsOne from "../../components/other/funfacts/funfacts1/FunFactsOne";
-import InfoBox3 from "../../components/other/infoboxes/InfoBox3";
-import Button from "../../components/common/Button";
 import RecommendedPlace from "../../components/places/RecommendedPlace";
-import { GiChickenOven } from "react-icons/gi";
+import { GiChickenOven, GiMeepleGroup } from "react-icons/gi";
 import CircularProgress from "@mui/material/CircularProgress";
+import imguser from "../../assets/images/user.png";
 
+import { IoIosCheckmarkCircle, IoMdStar, IoMdStarHalf } from "react-icons/io";
 
-import Testimonial from "../../components/sliders/Testimonial";
 import SectionDivider from "../../components/common/SectionDivider";
-import LatestBlog from "../../components/blogs/LatestBlog";
-import CtaOne from "../../components/other/cta/CtaOne";
-import ClientLogo from "../../components/sliders/ClientLogo";
-import NewsLetter from "../../components/other/cta/NewsLetter";
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import sectiondata from "../../store/store";
-import InfoBoxOne from "../../components/other/infoboxes/infobox1/InfoBoxOne";
 import home4 from "../../assets/video/jobs.mp4";
 import { url, ImageUrl } from "../../environment";
 
@@ -30,10 +22,64 @@ function Home4() {
   const [isLoading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
+  const [AllVistedPlaces, setAllVistedPlaces] = useState([]);
   useEffect(() => {
     getAllCategories();
     window.scrollTo(0, 0);
+    getMostVisted();
   }, [token]);
+
+  const getMostVisted = () => {
+    setLoading(true);
+    fetch(`${url}/listing/getPromotedListingJobs`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("All Companies Recommend", response);
+        if (response.message === "Success") {
+          let Array = [];
+
+          response?.doc?.map((item, index) => {
+            Array?.push({
+              title: item.title,
+              video: item.video,
+              image: item.images ? ImageUrl + item.images[0] : "",
+              bedge: "New Open",
+              titleIcon: <IoIosCheckmarkCircle />,
+              titleUrl: `/listing-details/${item._id}`,
+              stitle: item.shortDescription,
+              cardType: item.category.name,
+              cardTypeIcon: <GiChickenOven />,
+              author: imguser,
+              authorUrl: "#",
+              number: item.seller.phone,
+              website: "www.mysitelink.com",
+              date: "Posted 1 month ago",
+              view: "204",
+              ratings: [
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStarHalf />,
+                <IoMdStar className="last-star" />,
+              ],
+              ratingNum: "4.5",
+            });
+          });
+
+          setAllVistedPlaces(Array);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getAllCategories = () => {
     setLoading(true);
@@ -51,18 +97,18 @@ function Home4() {
         if (response.message === "Success") {
           //   navigate.push("/");
           // setAllCategories(response.doc)
-          console.log(response?.doc[0].image);
+          // console.log(response?.doc[0].image);
           let Array = [];
 
           // setAllCategories(
-          response?.doc.map((item) => {
+          response?.doc.categories.map((item) => {
             // if (item.type === "Jobs") {
-              Array.push({
-                icon: <GiChickenOven />,
-                title: item.name,
-                cardLink: `/all-categories/${item._id}`,
-                img: ImageUrl.concat(item.image),
-              });
+            Array.push({
+              icon: <GiMeepleGroup />,
+              title: item.name,
+              cardLink: `/all-categories/${item._id}`,
+              img: ImageUrl.concat(item.image),
+            });
             // }
           });
 
@@ -137,9 +183,7 @@ function Home4() {
             />
           </div>
 
-          <RecommendedPlace
-            recommendplaces={sectiondata.mostvisitedplaces.places}
-          />
+          <RecommendedPlace recommendplaces={AllVistedPlaces} />
         </div>
       </section>
 
