@@ -103,13 +103,40 @@ function ListRightSidebar() {
   const [LoadingListing, setLoadingListing] = useState(false);
 
   const token = localStorage.getItem("token");
+  const [Home1, setHom1] = React.useState("");
   const location = useLocation();
 
   console.log(JSON.parse(new URLSearchParams(location.search).get("data")));
   useEffect(() => {
     getlistingByCategory();
+    getUserMyImage();
   }, [token]);
 
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Explore") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     getlistingBySubcategory();
   }, [SubId]);
@@ -311,6 +338,8 @@ function ListRightSidebar() {
         console.log("All Subcategory", response);
         if (response.message === "Success") {
           setAllpages(response.doc.pages);
+          setFormFields(response.doc.filterfields);
+
           setAllListing(
             response?.doc?.listings?.map((item) => ({
               // icon: <GiChickenOven />,
@@ -341,7 +370,6 @@ function ListRightSidebar() {
               // img: img1
             }))
           );
-          setFormFields(response.doc.filterfields);
           setLoadingListing(false);
         }
       })
@@ -359,7 +387,7 @@ function ListRightSidebar() {
       <Breadcrumb
         CurrentPgTitle="List Right Sidebar"
         MenuPgTitle="Listings"
-        img={state.breadImg}
+        img={Home1}
       />
       {isLoading ? (
         <div

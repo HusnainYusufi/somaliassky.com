@@ -12,6 +12,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
+import { useTranslation } from "react-i18next";
 import Typography from "@mui/material/Typography";
 const { Option } = components;
 const CustomSelectOption = (props) => (
@@ -1039,6 +1040,8 @@ const state = {
   ],
 };
 export default function BannerOneSearchInput() {
+  const [t, i18n] = useTranslation("common");
+  const dir = i18n.dir();
   const options = [
     { value: "chocolate", label: "Villas", icon: <FcSalesPerformance /> },
     {
@@ -1070,7 +1073,11 @@ export default function BannerOneSearchInput() {
           <Button
             variant="contained"
             className="mb-2"
-            startIcon={<FcSalesPerformance />}
+            startIcon={
+              <span style={{ marginLeft: "10px" }}>
+                <FcSalesPerformance />
+              </span>
+            }
           >
             For sales
           </Button>
@@ -1134,7 +1141,11 @@ export default function BannerOneSearchInput() {
             variant={selected === [] ? "contained" : "outlined"}
             color={selected ? "primary" : "default"}
             onClick={() => setSelected([])}
-            startIcon={<FcSalesPerformance />}
+            startIcon={
+              <span style={{ marginLeft: "10px" }}>
+                <FcSalesPerformance />
+              </span>
+            }
           >
             All
           </Button>

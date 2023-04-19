@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BannerOneHeroHeading from "./BannerOneHeroHeading";
 import BannerOneSearchInput from "./SearchFilterSale";
 import BannerOneCategories from "./BannerOneCategories";
 import sectiondata from "../../../store/store";
-import Home1 from "../../../assets/images/home1.jpg";
+// import Home1 from "../../../assets/images/home1.jpg";
+import { ImageUrl, url } from "../../../environment";
 
-export default function BannerOne({ LookingFor, setLookingFor }) {
+export default function BannerOne({ LookingFor, setLookingFor, Home3 }) {
+  const [Home1, setHom1] = React.useState("");
+
   return (
     <>
       <section
         className="hero-wrapper"
-        style={{ backgroundImage: "url(" + Home1 + ")" }}
+        style={{ backgroundImage: "url(" + Home3 + ")" }}
       >
         <div className="hero-overlay"></div>
         <div className="container">

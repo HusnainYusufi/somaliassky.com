@@ -20,11 +20,39 @@ function Home3() {
   const [isLoading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   const [AllVistedPlaces, setAllVistedPlaces] = useState([]);
+  const [Home1, setHom1] = useState("");
 
   useEffect(() => {
     getAllCategories();
     window.scrollTo(0, 0);
+    getUserMyImage();
   }, [token]);
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Resturant") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getMostVisted = () => {
     setLoading(true);
@@ -121,7 +149,7 @@ function Home3() {
       {}
 
       <Banner3
-        bgImg={home3}
+        bgImg={Home1}
         herotitle={sectiondata.herobanners.banner3.title}
         herocontent={sectiondata.herobanners.banner3.content}
       />

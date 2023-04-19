@@ -27,6 +27,7 @@ function Home4() {
     getAllCategories();
     window.scrollTo(0, 0);
     getMostVisted();
+    getUserMyImage();
   }, [token]);
 
   const getMostVisted = () => {
@@ -74,6 +75,34 @@ function Home4() {
 
           setAllVistedPlaces(Array);
           setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const [Home1, setHom1] = useState("");
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Jobs") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
         }
       })
       .catch((err) => {
@@ -130,7 +159,7 @@ function Home4() {
 
       {/* Banner */}
       <Banner4
-        videoUrl={home4}
+        videoUrl={Home1}
         title={sectiondata.herobanners.banner4.sectitle}
         content={sectiondata.herobanners.banner4.seccontent}
       />

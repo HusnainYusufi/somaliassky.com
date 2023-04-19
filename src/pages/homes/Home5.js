@@ -6,7 +6,8 @@ import GeneralMap from "../../components/contact/GeneralMap";
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import sectiondata from "../../store/store";
-import { url } from "../../environment";
+import { url, ImageUrl } from "../../environment";
+
 function Home5() {
   useEffect(() => {
     window.scrollTo(0, 0);

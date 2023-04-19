@@ -105,19 +105,45 @@ function ListRightSidebar() {
   const [MaxPrice, setMaxPrice] = useState();
   const [Sort, setSort] = useState();
   const [CategoryId, setCategoryId] = useState("");
+  const [Home1, setHom1] = React.useState("");
 
   const token = localStorage.getItem("token");
   const location = useLocation();
 
   const data = JSON.parse(new URLSearchParams(location.search).get("data"));
   useEffect(() => {
+    getUserMyImage();
     if (data) {
       SearchListing();
     } else {
       getAllListing();
     }
   }, [token]);
-
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Explore") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const getAllListing = (e, pagnum) => {
     setLoading(true);
     fetch(`${url}/listing/xxx${pagnum ? pagnum : 1}`, {
@@ -359,7 +385,7 @@ function ListRightSidebar() {
       <Breadcrumb
         CurrentPgTitle="List Right Sidebar"
         MenuPgTitle="Listings"
-        img={state.breadImg}
+        img={Home1}
       />
 
       {/* Place List */}

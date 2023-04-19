@@ -10,13 +10,42 @@ import NewsLetter from "../components/other/cta/NewsLetter";
 import Footer from "../components/common/footer/Footer";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import sectiondata from "../store/store";
-import { url } from "../environment";
+import { url, ImageUrl } from "../environment";
 import { FaMinus, FaPlus } from "react-icons/fa";
 function Faq() {
+  const [Home1, setHom1] = React.useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
     getAllFaq();
+    getUserMyImage();
   }, []);
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "FAQ") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const [isLoading, setLoading] = useState(false);
   const [AllFAQ, setAllFAQ] = useState([]);
 
@@ -59,7 +88,7 @@ function Faq() {
       <GeneralHeader />
 
       {/* Banner */}
-      <Banner6 title="Hello, How Can We Help You?" />
+      <Banner6 Home1={Home1} title="Hello, How Can We Help You?" />
 
       {/* Category */}
       <section className="hiw-area section-bg padding-top-80px padding-bottom-50px after-none text-center">

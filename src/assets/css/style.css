@@ -2516,6 +2516,7 @@ body {
     text-transform: capitalize;
     padding-top: 15px;
     padding-right: 23px;
+    padding-left: 8px;
     position: relative; }
     .main-menu-content nav ul li a {
       color: #fff;
@@ -5594,6 +5595,8 @@ body {
         margin-top: 35px; } }
     .cta-area .btn-box .theme-btn:nth-child(2) {
       margin-left: 10px; }
+      .cta-area .btn-box .theme-btn:nth-child(1) {
+        margin-left: 10px; }
       @media (max-width: 320px) {
         .cta-area .btn-box .theme-btn:nth-child(2) {
           margin-left: 0;

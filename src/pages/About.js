@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GeneralHeader from "../components/common/GeneralHeader";
 import Banner5 from "../components/banner/banner5/Banner5";
 import ImageBox from "../components/about/ImageBox";
@@ -16,17 +16,47 @@ import Footer from "../components/common/footer/Footer";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import sectiondata from "../store/store";
 import { useTranslation } from "react-i18next";
+import { url, ImageUrl } from "../environment";
 
 function About() {
   const [t, i18n] = useTranslation("common");
+  const [Home1, setHom1] = React.useState("");
 
+  useEffect(() => {
+    getUserMyImage();
+  }, []);
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "About") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <main className="about-page">
       {/* Header */}
       <GeneralHeader />
 
       {/* Banner */}
-      <Banner5 />
+      <Banner5 Home1={Home1} />
 
       {/* Team Area */}
       <section className="team-area padding-top-100px padding-bottom-70px">

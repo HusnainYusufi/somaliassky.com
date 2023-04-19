@@ -10,6 +10,9 @@
     height: 51px;
     padding: 0 40px;
 }
+.dropdown-toggle::after {
+    display: none;
+  }
 body {
     font-size: 16px;
     line-height: 24px;

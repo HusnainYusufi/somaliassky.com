@@ -1,17 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiPlusCircle } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
+
+import { AiOutlineUser } from "react-icons/ai";
+
+import { AiOutlineGlobal } from "react-icons/ai";
+import i18next from "i18next";
+import Button from "../common/Button";
 
 import { Link } from "react-router-dom";
 import sectiondata from "../../store/store";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "@mui/material";
+const languages = [
+  {
+    code: "en",
+    name: "English",
+    dir: "ltl",
+    country_code: "en",
+  },
+  {
+    code: "ar",
+    name: "العربية",
+    dir: "rtl",
+    country_code: "sa",
+  },
+  {
+    code: "so",
+    name: "Somalia",
+    dir: "ltl",
+    country_code: "so",
+  },
+];
 
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   const [isLoggedIn] = useState(localStorage.getItem("token"));
   const counter = useSelector((state) => state.counter);
   const [t, i18n] = useTranslation("common");
+  const fullScreen = useMediaQuery("(max-width:960px)");
+  const directionality = i18next.dir();
 
+  const dir = i18n.language === "ar" ? "rtl" : "ltr";
+  i18n.dir();
   useEffect(() => {
     function showResNavMenu() {
       this.classList.toggle("active");
@@ -35,6 +66,7 @@ export default function Navbar() {
     let obj = sectiondata.headermenu.find((item) => item.title === "Profile")
       ? false
       : true;
+
     if (obj && isLoggedIn) {
       sectiondata.headermenu.push({
         title: "Profile",
@@ -55,8 +87,12 @@ export default function Navbar() {
   // });
   useEffect(() => {
     FilterNavbarData();
-  }, [counter]);
-
+  }, [counter, i18n.language]);
+  const changeLanguage = (ev) => {
+    console.log(ev);
+    i18next.changeLanguage(ev);
+    document.body.dir = i18n.dir();
+  };
   const FilterNavbarData = () => {
     const result = sectiondata.headermenu.filter(
       (item) => item.title !== "Profile" && item.title !== "Chat"
@@ -95,7 +131,11 @@ export default function Navbar() {
                       {item.dropdown.map((ditem, index2) => {
                         return (
                           <li key={index2} class="dropdown">
-                            <Link to={ditem.path} class="dropbtn">
+                            <Link
+                              to={ditem.path}
+                              class="dropbtn"
+                              onClick={() => changeLanguage("so")}
+                            >
                               {t(ditem.title)}
                               {"  "}
                               {ditem.dropdown ? <FiChevronDown /> : ""}
@@ -130,10 +170,16 @@ export default function Navbar() {
           </ul>
         </nav>
       </div>
-      <div className="side-menu-open" onClick={() => setNavOpen(!navOpen)}>
-        <span className="menu__bar"></span>
-        <span className="menu__bar"></span>
-        <span className="menu__bar"></span>
+      <div>
+        <div
+          // style={{ position: "unset" }}
+          className="side-menu-open"
+          onClick={() => setNavOpen(!navOpen)}
+        >
+          <span className="menu__bar"></span>
+          <span className="menu__bar"></span>
+          <span className="menu__bar"></span>
+        </div>
       </div>
       <div
         className={navOpen ? "side-nav-container active" : "side-nav-container"}
@@ -199,13 +245,68 @@ export default function Navbar() {
               );
             })}
           </ul>
-          <div className="side-nav-button">
-            <Link to="/login" className="theme-btn">
-              login
-            </Link>
-            <Link to="/sign-up" className="theme-btn">
-              Sign up
-            </Link>
+          {!isLoggedIn && (
+            <div className="side-nav-button">
+              <Link to="/login" className="theme-btn">
+                login
+              </Link>
+              <Link to="/sign-up" className="theme-btn">
+                Sign up
+              </Link>
+            </div>
+          )}
+          {isLoggedIn ? (
+            <div className="side-nav-button">
+              <Link to="/add-listing/new" className="theme-btn">
+                {t("Sell")}
+              </Link>
+            </div>
+          ) : (
+            <div className="side-nav-button">
+              <Link to="/login" className="theme-btn">
+                {t("Sell")}
+              </Link>
+            </div>
+          )}
+          <div className="d-flex" style={{ justifyContent: "center" }}>
+            {directionality === "rtl" && (
+              <div
+                dir="ltl"
+                class="dropdown"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "fixed !important",
+                }}
+              >
+                <a
+                  class="btn btn-secondary dropdown-toggle d-flex mt-2 ml-1 mr-1 align-items-center "
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <div>Languages</div>
+                </a>
+                <ul class="dropdown-menu">
+                  {languages.map((item) => (
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        onClick={() => {
+                          i18next.changeLanguage(item.code);
+
+                          document.body.dir = i18n.dir();
+                          // handleClose();
+                        }}
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

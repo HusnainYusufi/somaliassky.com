@@ -108,6 +108,7 @@ function ChatBox({
   const [offerModalBool, setOfferModalBool] = useState(false);
   const location = useLocation();
   const data = location?.state?.data;
+
   useEffect(() => {
     // getChat(location.state);
     const User = JSON.parse(localStorage.getItem("user"));
@@ -157,6 +158,7 @@ function ChatBox({
       }
     });
   };
+
   const SendOffer = (Item) => {
     console.log(Item);
     const user = JSON.parse(localStorage.getItem("user"));
@@ -210,6 +212,7 @@ function ChatBox({
         console.log(err);
       });
   };
+
   const openOfferModal = () => {
     setOfferModalBool(true);
   };
@@ -217,6 +220,7 @@ function ChatBox({
   const handleChange = (e) => {
     setChatText(e.target.value);
   };
+
   const sendUserChat = () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -250,6 +254,7 @@ function ChatBox({
     });
     setChatText("");
   };
+
   const makeOffer = (e) => {
     const offer = "$" + e + " is my Offer for " + userChat?.productName;
     SendOffer(location.state);
@@ -292,6 +297,7 @@ function ChatBox({
       }
     });
   };
+
   const cardAcceptResponse = (chat, messageId) => {
     // console.log("Resssssss", chat, messageId);
 
@@ -300,6 +306,7 @@ function ChatBox({
       messageId: messageId,
     });
   };
+
   return (
     <Grid
       item

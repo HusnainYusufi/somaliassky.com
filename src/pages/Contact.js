@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GeneralHeader from "../components/common/GeneralHeader";
 import Breadcrumb from "../components/common/Breadcrumb";
 import AskQuestionField from "../components/contact/AskQuestionField";
@@ -13,13 +13,42 @@ import breadcrumbimg from "../assets/images/contact-us.png";
 import sectiondata from "../store/store";
 import contactUs from "../assets/images/321f.jpg";
 import { useTranslation } from "react-i18next";
-
+import { url, ImageUrl } from "../environment";
 const state = {
   breadcrumbimg: breadcrumbimg,
 };
 function Contact() {
-  const [t, i18n] = useTranslation("common");
+  const [Home1, setHom1] = React.useState("");
 
+  const [t, i18n] = useTranslation("common");
+  useEffect(() => {
+    getUserMyImage();
+  }, []);
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Contact") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <main className="contact-page">
       {/* Header */}
@@ -29,7 +58,7 @@ function Contact() {
       <Breadcrumb
         // CurrentPgTitle="Contact Us"
         // MenuPgTitle="pages"
-        img={contactUs}
+        img={Home1}
       />
 
       <section className="contact-area padding-top-40px padding-bottom-80px">

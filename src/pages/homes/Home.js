@@ -34,8 +34,37 @@ function Home() {
     getAllCategories();
     getMostVisted();
     getUserMyListing();
+    getUserMyImage();
     window.scrollTo(0, 0);
   }, [token]);
+
+  const [Home1, setHom1] = useState("");
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Home") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fullScreen = useMediaQuery("(max-width:425px)");
   const UserID = JSON.parse(localStorage.getItem("user"));
@@ -229,13 +258,20 @@ function Home() {
     console.log(AllCategories);
   };
   const { t } = useTranslation();
+  useEffect(() => {
+    getUserMyListing();
+  }, []);
 
   return (
     <main className="home-1">
       {/* Header */}
       <GeneralHeader />
       {/* Hero Banner */}
-      <BannerOne setLookingFor={setLookingFor} LookingFor={LookingFor} />
+      <BannerOne
+        Home3={Home1}
+        setLookingFor={setLookingFor}
+        LookingFor={LookingFor}
+      />
       {/* Popular Categories */}
       {/* {!fullScreen && ( */}
       <section className="cat-area padding-top-100px padding-bottom-90px">

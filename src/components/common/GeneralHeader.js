@@ -3,8 +3,11 @@ import Navbar from "./Navbar";
 import HeaderAuthorAccess from "../other/account/HeaderAuthorAccess";
 import Logo from "./Logo";
 import logosrc from "../../assets/images/LogoPng.png";
+import { useTranslation } from "react-i18next";
 
 export default function GeneralHeader() {
+  const { t, i18n } = useTranslation("common");
+
   useEffect(() => {
     const headerwrap = document.querySelector(".header-menu-wrapper");
     const rootElement = document.documentElement;
@@ -18,9 +21,11 @@ export default function GeneralHeader() {
     }
     document.addEventListener("scroll", handleScroll);
   });
+  const dir = i18n.language === "ar" ? "rtl" : "ltr";
+
   return (
     <>
-      <header className="header-area">
+      <header dir={dir} className="header-area">
         <div className="header-menu-wrapper">
           <div className="container">
             <div className="row">

@@ -19,12 +19,40 @@ import home2 from "../../assets/images/home1.jpg";
 function Home2() {
   const [AllVistedPlaces, setAllVistedPlaces] = useState([]);
   const [vistiedLoading, setVistiedLoading] = useState(false);
+  const [Home1, setHom1] = useState("");
 
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
     getMostVisted();
+    getUserMyImage();
   }, []);
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Gate Of Somalia") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getMostVisted = () => {
     setVistiedLoading(true);
@@ -93,7 +121,7 @@ function Home2() {
       <GeneralHeader />
 
       {/* Banner */}
-      <BannerTwo bgImg={home2} />
+      <BannerTwo bgImg={Home1} />
 
       {/* Popular Destination */}
       {/* <section className="cat-area destination-area padding-top-100px padding-bottom-100px">

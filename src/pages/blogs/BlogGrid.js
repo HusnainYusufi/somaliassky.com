@@ -38,7 +38,7 @@ function BlogGrid() {
               img: item.image[0] ? ImageUrl + item.image[0] : img2,
               title: item.title,
               titleLink: `/blog-single/${item._id}`,
-              desc: item.description,
+              desc: item.description.slice(0, 100),
               date: "12 Jan, 2020",
               meta: "Tips & Tricks",
               metaLink: "#",

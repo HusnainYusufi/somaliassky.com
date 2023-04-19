@@ -8,9 +8,9 @@ import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import breadcrumbimg from "../assets/images/bread-bg.jpg";
 import sectiondata from "../store/store";
 import { MdClose } from "react-icons/md";
+import { url, ImageUrl } from "../environment";
 import { IoMdPaperPlane } from "react-icons/io";
 import { FiCheck } from "react-icons/fi";
-import { url } from "../environment";
 const state = {
   breadcrumbimg: breadcrumbimg,
 };
@@ -19,7 +19,36 @@ function PricingPlan() {
   const [isLoading, setIsLoading] = React.useState(false);
   useEffect(() => {
     getAllplans();
+    getUserMyImage();
   }, []);
+
+  const [Home1, setHom1] = React.useState("");
+
+  const getUserMyImage = () => {
+    // setListingLoader(true);
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // "access-control-allow-origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "About") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const getAllplans = () => {
     setIsLoading(true);
     fetch(`${url}/rocket/getRocketPlans`, {
@@ -67,7 +96,7 @@ function PricingPlan() {
       <Breadcrumb
         CurrentPgTitle="Pricing Plans"
         MenuPgTitle="pages"
-        img={state.breadcrumbimg}
+        img={Home1}
       />
 
       {/* Pricing Plan */}
