@@ -5,11 +5,14 @@ import { AiOutlineUser } from "react-icons/ai";
 import { FiPhone, FiExternalLink } from "react-icons/fi";
 import Button from "../../common/Button";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function WidgetAuthor({ contents }) {
   const [User, setUser] = React.useState(
     JSON.parse(localStorage.getItem("user"))
   );
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="sidebar-widget">
@@ -30,7 +33,7 @@ function WidgetAuthor({ contents }) {
               <i className="la">
                 <GiPositionMarker />
               </i>{" "}
-              {contents.address}
+              {t(contents.address)}
             </li>
             <li className="mb-2">
               <i className="la">
@@ -48,7 +51,7 @@ function WidgetAuthor({ contents }) {
               <i className="la">
                 <FiExternalLink />
               </i>{" "}
-              <a href={contents.websiteUrl}>{contents.website}</a>
+              <a href={contents.websiteUrl}>{t(contents.website)}</a>
             </li>
           </ul>
         </div>

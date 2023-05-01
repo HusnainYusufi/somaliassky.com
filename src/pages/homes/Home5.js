@@ -3,18 +3,27 @@ import HeaderTwo from "../../components/common/HeaderTwo";
 import BannerOneSearchInput from "../../components/banner/banner1/BannerOneSearchInput";
 import RecommendedPlace from "../../components/places/RecommendedPlace";
 import GeneralMap from "../../components/contact/GeneralMap";
+import img1 from "../../assets/images/img1.jpg"; // 263*175
+import authorimg from "../../assets/images/small-team1.jpg"; // 67*60
+import CircularProgress from "@mui/material/CircularProgress";
+
 import Footer from "../../components/common/footer/Footer";
 import ScrollTopBtn from "../../components/common/ScrollTopBtn";
 import sectiondata from "../../store/store";
+import { RiHotelBedLine } from "react-icons/ri";
 import { url, ImageUrl } from "../../environment";
-
+import { IoIosCheckmarkCircle, IoMdStar, IoMdStarHalf } from "react-icons/io";
 function Home5() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getAllCordinate();
+    getAllSales();
   }, []);
 
   const [Cordinates, setAllCordinates] = React.useState([]);
+  const [SalesPlaces, setAllSalesPlaces] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(false);
+
   const getAllCordinate = () => {
     // setLoading(true)
     fetch(`${url}/listing/getAllCordinates`, {
@@ -37,6 +46,81 @@ function Home5() {
         console.log(err);
       });
   };
+
+  const getTimeStamp = (timestamp) => {
+    const timeDifference = Date.parse(new Date()) - Date.parse(timestamp);
+    let timeAgo;
+    console.log(timeDifference, timestamp);
+    if (timeDifference < 1000) {
+      timeAgo = "Just now";
+    } else if (timeDifference < 60000) {
+      timeAgo = `${Math.floor(timeDifference / 1000)} seconds ago`;
+    } else if (timeDifference < 3600000) {
+      timeAgo = `${Math.floor(timeDifference / 60000)} minutes ago`;
+    } else if (timeDifference < 86400000) {
+      timeAgo = `${Math.floor(timeDifference / 3600000)} hours ago`;
+    } else {
+      timeAgo = `${Math.floor(timeDifference / 86400000)} days ago`;
+    }
+
+    return <span>{timeAgo}</span>;
+  };
+
+  const getAllSales = () => {
+    setLoading(true);
+    fetch(`${url}/listing/getPromotedListingSale`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Recommend places----->>>", response);
+        if (response.message === "Success") {
+          let item = response?.doc;
+          let Array = [];
+          item?.map((ele) => {
+            Array?.push({
+              // icon: <GiChickenOven />,
+              title: ele.title,
+              video: ele.video,
+              image: ele.images ? ImageUrl + ele.images[0] : "",
+              bedge: "New Open",
+              titleIcon: <IoIosCheckmarkCircle />,
+              titleUrl: `/listing-details/${item._id}`,
+              stitle: ele.shortDescription,
+              cardType: ele.category.name,
+              id: ele._id,
+              cardTypeIcon: <RiHotelBedLine />,
+              author: authorimg,
+              authorUrl: "#",
+              number: ele.seller.phone,
+              website: "www.mysitelink.com",
+              date: getTimeStamp(ele.createdAt),
+              view: "204",
+              ratings: [
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStar />,
+                <IoMdStarHalf />,
+                <IoMdStar className="last-star" />,
+              ],
+              ratingNum: "4.5",
+              // url:   `/list-right-sideba/${item._id}`,
+              // img: img1
+            });
+          });
+          setLoading(false);
+          setAllSalesPlaces(Array);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <main className="home-5">
       {/* Header */}
@@ -65,9 +149,23 @@ function Home5() {
       {/* Browse Categories */}
       <section className="cat-area padding-top-100px padding-bottom-90px">
         <div className="container">
-          <RecommendedPlace
-            recommendplaces={sectiondata.mostvisitedplaces.places}
-          />
+          {isLoading ? (
+            <div
+              className="row mt-5 "
+              style={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <CircularProgress />
+            </div>
+          ) : SalesPlaces.length > 0 ? (
+            <RecommendedPlace recommendplaces={SalesPlaces} />
+          ) : (
+            <div
+              className="row two-clmn margin-top-35px margin-bottom-35px text-align-center"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <h2 className="text-align-center">No Listing Found</h2>
+            </div>
+          )}
           {/* <BrowseCategoriesThree catitems={sectiondata.categories.browsecategories4.categories} /> */}
         </div>
       </section>

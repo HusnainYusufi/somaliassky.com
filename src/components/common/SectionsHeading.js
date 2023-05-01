@@ -18,7 +18,7 @@ export default function SectionsHeading({
         ) : (
           " "
         )}
-        {desc ? <p className={"sec__desc " + descClass}>{desc}</p> : " "}
+        {desc ? <p className={"sec__desc " + descClass}>{t(desc)}</p> : " "}
       </div>
       {children}
     </>

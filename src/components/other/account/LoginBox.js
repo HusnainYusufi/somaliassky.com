@@ -134,7 +134,7 @@ function LoginBox({ title, subtitle }) {
                 <div className="col-lg-12">
                   <div className="input-box">
                     <label className="label-text">
-                      {t("Username, or email")}
+                      {t("Username, O r Email")}
                     </label>
                     <div className="form-group">
                       {/* <span className="form-icon">
@@ -211,14 +211,14 @@ function LoginBox({ title, subtitle }) {
                       <div className="custom-checkbox mr-2 ml-2 d-flex align-items-center justify-content-between">
                         <div>
                           <input type="checkbox" id="chb1" />
-                          <label htmlFor="chb1">Remember Me</label>
+                          <label htmlFor="chb1">{t("Remember Me")}</label>
                         </div>
                         <div>
                           <Link
                             to="/recover"
                             className="color-text font-weight-medium"
                           >
-                            Forgot password?
+                            {t("Forgot password?")}
                           </Link>
                         </div>
                       </div>
@@ -227,16 +227,16 @@ function LoginBox({ title, subtitle }) {
                   <div className="col-lg-12">
                     <div className="btn-box margin-top-20px ml-2 margin-bottom-20px">
                       <button className="theme-btn border-0" type="submit">
-                        Login now
+                        {t("Login now")}
                       </button>
                     </div>
                   </div>
                   <div className="col-lg-12">
                     <p className="font-weight-medium ml-2">
-                      Not a member?{" "}
+                      {t("Not a member?")}{" "}
                       <Link to="/sign-up" className="color-text">
                         {" "}
-                        Register
+                        {t("Register")}
                       </Link>
                     </p>
                   </div>

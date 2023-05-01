@@ -10,6 +10,7 @@ import { MdStar, MdStarHalf } from "react-icons/md";
 import team1 from "../../assets/images/team2.jpg";
 import GeneralMap from "../../components/contact/GeneralMap";
 import ModalVideo from "react-modal-video";
+import { useTranslation } from "react-i18next";
 
 import ContactInfo from "../../components/contact/ContactInfo";
 import ListingDetailsComments from "../../components/contact/ListingDetailsComments";
@@ -30,6 +31,8 @@ const ListingDetail = () => {
   const [AllComments, setAllComments] = React.useState([]);
   const [Cordinates, setCordinates] = React.useState([]);
   const [ContactInfoDet, setContactInfo] = React.useState({});
+  const [t, i18n] = useTranslation("common");
+
   const counter = useSelector((state) => state.counter);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -39,7 +42,6 @@ const ListingDetail = () => {
   const [Refresh, setRefresh] = React.useState(0);
   const openModal = () => {
     setIsOpen(true);
-    // this.setState({ isOpen: true })
   };
   useEffect(() => {
     getSingleListing();
@@ -47,7 +49,6 @@ const ListingDetail = () => {
   }, [Refresh]);
 
   const getSingleListing = (async) => {
-    // setLoading(true)
     fetch(`${url}/listing/getSpecificListing${id}`, {
       method: "GET",
       headers: {
@@ -85,27 +86,8 @@ const ListingDetail = () => {
               ],
               replyBtn: "Reply",
               replyBtnIcon: <RiReplyLine />,
-              // replyComments: [
-              //   {
-              //     img: team1,
-              //     name: "Julian Smith",
-              //     date: "Reviewed 3 Days ago",
-              //     content:
-              //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Curabitur non nulla sit amet nisl tempus",
-              //     stars: [
-              //       <MdStar />,
-              //       <MdStar />,
-              //       <MdStar />,
-              //       <MdStar />,
-              //       <MdStarHalf />,
-              //     ],
-              //     replyBtn: "Reply",
-              //     replyBtnIcon: <RiReplyLine />,
-              //   },
-              // ],
             });
           });
-          // console.log();
           GetCommentData(CommentsArray);
           setContactInfo(contactinfos);
           setSingleDetails(item);
@@ -142,10 +124,10 @@ const ListingDetail = () => {
 
   return (
     <main className="listing-details">
-      {/* Header */}
+      {}
       <GeneralHeader />
 
-      {/* Breadcrumb */}
+      {}
       <ListingDetailsBreadcrumb
         title={SingleDetails?.title}
         SingleDetails={SingleDetails}
@@ -169,36 +151,19 @@ const ListingDetail = () => {
 
                 <div className="listing-description padding-top-40px padding-bottom-35px">
                   <h2 className="widget-title">
-                    {SingleDetails?.shortDescription}
+                    {t(SingleDetails?.shortDescription)}
                   </h2>
                   <div className="title-shape"></div>
                   <div className="section-heading mt-4">
                     <p className="sec__desc font-size-16">
-                      {SingleDetails?.description}
+                      {t(SingleDetails?.description)}
                     </p>
                   </div>
                 </div>
 
-                {/* <div className="feature-listing padding-bottom-20px">
-                  <h2 className="widget-title">
-                    {sectiondata.listingDetails.featurestitle}
-                  </h2>
-                  <div className="title-shape"></div>
-                  <ul className="list-items mt-4">
-                    {sectiondata.listingDetails.featureslists.map((item, i) => {
-                      return (
-                        <li key={i}>
-                          <i className="color-text font-size-18">{item.icon}</i>{" "}
-                          {item.title}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div> */}
-
                 <div className="video-listing padding-bottom-40px">
                   <h2 className="widget-title">
-                    {sectiondata.listingDetails.videotitle}
+                    {t(sectiondata.listingDetails.videotitle)}
                   </h2>
                   <div className="title-shape"></div>
                   <div className="video__box margin-top-35px text-center">
@@ -208,21 +173,21 @@ const ListingDetail = () => {
                           src={ImageUrl + SingleDetails?.video[0]}
                           type="video/mp4"
                         />
-                        Error Message
+                        {t("Error Message")}
                       </video>
                     ) : (
                       <div className="video__box-content">
                         <span
                           className="mfp-iframe video-popup-btn video-play-btn"
                           onClick={openModal}
-                          title="Play Video"
+                          title={t("Play Video")}
                         >
                           <span className="d-inline-block">
                             <AiOutlinePlayCircle />
                           </span>
                         </span>
                         <p className="video__desc">
-                          {sectiondata.listingDetails.videobtn}
+                          {t(sectiondata.listingDetails.videobtn)}
                         </p>
                       </div>
                     )}
@@ -237,12 +202,11 @@ const ListingDetail = () => {
 
                 <ContactInfo contactinfos={ContactInfoDet} />
 
-                {/* <CustomerFeedback /> */}
                 {AllComments.length > 0 ? (
                   <>
                     <div className="comments-wrap">
                       <h2 className="widget-title">
-                        {AllComments.length} Reviews
+                        {AllComments.length} {t("Reviews")}
                       </h2>
                       <div className="title-shape"></div>
                       <ListingDetailsComments commentlists={AllComments} />
@@ -264,26 +228,12 @@ const ListingDetail = () => {
         </div>
       </section>
 
-      {/* <section className="card-area padding-top-80px padding-bottom-100px">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="section-heading">
-                <h2 className="widget-title">{contentstate.peopleViewtitle}</h2>
-                <div className="title-shape"></div>
-              </div>
-            </div>
-          </div>
-          <PlaceOne places={sectiondata.mostvisitedplaces.places} />
-        </div>
-      </section> */}
-
       <NewsLetter
         className="mb-4"
         newsLetterContent={sectiondata.calltoactions.newsletters}
       />
 
-      {/* Footer */}
+      {}
       <Footer />
 
       <ScrollTopBtn />

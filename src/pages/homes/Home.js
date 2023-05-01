@@ -28,8 +28,6 @@ function Home() {
   const [vistiedLoading, setVistiedLoading] = useState(false);
   const [LookingFor, setLookingFor] = useState({ id: "" });
   const token = localStorage.getItem("token");
-  // useEffect(() => {
-  // }, [])
   useEffect(() => {
     getAllCategories();
     getMostVisted();
@@ -41,13 +39,11 @@ function Home() {
   const [Home1, setHom1] = useState("");
 
   const getUserMyImage = () => {
-    // setListingLoader(true);
     fetch(`${url}/webpage/getWebImage`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        // "access-control-allow-origin": "*",
       },
     })
       .then((response) => response.json())
@@ -76,29 +72,19 @@ function Home() {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        // authorization: `bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((response) => {
         console.log("All categories", response);
         if (response.message === "Success") {
-          //   navigate.push("/");
-          // setAllCategories(response.doc)
-          // console.log(response?.doc.categories[0].image);
           let Array = [];
           let Array1 = [];
 
-          // setAllCategories(
           response?.doc?.categories.map((item, index) => {
-            // response?.doc?.count.map((ele) => {
-            // if (item.type === "Home1") {
-            // if (item._id === ele._id) {
-            // console.log(ImageUrl + item.image);
             Array.push({
               icon: "",
               title: item.name,
-              // id:item._id,
               stitle: "12 Listings",
               count:
                 item._id === response?.doc?.count[index]?._id
@@ -109,31 +95,26 @@ function Home() {
                   ? `/list-map-view/${item._id}`
                   : `/list-right-sidebar/${item._id}`,
 
-              // `/list-right-sidebar/${item._id}`,
               img: ImageUrl + item.image,
             });
-            // }
-            // });
           });
 
           setAllCategories(Array.slice(0, 7));
           let Obj = Array.slice(0, 7);
-          Obj[7] = {
-            // icon: <IoIosCheckmarkCircle />,
-            title: "Others",
-            // id:item._id,
-            stitle: "12 Listings",
+          if (Array.length > 6) {
+            Obj[7] = {
+              title: "Others",
+              stitle: "12 Listings",
 
-            url: "/all-categories",
+              url: "/all-categories",
 
-            // `/list-right-sidebar/${item._id}`,
-            img: other,
-          };
+              img: other,
+            };
+          }
+
           setAllCategories(Obj);
 
-          // );
           setLoading(false);
-          //   localStorage.setItem('token',response.doc)
           setTimeout(() => {
             console.log("Hello, World!");
             CheckImage();
@@ -145,13 +126,11 @@ function Home() {
       });
   };
   const getUserMyListing = () => {
-    // setListingLoader(true);
     fetch(`${url}/user/getMyListing`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        // "access-control-allow-origin": "*",
       },
       body: JSON.stringify({
         userid: UserID?.doc?._id,
@@ -175,22 +154,16 @@ function Home() {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        // authorization: `bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((response) => {
         console.log("All Visted places", response);
         if (response.message === "Success") {
-          //   navigate.push("/");
-          // setAllCategories(response.doc)
-          // console.log(response?.doc.categories[0].image);
           let Array = [];
 
-          // setAllCategories(
           response?.doc?.map((item, index) => {
             Array?.push({
-              // icon: <GiChickenOven />,
               title: item.title,
               video: item.video,
               image: item.images ? ImageUrl + item.images[0] : "",
@@ -215,19 +188,11 @@ function Home() {
                 <IoMdStar className="last-star" />,
               ],
               ratingNum: "4.5",
-              // url:   `/list-right-sideba/${item._id}`,
-              // img: img1
             });
           });
 
           setAllVistedPlaces(Array);
-          // );
           setVistiedLoading(false);
-          //   localStorage.setItem('token',response.doc)
-          // setTimeout(() => {
-          //   console.log("Hello, World!");
-          //   CheckImage();
-          // }, 6000);
         }
       })
       .catch((err) => {
@@ -257,30 +222,30 @@ function Home() {
   const CheckImage = () => {
     console.log(AllCategories);
   };
-  const { t } = useTranslation();
+  const [t, i18n] = useTranslation("common");
+
   useEffect(() => {
     getUserMyListing();
   }, []);
 
   return (
     <main className="home-1">
-      {/* Header */}
+      {}
       <GeneralHeader />
-      {/* Hero Banner */}
+      {}
       <BannerOne
         Home3={Home1}
         setLookingFor={setLookingFor}
         LookingFor={LookingFor}
       />
-      {/* Popular Categories */}
-      {/* {!fullScreen && ( */}
+      {}
+      {}
       <section className="cat-area padding-top-100px padding-bottom-90px">
         <div className="container">
           <div className="row section-title-width text-center">
             <SectionsHeading
               className={"mt-1"}
               title={sectiondata.popularcategories.sectitle}
-              // desc={sectiondata.popularcategories.seccontent}
             />
           </div>
           {isLoading ? (
@@ -299,31 +264,22 @@ function Home() {
               className="row two-clmn margin-top-35px margin-bottom-35px text-align-center"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <h2 className="text-align-center">No Categories Found</h2>
+              <h2 className="text-align-center">{t("No Categories Found")}</h2>
             </div>
           )}
         </div>
       </section>
-      {/* )} */}
+      {}
 
-      {/* How It Work */}
-      {/* <section className="hiw-area text-center padding-top-100px padding-bottom-110px">
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.howitworks.hiw1.sectitle} desc={sectiondata.howitworks.hiw1.seccontent} />
-                    </div>
-
-                    <HowItWorkOne hiw1content={sectiondata.howitworks.hiw1} />
-                </div>
-            </section> */}
-      {/* Most Visited Place */}
+      {}
+      {}
+      {}
       <section className="card-area text-center padding-bottom-100px">
         <div className="container">
           <div className="row section-title-width text-center">
             <SectionsHeading
               className={"mt-1"}
               title={sectiondata.mostvisitedplaces.sectitle}
-              // desc={sectiondata.mostvisitedplaces.seccontent}
               descClass=" font-size-17 pr-3 mb-3"
             />
           </div>
@@ -341,33 +297,17 @@ function Home() {
               className="row two-clmn margin-top-35px margin-bottom-35px text-align-center"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <h2 className="text-align-center">No Ads Found</h2>
+              <h2 className="text-align-center">{t("No Ads Found")}</h2>
             </div>
           )}
-          {/* <PlaceOne places={sectiondata.mostvisitedplaces.places} /> */}
+          {}
         </div>
       </section>
-      {/* FunFacts */}
-      {/* <section className="funfact-area section-bg-2 padding-top-100px padding-bottom-50px text-center">
-                <div className="container">
-                    <div className="row section-title-width">
-                        <SectionsHeading title={sectiondata.funfacts.funfact1.sectitle} titleClass="text-white" desc={sectiondata.funfacts.funfact1.seccontent} />
-                    </div>
-
-                    <FunFactsOne countitems={sectiondata.funfacts.funfact1.counteritems} />
-                </div>
-            </section> */}
-      {/* How It Work */}
-      {/* <section className="hiw-area padding-top-100px padding-bottom-80px after-none text-center">
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.howitworks.hiw2.sectitle} desc={sectiondata.howitworks.hiw2.seccontent} />
-                    </div>
-
-                    <InfoBox3 infoitems={sectiondata.howitworks.hiw2.items} />
-                </div>
-            </section> */}
-      {/* CTA */}
+      {}
+      {}
+      {}
+      {}
+      {}
       <section className="cta-area section-bg column-sm-center padding-top-80px padding-bottom-80px">
         {sectiondata.calltoactions.cta1.shapes.map((img, index) => {
           return (
@@ -401,51 +341,13 @@ function Home() {
           </div>
         </div>
       </section>
-      {/* Testimonial */}
-      {/* <section className="testimonial-area padding-top-100px padding-bottom-100px text-center">
-                {sectiondata.testimonialdata.tmimage.map((tmimg, index) => {
-                    return (
-                        <img key={index} src={tmimg.tmimg} alt="testimonial" className="random-img" />
-                    )
-                })}
-                <div className="container">
-                    <div className="row section-title-width text-center">
-                        <SectionsHeading title={sectiondata.testimonialdata.sectitle} desc={sectiondata.testimonialdata.seccontent} />
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-8 mx-auto mt-4">
-                            <Testimonial slideitems={sectiondata.testimonialdata.sliders} />
-                        </div>
-                    </div>
-                </div>
-            </section> */}
-      <SectionDivider />
-      {/* Blog */}
-      {/* <section className="blog-area padding-top-100px padding-bottom-80px">
-                <div className="container">
-                    <div className="row section-title-width section-title-ml-mr-0">
-                        <div className="col-lg-8">
-                            <SectionsHeading title={sectiondata.latestarticles.sectitle} desc={sectiondata.latestarticles.seccontent} />
-                        </div>
-                        <div className="col-lg-4">
-                            <div className="btn-box h-100 d-flex align-items-center justify-content-end">
-                                <Button text={sectiondata.latestarticles.btntext} url={sectiondata.latestarticles.btnurl} className=" margin-top-100px" />
-                            </div>
-                        </div>
-                    </div>
 
-                    <LatestBlog latestarticles={sectiondata.latestarticles.items} />
-                </div>
-            </section> */}
-      {/* CTA 2 */}
+      <SectionDivider />
+
       <section className="cta-area cta-area3 padding-top-100px padding-bottom-100px section-bg">
         <CtaOne />
       </section>
-      {/* Client Logo */}
-      {/* <ClientLogo logos={sectiondata.clientlogos} /> */}
-      {/* NewsLetter */}
-      {/* <NewsLetter newsLetterContent={sectiondata.calltoactions.newsletters} /> */}
-      {/* Footer */}
+
       <Footer />
       <ScrollTopBtn />
     </main>

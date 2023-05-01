@@ -134,7 +134,7 @@ export default function Navbar() {
                             <Link
                               to={ditem.path}
                               class="dropbtn"
-                              onClick={() => changeLanguage("so")}
+                              // onClick={() => changeLanguage("so")}
                             >
                               {t(ditem.title)}
                               {"  "}

@@ -2,12 +2,15 @@ import React from "react";
 import { GiPositionMarker } from "react-icons/gi";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiPhone, FiExternalLink } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 function ContactInfo({ contactinfos }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="contact-listing padding-top-40px padding-bottom-40px">
-        <h2 className="widget-title">{contactinfos.title}</h2>
+        <h2 className="widget-title">{t(contactinfos.title)}</h2>
         <div className="title-shape"></div>
         <div className="info-list margin-top-35px padding-bottom-35px">
           <ul>
@@ -17,9 +20,9 @@ function ContactInfo({ contactinfos }) {
                   <i className="la d-inline-block">
                     <GiPositionMarker />
                   </i>{" "}
-                  Address:
+                  {t("Address")}:
                 </span>
-                {contactinfos.address}
+                {t(contactinfos.address)}
               </li>
             ) : (
               ""
@@ -30,10 +33,10 @@ function ContactInfo({ contactinfos }) {
                   <i className="la d-inline-block">
                     <FaRegEnvelope />
                   </i>{" "}
-                  Email:
+                  {t("Email")}:
                 </span>
                 <a href={"mailto:" + contactinfos.email}>
-                  {contactinfos.email}
+                  {t(contactinfos.email)}
                 </a>
               </li>
             ) : (
@@ -45,7 +48,7 @@ function ContactInfo({ contactinfos }) {
                   <i className="la d-inline-block">
                     <FiPhone />
                   </i>{" "}
-                  Phone:
+                  {t("Phone")}:
                 </span>
                 {contactinfos.number}
               </li>
@@ -58,9 +61,9 @@ function ContactInfo({ contactinfos }) {
                   <i className="la d-inline-block">
                     <FiExternalLink />
                   </i>{" "}
-                  Website:
+                  {t("Website")}:
                 </span>
-                <a href={contactinfos.websiteUrl}>{contactinfos.website}</a>
+                <a href={contactinfos.websiteUrl}>{t(contactinfos.website)}</a>
               </li>
             ) : (
               ""

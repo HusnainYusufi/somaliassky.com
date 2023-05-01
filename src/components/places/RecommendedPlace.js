@@ -5,12 +5,14 @@ import { FaRegCalendarCheck } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { url } from "../../environment";
 import { IconButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 function RecommendedPlace({ recommendplaces }) {
   const User = JSON.parse(localStorage.getItem("user"));
   const [ListingId, setListingId] = useState([]);
+  const [t, i18n] = useTranslation("common");
 
   useEffect(() => {
     myFavouritesProducts();
@@ -123,7 +125,7 @@ function RecommendedPlace({ recommendplaces }) {
                         item.titleIcon ? "badge" : "badge badge-closed"
                       }
                     >
-                      {item.bedge}
+                      {t(item.bedge)}
                     </span>
                     <span
                       className="badge-toggle"
@@ -165,13 +167,13 @@ function RecommendedPlace({ recommendplaces }) {
                   <div className="card-content">
                     <a href={item.titleUrl}>
                       <h5 className="card-meta">
-                        <span>{item.cardTypeIcon}</span> {item.cardType}
+                        <span>{item.cardTypeIcon}</span> {t(item.cardType)}
                       </h5>
                       <h4 className="card-title">
                         {item.title}
                         <i>{item.titleIcon}</i>
                       </h4>
-                      <p className="card-sub">{item.stitle}</p>
+                      <p className="card-sub">{t(item.stitle)}</p>
                     </a>
                     <a href={item.authorUrl} className="author-img">
                       <img src={item.author} alt="author-img" />
@@ -187,7 +189,7 @@ function RecommendedPlace({ recommendplaces }) {
                         <span className="la d-inline-block">
                           <IoIosLink />
                         </span>{" "}
-                        <a href={item.websiteUrl}>{item.website}</a>
+                        <a href={item.websiteUrl}>{t(item.website)}</a>
                       </li>
                       <li>
                         <span className="la d-inline-block">

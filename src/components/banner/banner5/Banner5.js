@@ -14,7 +14,7 @@ const Banner5 = ({ Home1 }) => {
             <div className="row">
               <div className="col-lg-8">
                 <div className="breadcrumb-content">
-                  <h2 className="breadcrumb__title mb-0">Somaliasky Sky </h2>
+                  <h2 className="breadcrumb__title mb-0">SomaliaskySky </h2>
                 </div>
               </div>
               <div className="col-lg-4 text-right">

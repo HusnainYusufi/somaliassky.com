@@ -3,6 +3,8 @@ import { GiPositionMarker, GiChickenOven } from "react-icons/gi";
 import { MdStar, MdStarBorder, MdClose } from "react-icons/md";
 import { BsPencil } from "react-icons/bs";
 import { AiOutlineFlag } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
+
 import {
   FaRegMoneyBillAlt,
   FaFacebookF,
@@ -136,6 +138,9 @@ function ListingDetailsBreadcrumb({
       false
     );
   });
+
+  const [t, i18n] = useTranslation("common");
+
   let background =
     ImageUrl + SingleDetails && SingleDetails?.images?.length > 0
       ? ImageUrl + SingleDetails?.images[0]
@@ -153,12 +158,12 @@ function ListingDetailsBreadcrumb({
             <div className="row">
               <div className="col-lg-12 position-relative">
                 <div className="breadcrumb-content">
-                  <h2 className="breadcrumb__title">{title}</h2>
+                  <h2 className="breadcrumb__title">{t(title)}</h2>
                   <p className="breadcrumb__desc">
                     <span className="la d-inline-block">
                       <GiPositionMarker />
                     </span>{" "}
-                    {address1 ? address1 : address2}
+                    {address1 ? t(address1) : t(address2)}
                   </p>
                   <ul className="listing-info mt-3 mb-3">
                     <li>
@@ -194,7 +199,7 @@ function ListingDetailsBreadcrumb({
                         <i className="d-inline-block">
                           <GiChickenOven />
                         </i>{" "}
-                        {SingleDetails?.category?.name}
+                        {t(SingleDetails?.category?.name)}
                       </span>
                     </li>
                   </ul>
@@ -251,7 +256,7 @@ function ListingDetailsBreadcrumb({
                         <i className="d-inline-block">
                           <AiOutlineFlag />
                         </i>{" "}
-                        report
+                        {t("report")}
                       </span>
                     </li>
                   </ul>
@@ -292,13 +297,13 @@ function ListingDetailsBreadcrumb({
                   <span className="mb-0">
                     <AiOutlineFlag />
                   </span>{" "}
-                  Report this Listing
+                  {t("Report this Listing")}
                 </h4>
               </div>
               <div className="contact-form-action">
                 <form method="post">
                   <div className="msg-box">
-                    <label className="label-text">Write Message</label>
+                    <label className="label-text">{t("Write Message")}</label>
                     <div className="form-group">
                       <i className="form-icon">
                         <BsPencil />
@@ -319,7 +324,7 @@ function ListingDetailsBreadcrumb({
                       <i>
                         <RiSendPlane2Line />
                       </i>{" "}
-                      Send message
+                      {t("Send message")}
                     </button>
                   </div>
                 </form>

@@ -10,6 +10,7 @@ import WidgetPostedBy from "./widgets/WidgetPostedBy";
 import Button from "../common/Button";
 import sectiondata from "../../store/store";
 import { BsChevronRight } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 function ListingListSidebar({
   getlistingByFilter,
@@ -21,6 +22,8 @@ function ListingListSidebar({
   setCategoryId,
   FormFields,
 }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="sidebar">
@@ -54,7 +57,7 @@ function ListingListSidebar({
               onClick={getlistingByFilter}
               class="btn btn-dark"
             >
-              Apply filter
+              {t("Apply filter")}
               <span className="d-inline-block">
                 <BsChevronRight />
               </span>

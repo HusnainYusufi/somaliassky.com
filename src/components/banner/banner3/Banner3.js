@@ -15,9 +15,9 @@ function Banner3({ bgImg, herotitle, herocontent }) {
         <div className="hero-overlay"></div>
         {bgImg ? (
           <div className="video-bg">
-            <video autoPlay loop>
+            {/* <video autoPlay loop>
               <source src={bgImg} />
-            </video>
+            </video> */}
           </div>
         ) : (
           ""

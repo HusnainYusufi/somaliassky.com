@@ -25,7 +25,10 @@ export default function CtaOne() {
         <div className="row">
           <div className="col-lg-5">
             <div className="mobile-img">
-              <img src={sectiondata.calltoactions.cta2.img} alt="mobile-img" />
+              <img
+                src={sectiondata.calltoactions.cta2.img}
+                alt={t("mobile-img")}
+              />
             </div>
           </div>
           <div className="col-lg-6 ml-auto">
@@ -44,7 +47,7 @@ export default function CtaOne() {
                         className="d-flex align-items-center mb-2"
                         key={index}
                       >
-                        <span className="la">{item.icon}</span> {item.text}
+                        <span className="la">{item.icon}</span> {t(item.text)}
                       </li>
                     );
                   }

@@ -4,8 +4,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { useTranslation } from "react-i18next";
 
 function WidgetSortBy({ sortitems, title, setSort }) {
+  const [t, i18n] = useTranslation("common");
+
   const handleRadioGroupChange = (event) => {
     setSort(event.target.value);
     console.log(event.target.value);
@@ -13,7 +16,7 @@ function WidgetSortBy({ sortitems, title, setSort }) {
   return (
     <>
       <div className="sidebar-widget">
-        <h3 className="widget-title">{title}</h3>
+        <h3 className="widget-title">{t(title)}</h3>
         <div className="title-shape"></div>
         <div className="check-box-list mt-4">
           {/* {sortitems.map((item) => {
@@ -28,12 +31,12 @@ function WidgetSortBy({ sortitems, title, setSort }) {
               <FormControlLabel
                 value="Newest"
                 control={<Radio />}
-                label="Newest"
+                label={t("Newest")}
               />
               <FormControlLabel
                 value="Oldest"
                 control={<Radio />}
-                label="Oldest"
+                label={t("Oldest")}
               />
             </RadioGroup>
           </FormControl>

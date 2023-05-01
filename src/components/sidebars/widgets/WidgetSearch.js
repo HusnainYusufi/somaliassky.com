@@ -1078,17 +1078,20 @@ function WidgetSearch({
               <input
                 className="form-control"
                 type="text"
-                placeholder="What are you looking for?"
+                placeholder={t("What are you looking for?")}
               />
             </div>
           </form>
         </div>
         <div className="sidebar-option mb-3">
-          <Select placeholder="Select a Location" options={state.locations} />
+          <Select
+            placeholder={t("Select a Location")}
+            options={state.locations}
+          />
         </div>
         <div className="sidebar-option mb-3">
           <Select
-            placeholder="Select a Category"
+            placeholder={t("Select a Category")}
             onChange={(e) => setCategoryId(e.value)}
             options={AllCategories}
           />

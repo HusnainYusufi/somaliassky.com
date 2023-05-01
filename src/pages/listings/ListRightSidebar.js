@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BsGrid, BsListUl } from "react-icons/bs";
 import { FiRefreshCw } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
+
 import GeneralHeader from "../../components/common/GeneralHeader";
 import CircularProgress from "@mui/material/CircularProgress";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -92,6 +94,7 @@ function ListRightSidebar() {
   const [isLoading, setLoading] = useState(false);
   const [CategoryId, setCategoryId] = useState("");
   const [FormFieldsSelected, setFormFieldsSelected] = useState([{ id: "" }]);
+  const [t, i18n] = useTranslation("common");
 
   const [SubId, setSubId] = useState("");
   const [MinPrice, setMinPrice] = useState();
@@ -444,7 +447,7 @@ function ListRightSidebar() {
               </div>
             ) : AllListing.length == 0 ? (
               <div className="col-lg-8 row align-items-center justify-content-center">
-                <h3>No Listing Found</h3>
+                <h3>{t("No Listing Found")}</h3>
               </div>
             ) : (
               <div className="col-lg-8 row align-items-start">

@@ -1020,45 +1020,6 @@ export default function BannerOneSearchInput({ City }) {
 
   const [t, i18n] = useTranslation("common");
 
-  const loadOptions = (inputValue) => {
-    console.log(inputValue);
-    fetch(`${url}/listing/searchListing`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify({
-        title: inputValue,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("Sugession", response);
-        if (response.message === "Success") {
-          //   navigate.push("/");
-          // setAllCategories(response.doc)
-          let Array = [];
-
-          // setAllCategories(
-          response?.doc.map((item) => {
-            Array.push({
-              label: item.title,
-              value: item._id,
-            });
-          });
-
-          setAllSugessions(Array);
-          // );
-          //   setLoading(false);
-          //   localStorage.setItem('token',response.doc)
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const SearchListing = (e) => {
     // e.preventDefault();
 

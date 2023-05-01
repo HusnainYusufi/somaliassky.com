@@ -1,8 +1,11 @@
 import React, { Component, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 const WidgetFilterPrice = ({ setMinPrice, setMaxPrice }) => {
   const [Value, setValue] = useState([20, 50]);
+  const [t, i18n] = useTranslation("common");
+
   useEffect(() => {
     let minDollars = 0;
     let maxDollars = 500;
@@ -46,7 +49,7 @@ const WidgetFilterPrice = ({ setMinPrice, setMaxPrice }) => {
         </div>
         <div className="price-slider-amount d-flex">
           <label htmlFor="amount" className="filter__label">
-            {Filterstate.stitle}
+            {t(Filterstate.stitle)}
           </label>
           <div className="price-wrap d-flex">
             <div className="price text-violet">
