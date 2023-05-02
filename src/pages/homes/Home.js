@@ -269,11 +269,7 @@ function Home() {
           )}
         </div>
       </section>
-      {}
 
-      {}
-      {}
-      {}
       <section className="card-area text-center padding-bottom-100px">
         <div className="container">
           <div className="row section-title-width text-center">
@@ -303,11 +299,7 @@ function Home() {
           {}
         </div>
       </section>
-      {}
-      {}
-      {}
-      {}
-      {}
+
       <section className="cta-area section-bg column-sm-center padding-top-80px padding-bottom-80px">
         {sectiondata.calltoactions.cta1.shapes.map((img, index) => {
           return (

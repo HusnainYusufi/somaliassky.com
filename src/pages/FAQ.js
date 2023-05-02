@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GeneralHeader from "../components/common/GeneralHeader";
+import { useTranslation } from "react-i18next";
 import Banner6 from "../components/banner/banner6/Banner6";
 import FaqCategories from "../components/other/categories/FaqCategories";
 import AccordionList from "../components/other/AccordionList";
@@ -14,12 +15,15 @@ import { url, ImageUrl } from "../environment";
 import { FaMinus, FaPlus } from "react-icons/fa";
 function Faq() {
   const [Home1, setHom1] = React.useState("");
-
+  const [isLoading, setLoading] = useState(false);
+  const [AllFAQ, setAllFAQ] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
     getAllFaq();
     getUserMyImage();
   }, []);
+
+  const [t, i18n] = useTranslation("common");
 
   const getUserMyImage = () => {
     // setListingLoader(true);
@@ -46,8 +50,6 @@ function Faq() {
         console.log(err);
       });
   };
-  const [isLoading, setLoading] = useState(false);
-  const [AllFAQ, setAllFAQ] = useState([]);
 
   const getAllFaq = () => {
     setLoading(true);
@@ -82,6 +84,7 @@ function Faq() {
         console.log(err);
       });
   };
+
   return (
     <main className="faq-page">
       {/* Header */}

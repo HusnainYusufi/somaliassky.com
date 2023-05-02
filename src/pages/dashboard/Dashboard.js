@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import GeneralHeader from "../../components/common/GeneralHeader";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import img1 from "../../assets/images/img1.jpg"; // 263*175
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { message } from "antd";
 import { Upload } from "antd";
 
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import BoostModal from "./BoostModal";
@@ -21,21 +18,18 @@ import {
   FaArchive,
   FaRegTrashAlt,
   FaRocket,
-  FaRegEnvelope,
 } from "react-icons/fa";
 import BostPost from "../../assets/images/BoostedPost.png";
 import { GiPositionMarker } from "react-icons/gi";
-import { FiPhone, FiEdit } from "react-icons/fi";
+import { FiPhone } from "react-icons/fi";
 import { url, ImageUrl } from "../../environment";
 // import imguser from "../../assets/images/user.png";
 import imguser from "../../assets/images/team1.jpg"; // 368*331
-
+import ListingTab from "../../pages/dashboard/ListingTab";
 import {
   AiOutlineUser,
   AiOutlinePlusCircle,
   AiOutlinePoweroff,
-  AiOutlineYoutube,
-  AiOutlineExclamationCircle,
 } from "react-icons/ai";
 import NewsLetter from "../../components/other/cta/NewsLetter";
 import Footer from "../../components/common/footer/Footer";
@@ -78,7 +72,7 @@ const Dashboard = () => {
   useEffect(() => {
     const UserID = JSON.parse(localStorage.getItem("user"));
     // getArchivedPost();
-    getUserListing();
+    getAllCategories();
     // getProfileEdit();
     // myFavouritesProducts();
     // setUserDetails({
@@ -106,6 +100,7 @@ const Dashboard = () => {
     console.log(obj);
     setEditProfile(obj);
   };
+
   const handleClose = () => {
     setBoastModalOpen(false);
   };
@@ -128,6 +123,7 @@ const Dashboard = () => {
 
     return <span>{timeAgo}</span>;
   };
+
   const UserID = JSON.parse(localStorage.getItem("user"));
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
@@ -145,6 +141,28 @@ const Dashboard = () => {
       duration: 3,
     });
   };
+
+  const getAllCategories = () => {
+    fetch(`${url}/category/getAllcategory`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("All categories", response);
+        if (response.message === "Success") {
+          let Array = [];
+          let Array1 = [];
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getUserListing = () => {
     setListingLoader(true);
     fetch(`${url}/user/myListings`, {
@@ -152,7 +170,7 @@ const Dashboard = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        // "access-control-allow-origin": "*",
+        "access-control-allow-origin": "*",
       },
       body: JSON.stringify({
         userid: UserID?.doc?._id,
@@ -558,100 +576,7 @@ const Dashboard = () => {
               <div className="col-lg-12">
                 <div className="tab-content" id="nav-tabContent">
                   <TabPanel>
-                    {ListingLoader ? (
-                      <div
-                        className="col-lg-8 row mt-5 "
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <CircularProgress />
-                      </div>
-                    ) : AllListing?.length > 0 ? (
-                      <div className="row">
-                        {AllListing?.map((item, i) => {
-                          return (
-                            <div key={i} className="col-lg-4 column-td-6">
-                              <div className="card-item">
-                                <Link
-                                  to={item.cardLink}
-                                  className="card-image-wrap"
-                                >
-                                  <div className="card-image">
-                                    <img
-                                      src={item.img}
-                                      className="card__img"
-                                      alt="Card"
-                                      width={40}
-                                      height={220}
-                                    />
-                                  </div>
-                                </Link>
-                                <div className="card-content-wrap">
-                                  <div className="card-content">
-                                    <Link to={item.cardLink}>
-                                      <h4 className="card-title mt-0">
-                                        {item.title}
-                                      </h4>
-                                      <p className="card-sub">
-                                        {item.subtitle}
-                                      </p>
-                                    </Link>
-                                  </div>
-                                  <div className="rating-row">
-                                    <div className="edit-info-box">
-                                      <button
-                                        onClick={() => ArchivedPost(item.id)}
-                                        type="button"
-                                        className="theme-btn button-success border-0 mr-1 mb-1"
-                                      >
-                                        <span className="la">
-                                          <FaArchive />
-                                        </span>{" "}
-                                        Archived
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="theme-btn delete-btn border-0 mr-1"
-                                        data-toggle="modal"
-                                        data-target=".product-delete-modal"
-                                        onClick={(e) =>
-                                          handleClickOpen(e, item.id)
-                                        }
-                                      >
-                                        <span className="la">
-                                          <FaRocket />
-                                        </span>{" "}
-                                        Boost
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="theme-btn delete-btn border-0 mb-1 mr-1"
-                                        data-toggle="modal"
-                                        data-target=".product-delete-modal"
-                                      >
-                                        <span className="la">
-                                          {item.deleteIcon}
-                                        </span>{" "}
-                                        {item.deleteTxt}
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div
-                        className="row two-clmn margin-top-35px margin-bottom-35px text-align-center"
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <h2 className="text-align-center">No Listing Found</h2>
-                      </div>
-                    )}
+                    <ListingTab />
                   </TabPanel>
                   <TabPanel>
                     <div className="row">

@@ -5,6 +5,8 @@ import SectionsHeading from "../../components/common/SectionsHeading";
 import BrowseCategories from "../../components/other/categories/BrowseCategories";
 import SectionDivider from "../../components/common/SectionDivider";
 import Button from "../../components/common/Button";
+import { useTranslation } from "react-i18next";
+
 import { IoIosCheckmarkCircle, IoMdStar, IoMdStarHalf } from "react-icons/io";
 import imguser from "../../assets/images/user.png";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -53,6 +55,8 @@ function Home3() {
         console.log(err);
       });
   };
+
+  const [t, i18n] = useTranslation("common");
 
   const getMostVisted = () => {
     setLoading(true);
@@ -194,36 +198,8 @@ function Home3() {
 
       <SectionDivider />
 
-      {}
-      {}
-
       <SectionDivider />
 
-      {}
-      {}
-
-      {}
-      {}
-
-      {}
-      {}
-
-      <SectionDivider />
-
-      {}
-      {}
-
-      <SectionDivider />
-
-      {}
-      {}
-
-      <SectionDivider />
-
-      {}
-      {}
-
-      {}
       <section className="cta-area cta-area3 column-sm-center section-bg-2 padding-top-70px padding-bottom-70px">
         <div className="container">
           <div className="row align-items-center">

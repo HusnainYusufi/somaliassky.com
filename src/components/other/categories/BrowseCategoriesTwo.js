@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function BrowseCategoriesTwo({ catitems }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="row mt-5">
@@ -23,7 +26,7 @@ function BrowseCategoriesTwo({ catitems }) {
                         <span className="d-inline-block">{item.icon}</span>
                       </div>
                       <div className="cat-content">
-                        <h4 className="cat__title">{item.title}</h4>
+                        <h4 className="cat__title">{t(item.title)}</h4>
                       </div>
                     </Link>
                   </figcaption>

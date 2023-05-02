@@ -3,8 +3,11 @@ import SectionDivider from "../../common/SectionDivider";
 import { FiCheck } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { MdClose } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 function Plans({ plans }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="row">
@@ -18,7 +21,7 @@ function Plans({ plans }) {
               >
                 <div className="price-head">
                   <i className="fa price__icon">{item.icon}</i>
-                  <h3 className="price__title mt-3">{item.title}</h3>
+                  <h3 className="price__title mt-3">{t(item.title)}</h3>
                 </div>
                 <div className="price-content">
                   <div className="price-number">
@@ -26,9 +29,9 @@ function Plans({ plans }) {
                       <sup>{item.currency}</sup>
                       {item.price}
                     </p>
-                    <p className="price__subtitle">{item.mo}</p>
+                    <p className="price__subtitle">{t(item.mo)}</p>
                     <p className="price__subtitle">
-                      No of Rockets {item.rockets}
+                      {t("No of Rockets")} {item.rockets}
                     </p>
                   </div>
 
@@ -50,7 +53,7 @@ function Plans({ plans }) {
                                 </span>
                               )}
                             </i>{" "}
-                            {ftitem.description}
+                            {t(ftitem.description)}
                           </li>
                         );
                       })}
@@ -65,7 +68,7 @@ function Plans({ plans }) {
                             : "theme-btn w-100"
                         }
                       >
-                        {item.buttonTxt}
+                        {t(item.buttonTxt)}
                       </Link>
                     </div>
                   </div>
@@ -76,7 +79,7 @@ function Plans({ plans }) {
                     <i className="la">
                       <FiCheck />
                     </i>
-                    <span>Recommended</span>
+                    <span>{t("Recommended")}</span>
                   </div>
                 ) : (
                   ""

@@ -3,6 +3,7 @@ import { IoIosLink } from "react-icons/io";
 import { FiHeart, FiPhone } from "react-icons/fi";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -11,6 +12,7 @@ import { useState } from "react";
 import { url } from "../../environment";
 function PlaceGrid({ setAllListing, griditems }) {
   const User = JSON.parse(localStorage.getItem("user"));
+  const [t, i18n] = useTranslation("common");
 
   const [ListingId, setListingId] = useState([]);
 
@@ -48,6 +50,7 @@ function PlaceGrid({ setAllListing, griditems }) {
     console.log(check, item);
     favouriatePost(check, item?.id);
   };
+
   const handleClickUn = (e, check, item) => {
     e.preventDefault();
     console.log(check, item);
@@ -110,6 +113,7 @@ function PlaceGrid({ setAllListing, griditems }) {
     obj[index]["Like"] = item;
     setAllListing(obj);
   };
+
   return (
     <>
       {griditems?.map((item, index) => {
@@ -135,7 +139,7 @@ function PlaceGrid({ setAllListing, griditems }) {
                       item?.isPermoted ? "badgeNew" : "badge badge-closed"
                     }
                   >
-                    {item?.isPermoted ? "Permoted" : ""}
+                    {item?.isPermoted ? t("Permoted") : ""}
                   </span>
                   <span
                     className="badge-toggle"
@@ -178,10 +182,10 @@ function PlaceGrid({ setAllListing, griditems }) {
                 <div className="card-content">
                   <Link to={item?.titleUrl}>
                     <h5 className="card-meta">
-                      <span>{item?.cardTypeIcon}</span> {item?.cardType}
+                      <span>{item?.cardTypeIcon}</span> {t(item?.cardType)}
                     </h5>
                     <h4 className="card-title">
-                      {item?.title}
+                      {t(item?.title)}
                       {/* <i>{item?.titleIcon}</i> */}
                     </h4>
                     <p className="card-sub">{item?.stitle}</p>
@@ -230,7 +234,7 @@ function PlaceGrid({ setAllListing, griditems }) {
                           className="info__save"
                           data-toggle="tooltip"
                           data-placement="top"
-                          title="Bookmark"
+                          title={t("Bookmark")}
                         >
                           <FiHeart />
                         </span>

@@ -28,7 +28,7 @@ import ListingDetails from "./pages/listings/ListingDetails";
 import AddListing from "./pages/listings/AddListing";
 import UserProfile from "./components/other/account/UserProfile";
 import TopAuthors from "./pages/TopAuthors";
-import Dashboard from "./pages/dashboard/Dashboard";
+import Dashboard from "./pages/dashboard/DashboardNew";
 import Booking from "./pages/dashboard/Booking";
 import BookingConfirmation from "./pages/dashboard/BookingConfirmation";
 import Invoice from "./pages/dashboard/Invoice";

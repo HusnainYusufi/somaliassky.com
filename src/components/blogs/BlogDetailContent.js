@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import BlogTags from "./BlogTags";
 import BlogShare from "./BlogShare";
 import sectiondata from "../../store/store";
+import { useTranslation } from "react-i18next";
 
 function BlogDetailContent({ AllBlogs }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <div className="card-item blog-card border-bottom-0">
@@ -32,19 +35,19 @@ function BlogDetailContent({ AllBlogs }) {
               <span>
                 {AllBlogs.date} -{" "}
                 <Link to={AllBlogs.metaLink} className="tag__text">
-                  {AllBlogs.meta}
+                  {t(AllBlogs.meta)}
                 </Link>
               </span>
             </li>
             <li>
               <Link to="#" className="blog__btn">
-                {AllBlogs.likes} Likes
+                {AllBlogs.likes} {t("Likes")}
               </Link>
             </li>
           </ul>
           <h2 className="card-title font-size-26">{AllBlogs.title}</h2>
-          <p className="card-sub mt-3">{AllBlogs.desc1}</p>
-          <p className="card-sub mt-3">{AllBlogs.desc2}</p>
+          <p className="card-sub mt-3">{t(AllBlogs.desc1)}</p>
+          <p className="card-sub mt-3">{t(AllBlogs.desc2)}</p>
 
           <BlogBlockquote
             bgImg={AllBlogs.img}
@@ -70,11 +73,11 @@ function BlogDetailContent({ AllBlogs }) {
               })}
             </div>
           </div>
-          <p className="card-sub mb-3">{AllBlogs.desc4}</p>
-          <h3 className="widget-title">Storytelling</h3>
-          <p className="card-sub mb-3">{AllBlogs.desc4}</p>
-          <h3 className="widget-title">Branding</h3>
-          <p className="card-sub">{AllBlogs.desc4}</p>
+          <p className="card-sub mb-3">{t(AllBlogs.desc4)}</p>
+          <h3 className="widget-title">{t("Storytelling")}</h3>
+          <p className="card-sub mb-3">{t(AllBlogs.desc4)}</p>
+          <h3 className="widget-title">{t("Branding")}</h3>
+          <p className="card-sub">{t(AllBlogs.desc4)}</p>
           <div className="section-block margin-top-30px margin-bottom-30px"></div>
           <div className="tag-items d-flex justify-content-between">
             <BlogTags
@@ -86,7 +89,7 @@ function BlogDetailContent({ AllBlogs }) {
           </div>
           <div className="section-block margin-top-30px margin-bottom-50px"></div>
           <div className="comments-wrap">
-            <h2 className="widget-title">3 Comments</h2>
+            <h2 className="widget-title">3 {t("Comments")}</h2>
             <div className="title-shape"></div>
 
             <ListingDetailsComments
@@ -94,12 +97,14 @@ function BlogDetailContent({ AllBlogs }) {
             />
           </div>
           <div className="add-review-listing padding-top-50px">
-            <h2 className="widget-title">Add a Comment</h2>
+            <h2 className="widget-title">{t("Add a Comment")}</h2>
             <div className="title-shape"></div>
             <div className="section-heading padding-top-10px">
               <p className="sec__desc font-size-16">
-                Your email address will not be published. Required fields are
-                marked *
+                {t(
+                  "Your email address will not be published. Required fields are marked"
+                )}{" "}
+                *
               </p>
             </div>
             <div className="contact-form-action mt-3">

@@ -4,8 +4,11 @@ import { FaRegSmile } from "react-icons/fa";
 import Button from "../common/Button";
 import SectionDivider from "../common/SectionDivider";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function ListingDetailsComments({ commentlists }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <ul className="comments-list padding-top-40px">
@@ -17,7 +20,7 @@ function ListingDetailsComments({ commentlists }) {
                   <img className="avatar__img" alt="Comment" src={item.img} />
                   <div className="comment-body">
                     <div className="meta-data">
-                      <span className="comment__author">{item.name}</span>
+                      <span className="comment__author">{t(item.name)}</span>
                       <span className="comment__date">{item.date}</span>
                       <div className="rating-rating">
                         {item.stars.map((star, index) => {
@@ -29,25 +32,25 @@ function ListingDetailsComments({ commentlists }) {
                         })}
                       </div>
                     </div>
-                    <p className="comment-content">{item.content}</p>
+                    <p className="comment-content">{t(item.content)}</p>
                     <div className="comment-reply d-flex justify-content-between align-items-center">
                       {/* <Link className="theme-btn comment__btn" to="#">
                         <i className="la d-inline-block">{item.replyBtnIcon}</i>{" "}
                         {item.replyBtn}
                       </Link> */}
                       <p className="feedback-box">
-                        Was this review?
+                        {t("Was this review?")}
                         <button type="button" className="theme-btn">
                           <i className="la d-inline-block">
                             <FiThumbsUp />
                           </i>{" "}
-                          Helpful
+                          {t("Helpful")}
                         </button>
                         <button type="button" className="theme-btn">
                           <i className="la d-inline-block">
                             <FaRegSmile />
                           </i>{" "}
-                          Funny
+                          {t("Funny")}
                         </button>
                       </p>
                     </div>

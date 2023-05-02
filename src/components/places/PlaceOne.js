@@ -1,6 +1,8 @@
 import React from "react";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { useTranslation } from "react-i18next";
+
 import PhoneIcon from "@mui/icons-material/Phone";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
@@ -12,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function PlaceOne({ places, setSubId }) {
   const [value, setValue] = React.useState();
+  const [t, i18n] = useTranslation("common");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,7 +46,7 @@ function PlaceOne({ places, setSubId }) {
                   onClick={() => handleClick(item.id)}
                   // icon={<PhoneIcon />}
                   style={{ fontWeight: "600" }}
-                  label={item?.title}
+                  label={t(item?.title)}
                 />
               );
             })}

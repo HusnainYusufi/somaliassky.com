@@ -4,6 +4,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import { FaRegEnvelope } from "react-icons/fa";
 import { BsPencil } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
+
 import PhotoUploader2 from "../addlisting/PhotoUploader2";
 import { url } from "../../environment";
 const states = {
@@ -13,8 +15,9 @@ const states = {
 };
 
 const ReviewFields = ({ Id, setRefresh, Refresh }) => {
-  const [stars, setStars] = React.useState(1);
+  const [t, i18n] = useTranslation("common");
 
+  const [stars, setStars] = React.useState(1);
   const [Email, setEmail] = React.useState("");
   const [Name, setName] = React.useState("");
   const [Comments, setComments] = React.useState("");
@@ -60,13 +63,14 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
       navigate.push("/login");
     }
   };
+
   return (
     <>
       <div className="add-review-listing padding-top-50px" id="review">
-        <h2 className="widget-title">{states.title}</h2>
+        <h2 className="widget-title">{t(states.title)}</h2>
         <div className="title-shape"></div>
         <div className="section-heading padding-top-20px">
-          <p className="sec__desc font-size-16">{states.subtitle}</p>
+          <p className="sec__desc font-size-16">{t(states.subtitle)}</p>
         </div>
         <ul className="rating-list padding-top-20px">
           <li>
@@ -170,7 +174,7 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
           <div className="row">
             <div className="col-lg-6">
               <div className="input-box">
-                <label className="label-text">Name</label>
+                <label className="label-text">{t("Name")}</label>
                 <div className="form-group">
                   <span className="la form-icon">
                     <AiOutlineUser />
@@ -180,14 +184,14 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
                     value={Name}
                     type="text"
                     name="name"
-                    placeholder="Your Name"
+                    placeholder={t("Your Name")}
                   />
                 </div>
               </div>
             </div>
             <div className="col-lg-6">
               <div className="input-box">
-                <label className="label-text">Email</label>
+                <label className="label-text">{t("Email")}</label>
                 <div className="form-group">
                   <span className="la form-icon">
                     <FaRegEnvelope />
@@ -197,14 +201,14 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
                     type="email"
                     name="email"
                     value={Email}
-                    placeholder="Email Address"
+                    placeholder={t("Email Address")}
                   />
                 </div>
               </div>
             </div>
             <div className="col-lg-12">
               <div className="input-box">
-                <label className="label-text">Review</label>
+                <label className="label-text">{t("Review")}</label>
                 <div className="form-group">
                   <span className="la form-icon">
                     <BsPencil />
@@ -213,7 +217,7 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
                     className="message-control form-control"
                     onChange={(e) => setComments(e.target.value)}
                     name="message"
-                    placeholder="Write Message"
+                    placeholder={t("Write Message")}
                   ></textarea>
                 </div>
               </div>
@@ -227,7 +231,7 @@ const ReviewFields = ({ Id, setRefresh, Refresh }) => {
                   onClick={() => AddReviews()}
                   className="theme-btn border-0 margin-top-20px margin-bottom-20px"
                 >
-                  Submit review
+                  {t("Submit review")}
                 </button>
                 {/* </form> */}
               </div>

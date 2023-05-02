@@ -7,6 +7,8 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import PopularCategoriesTwo from "../../components/other/categories/PopularCategoriesTwo";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import ListingListSidebar from "../../components/sidebars/ListingListSidebar";
 import Button from "../../components/common/Button";
 import Pagination from "@mui/material/Pagination";
@@ -119,6 +121,9 @@ function ListRightSidebar() {
       getAllListing();
     }
   }, [token]);
+
+  const [t, i18n] = useTranslation("common");
+
   const getUserMyImage = () => {
     // setListingLoader(true);
     fetch(`${url}/webpage/getWebImage`, {
@@ -144,6 +149,7 @@ function ListRightSidebar() {
         console.log(err);
       });
   };
+
   const getAllListing = (e, pagnum) => {
     setLoading(true);
     fetch(`${url}/listing/xxx${pagnum ? pagnum : 1}`, {
@@ -398,7 +404,7 @@ function ListRightSidebar() {
                   <Select placeholder="Short by" options={state.shortby} />
                 </div>
                 <div className="col-lg-9 col-md-9 col-sm-12 ">
-                  <p className="showing__text text-right">{state.title}</p>
+                  <p className="showing__text text-right">{t(state.title)}</p>
                 </div>
               </div>
             </div>
@@ -411,7 +417,7 @@ function ListRightSidebar() {
               </div>
             ) : AllListing?.length === 0 ? (
               <div className="col-lg-8 row align-items-center justify-content-center">
-                <h3>No Listing Found</h3>
+                <h3>{t("No Listing Found")}</h3>
               </div>
             ) : (
               <div className="col-lg-8 row align-items-start">

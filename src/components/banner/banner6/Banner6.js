@@ -1,7 +1,10 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 function Banner6({ title, Home1 }) {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       <section
@@ -13,7 +16,7 @@ function Banner6({ title, Home1 }) {
             <div className="row">
               <div className="col-lg-12">
                 <div className="breadcrumb-content">
-                  <h2 className="breadcrumb__title">{title}</h2>
+                  <h2 className="breadcrumb__title">{t(title)}</h2>
                   <div className="contact-form-action">
                     <form method="post">
                       <div className="row">
@@ -32,7 +35,7 @@ function Banner6({ title, Home1 }) {
                                 className="form-control"
                                 type="text"
                                 name="name"
-                                placeholder="Search your question here..."
+                                placeholder={t("Search your question here...")}
                               />
                             </div>
                           </div>

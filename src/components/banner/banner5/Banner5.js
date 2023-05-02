@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import ModalVideo from "react-modal-video";
+import { useTranslation } from "react-i18next";
 
 const Banner5 = ({ Home1 }) => {
+  const [t, i18n] = useTranslation("common");
+
   return (
     <>
       {/* <ModalVideo channel='youtube' isOpen={this.state.isOpen} videoId='R2kiP9Qu7Pc' onClose={() => this.setState({isOpen: false})}/> */}
@@ -14,7 +17,9 @@ const Banner5 = ({ Home1 }) => {
             <div className="row">
               <div className="col-lg-8">
                 <div className="breadcrumb-content">
-                  <h2 className="breadcrumb__title mb-0">SomaliaskySky </h2>
+                  <h2 className="breadcrumb__title mb-0">
+                    {t("SomaliaskySky")}{" "}
+                  </h2>
                 </div>
               </div>
               <div className="col-lg-4 text-right">
@@ -24,7 +29,7 @@ const Banner5 = ({ Home1 }) => {
                     // onClick={this.openModal}
                     title="Play Video"
                   >
-                    Play
+                    {t("Play")}
                   </span>
                 </div>
               </div>

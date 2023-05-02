@@ -1324,26 +1324,8 @@ const sectiondata = {
     //     ]
     // },
     {
-      title: "blog",
-      path: "#",
-      dropdown: [
-        {
-          title: "All blogs",
-          path: "/blog-grid",
-        },
-        // {
-        //     title: 'left sidebar',
-        //     path: '/blog-left-sidebar'
-        // },
-        // {
-        //     title: 'right sidebar',
-        //     path: '/blog-right-sidebar'
-        // },
-        // {
-        //     title: 'blog detail',
-        //     path: '/blog-single'
-        // }
-      ],
+      title: "All blogs",
+      path: "/blog-grid",
     },
     {
       title: "FAQ",
