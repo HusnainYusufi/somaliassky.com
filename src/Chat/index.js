@@ -29,7 +29,6 @@ import SearchIcon from "@mui/icons-material/Search";
 const USER_CHAT_LIST = new Array(15).fill(null).map((e) => ({
   name: faker.name.findName(),
   productName: faker.commerce.productName(),
-  // lastMessage: faker.lorem.sentence(5, 10),
   date: faker.date.recent(4),
   avatar: faker.image.avatar(),
 }));
@@ -68,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
   },
   chat: {
     height: "85%",
-    // width: '95%',
     paddingY: "15px",
   },
   chatHeading: {
@@ -123,6 +121,7 @@ function ChatScreen() {
       );
     }
   };
+
   const theme = useTheme();
   const fullScreen = useMediaQuery("(max-width:960px)");
 
@@ -135,19 +134,7 @@ function ChatScreen() {
   const openMessagesForThisChat = (i, e) => {
     const user = JSON.parse(localStorage.getItem("user"));
     setChatBoxDetails(userChatList[i]);
-    // setEmptyScreen(false);
-    // console.log(false);
-    // setSelectedChat(i);
-    // console.log(userChatList[i]);
-    // setSingleChat(userChatList[i]);
-    // console.log(userChatList[i].messages);
-    // console.log(userChatList);
 
-    // if (user.doc._id === userChatList[i]?.id) {
-    //   setDetails(userChatList[i]?.buyer);
-    // } else {
-    //   setDetails(userChatList[i]?.seller);
-    // }
     if (fullScreen) {
       setMessagesModalBool(true);
     }
@@ -202,7 +189,6 @@ function ChatScreen() {
           setChatBoxID(response?.doc?._id);
           localStorage.setItem("NewId", response?.doc?._id);
           setChatBoxDetails(response?.doc);
-          // setEmptyScreen(false)
 
           if (user.doc?._id === Item?.sellerId) {
             setSingleChat(response.doc);
@@ -269,9 +255,11 @@ function ChatScreen() {
         console.log(err);
       });
   };
+
   const getChatNew = (Item) => {
     console.log(Item);
     setEmptyScreen(true);
+    console.log(Item);
 
     const user = JSON.parse(localStorage.getItem("user"));
     fetch(`${url}/chat/getChat`, {
@@ -363,7 +351,6 @@ function ChatScreen() {
   };
 
   const getAllMyChatsBuyer = () => {
-    // setLoading(true)
     const user = JSON.parse(localStorage.getItem("user"));
     fetch(`${url}/chat/buyerChats`, {
       method: "POST",
@@ -380,43 +367,31 @@ function ChatScreen() {
         console.log("Get All Buyer Chat list", response);
         if (response.message === "Success") {
           console.log(response);
-          // setSingleChat(response.doc);
           let Array = [];
-          // if (user.doc._id === response.doc.seller._id) {
           response.doc?.map((item, index) => {
             Array.push({
-              name:
-                // user.doc?._id === item?.seller._id
-                item.buyer?.username,
-              // : item.seller?.username,
+              name: item.buyer?.username,
               productName: item.listing?.title,
               _id: item?._id,
+              listing: item.listing,
               lastMessage: item?.messages[item?.messages?.length - 1]?.text,
               date: getTimeStamp(item?.createdDate),
               seller: item?.seller,
               messages: item?.messages,
               buyer: item?.buyer,
               avatar: item.buyer?.profileImage,
-              // : item.seller?.profileImage,
             });
-            // console.log();
-            // if (item.listing._id === location.state.id) {
-            //   setSelectedChat(index);
-            //   console.log(index);
-            // }
           });
           console.log(Array);
           setUserChatList(Array);
-
-          // }
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   const getAllMyChats = () => {
-    // setLoading(true)
     const user = JSON.parse(localStorage.getItem("user"));
     fetch(`${url}/chat/getAllMyChats`, {
       method: "POST",
@@ -433,9 +408,7 @@ function ChatScreen() {
         console.log("Get All Chat list", response);
         if (response.message === "Success") {
           console.log(response);
-          // setSingleChat(response.doc);
           let Array = [];
-          // if (user.doc._id === response.doc.seller._id) {
           response.doc?.map((item, index) => {
             Array.push({
               name:
@@ -445,32 +418,25 @@ function ChatScreen() {
               productName: item.listing?.title,
               listing: item.listing,
               _id: item?._id,
-              lastMessage: item?.messages[item?.messages?.length - 1].text,
+              lastMessage: item?.messages[item?.messages?.length - 1]?.text,
               date: getTimeStamp(item?.createdDate),
               seller: item?.seller,
               messages: item?.messages,
               buyer: item?.buyer,
               avatar: item.buyer?.profileImage,
-              // : item.seller?.profileImage,
             });
-            // console.log();
-            // if (item?.listing?._id === location?.state.id) {
-            //   setSelectedChat(index);
-            //   console.log(index);
-            // }
           });
           setUserChatList(Array);
 
           console.log(Array);
-          // }
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   const getAllMyChatsSeller = () => {
-    // setLoading(true)
     const user = JSON.parse(localStorage.getItem("user"));
     fetch(`${url}/chat/sellerChats`, {
       method: "POST",
@@ -487,9 +453,7 @@ function ChatScreen() {
         console.log("Get All Seller Chat list", response);
         if (response.message === "Success") {
           console.log(response);
-          // setSingleChat(response.doc);
           let Array = [];
-          // if (user.doc._id === response.doc.seller._id) {
           response.doc?.map((item, index) => {
             Array.push({
               name:
@@ -498,35 +462,28 @@ function ChatScreen() {
                   : item.seller?.username,
               productName: item.listing?.title,
               _id: item?._id,
+              listing: item.listing,
               lastMessage: item?.messages[item?.messages?.length - 1].text,
               date: getTimeStamp(item?.createdDate),
               seller: item?.seller,
               messages: item?.messages,
               buyer: item?.buyer,
-              avatar:
-                // user.doc?._id === item?.seller?._id
-                item.buyer?.profileImage,
-              // : item.seller?.profileImage,
+              avatar: item.buyer?.profileImage,
             });
-            // console.log();
-            // if (item?.listing?._id === location?.state?.id) {
-            //   setSelectedChat(index);
-            //   console.log(index);
-            // }
           });
           setUserChatList(Array);
           console.log(Array);
-          // }
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <>
-      {/* <TopNav /> */}
-      {/* <main className="home-1"> */}
+      {}
+      {}
       <HeaderTwo />
 
       <Grid container paddingTop={5} marginTop={7}>
@@ -588,13 +545,8 @@ function ChatScreen() {
                 fullWidth
                 placeholder="Search"
                 size="small"
-                // color="secondary"
                 InputProps={{
-                  endAdornment: (
-                    // <IconButton>
-                    <SearchIcon color={"disabled"} />
-                    // </IconButton>
-                  ),
+                  endAdornment: <SearchIcon color={"disabled"} />,
                 }}
               />
             </Grid>
@@ -607,9 +559,7 @@ function ChatScreen() {
                 <Grid item xs={12}>
                   <Button
                     key={i}
-                    // variant={selectedChat==i ? 'contained' : 'text'}
                     onClick={() => openMessagesForThisChat(i, e)}
-                    // color={"secondary"}
                     fullWidth
                     style={
                       selectedChat == i
@@ -617,7 +567,6 @@ function ChatScreen() {
                             backgroundColor: "#F9FAFC",
                             border: "1px solid #f1f1f1",
                             borderRadius: "5px",
-                            // padding: '10px',
                           }
                         : {}
                     }
@@ -643,12 +592,8 @@ function ChatScreen() {
                                   variant="caption"
                                   color={"GrayText"}
                                 >
-                                  {/* {e.date.getDate() +
-                                    "." +
-                                    (e.date.getMonth() + 1) +
-                                    "." +
-                                    e.date.getFullYear()} */}
-                                  {/* {e.date} */}
+                                  {}
+                                  {}
                                 </Typography>
                               </Grid>
                               <Grid item xs={12} align={"left"}>
@@ -725,8 +670,6 @@ function ChatScreen() {
           }}
         />
       </GeneralModal>
-      {/* <Footer /> */}
-      {/* </main> */}
     </>
   );
 }

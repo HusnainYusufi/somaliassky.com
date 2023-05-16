@@ -389,7 +389,7 @@ function ListRightSidebar() {
 
       {/* Breadcrumb */}
       <Breadcrumb
-        CurrentPgTitle="List Right Sidebar"
+        // CurrentPgTitle="List Right Sidebar"
         MenuPgTitle="Listings"
         img={Home1}
       />

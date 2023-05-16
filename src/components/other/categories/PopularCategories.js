@@ -32,9 +32,9 @@ function PopularCategories({ catitems }) {
                 )}
                 <figcaption className="fig-caption">
                   <Link to={item.url} className="cat-fig-box">
-                    {item.title !== "Others" && (
-                      <div className="icon-element mb-3">{item.icon}</div>
-                    )}
+                    {/* {item.title !== "Others" && (
+                      // <div className="icon-element mb-3">{item.icon}</div>
+                    )} */}
                     <div className="cat-content">
                       <h4 className="cat__title mb-3 p-1">{t(item.title)}</h4>
                       {item.title !== "Others" && (

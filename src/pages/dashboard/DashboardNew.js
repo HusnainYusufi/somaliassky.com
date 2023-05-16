@@ -6,6 +6,7 @@ import { FaRocket } from "react-icons/fa";
 import ListingTab from "../../pages/dashboard/ListingTab";
 import LikedTab from "../../pages/dashboard/LikedTab";
 import ArchivedTab from "../../pages/dashboard/ArchivedTab";
+import BoosterTab from "../../pages/dashboard/BoosterTab";
 import { Link } from "react-router-dom";
 import ProfileTab from "../../pages/dashboard/ProfileTab";
 import { BsListCheck, BsBookmark, BsPencil } from "react-icons/bs";
@@ -200,7 +201,7 @@ function Dashboard() {
                     <LikedTab />
                   </TabPanel>
                   <TabPanel>
-                    <ArchivedTab />
+                    <BoosterTab />
                   </TabPanel>
                 </div>
               </div>

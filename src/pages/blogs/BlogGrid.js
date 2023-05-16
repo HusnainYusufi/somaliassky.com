@@ -28,16 +28,17 @@ function BlogGrid() {
   const [Allpages, setAllpages] = React.useState(0);
 
   const [AllBlogs, setAllBlogs] = React.useState([]);
+  const [Home1, setHom1] = React.useState("");
 
   const [t, i18n] = useTranslation("common");
 
   useEffect(() => {
     getAllBlogs();
+    getUserMyImage();
   }, []);
 
   const getAllBlogs = (e, pagNum) => {
     setVistiedLoading(true);
-
     fetch(`${url}/blog/allBlogs${pagNum ? pagNum : 1}`, {
       method: "GET",
       headers: {
@@ -78,17 +79,37 @@ function BlogGrid() {
       });
   };
 
+  const getUserMyImage = () => {
+    fetch(`${url}/webpage/getWebImage`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Web Image", response);
+        if (response.message === "Success") {
+          response.doc?.map((item) => {
+            if (item.pageName === "Blog") {
+              setHom1(ImageUrl + item.image[0]);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <main className="blog-grid-page">
       {/* Header */}
       <GeneralHeader />
 
       {/* Breadcrumb */}
-      <Breadcrumb
-        CurrentPgTitle="Blog Grid"
-        MenuPgTitle="Blog"
-        img={state.breadcrumbimg}
-      />
+      <Breadcrumb CurrentPgTitle="Blog Grid" MenuPgTitle="Blog" img={Home1} />
 
       <section className="blog-grid padding-top-40px padding-bottom-100px">
         {vistiedLoading ? (

@@ -3,7 +3,14 @@ import { FiSearch } from "react-icons/fi";
 import SelectCountry from "../../common/SelectCountry";
 import Select, { components } from "react-select";
 import { FcSalesPerformance } from "react-icons/fc";
+import AgricultureIcon from "@mui/icons-material/Agriculture";
 import { FaRegDotCircle } from "react-icons/fa";
+import FortIcon from "@mui/icons-material/Fort";
+import TerrainIcon from "@mui/icons-material/Terrain";
+import BalconyIcon from "@mui/icons-material/Balcony";
+import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import VillaIcon from "@mui/icons-material/Villa";
 import { FaRegFlushed } from "react-icons/fa";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Chip from "@mui/material/Chip";
@@ -1043,22 +1050,22 @@ export default function BannerOneSearchInput() {
   const [t, i18n] = useTranslation("common");
   const dir = i18n.dir();
   const options = [
-    { value: "chocolate", label: "Villas", icon: <FcSalesPerformance /> },
+    { value: "chocolate", label: "Villas", icon: <VillaIcon /> },
     {
       value: "strawberry",
       label: "Terraced house",
-      icon: <FcSalesPerformance />,
+      icon: <BalconyIcon />,
     },
-    { value: "vanilla", label: "Apartments", icon: <FcSalesPerformance /> },
-    { value: "sd", label: "Farms/Forest", icon: <FcSalesPerformance /> },
+    { value: "vanilla", label: "Apartments", icon: <LocationCityIcon /> },
+    { value: "sd", label: "Farms/Forest", icon: <AgricultureIcon /> },
 
     {
       value: "vaassanilla",
       label: "Leisure accommodation",
-      icon: <FcSalesPerformance />,
+      icon: <AlignHorizontalLeftIcon />,
     },
-    { value: "sas", label: "plots", icon: <FcSalesPerformance /> },
-    { value: "A", label: "Others", icon: <FcSalesPerformance /> },
+    { value: "sas", label: "plots", icon: <TerrainIcon /> },
+    { value: "A", label: "Others", icon: <FortIcon /> },
   ];
 
   const [selected, setSelected] = React.useState([]);
@@ -1069,7 +1076,7 @@ export default function BannerOneSearchInput() {
         style={{ display: "block", borderRadius: "20px", padding: "40px 40px" }}
       >
         <div className="row mb-4" style={{ justifyContent: "start" }}>
-          {/* <div className="main-search-input-item location"> */}
+          {/* <div className=" location"> */}
           <Button
             variant="contained"
             className="mb-2"
@@ -1086,7 +1093,7 @@ export default function BannerOneSearchInput() {
         </div>
         {/* <h3>For Sale</h3> */}
         <div className="row mb-4">
-          <div className="main-search-input-item category">
+          <div className="col-lg-6 col-md-6 col-sm-12 mt-2">
             {/* <label style={{color:'black',fontWeight:'600'}}>City</label> */}
 
             <Select
@@ -1104,7 +1111,7 @@ export default function BannerOneSearchInput() {
 
           {/* */}
 
-          <div className="main-search-input-item location">
+          <div className=" col-lg-6 col-md-6 col-sm-12 mt-2">
             {/* <label style={{color:'black',fontWeight:'600'}}>Expand Area</label> */}
             <Select
               // defaultValue={[colourOptions[2], colourOptions[3]]}
@@ -1179,7 +1186,7 @@ export default function BannerOneSearchInput() {
           </AccordionSummary>
           <AccordionDetails>
             <div className="row mt-2 mb-4 ml-2 mr-2">
-              <div className="main-search-input-item category">
+              <div className="mt-2 col-lg-6 col-md-12  col-sm-12">
                 {/* <label style={{color:'black',fontWeight:'600',fontWeight:600}}>Types</label> */}
 
                 <Select
@@ -1204,7 +1211,7 @@ export default function BannerOneSearchInput() {
                   ]}
                 />
               </div>
-              <div className="main-search-input-item location">
+              <div className=" mt-2 location col-lg-6 col-md-12  col-sm-12">
                 {/* <label style={{color:'black',fontWeight:'600'}}>Minimum Number of rooms</label> */}
 
                 <Select
@@ -1215,7 +1222,7 @@ export default function BannerOneSearchInput() {
                     }),
                   }}
                   // defaultValue={[colourOptions[2], colourOptions[3]]}
-                  placeholder="Minimum number of rooms"
+                  placeholder="No of Rooms"
                   name="colors"
                   options={[
                     { value: "chocolate", label: "at least 1 room" },
@@ -1235,7 +1242,7 @@ export default function BannerOneSearchInput() {
                 </div> */}
             </div>
             <div className="row mt-2 mb-4 ml-2 mr-2">
-              <div className="main-search-input-item select">
+              <div className=" select col-lg-4 col-md-12  col-sm-12">
                 {/* <label style={{color:'black',fontWeight:'600'}}>Living Area</label> */}
 
                 <Select
@@ -1257,7 +1264,7 @@ export default function BannerOneSearchInput() {
                   }}
                 />
               </div>
-              <div className="main-search-input-item select">
+              <div className=" select mt-2 col-lg-4 col-md-12  col-sm-12">
                 {/* <label style={{color:'black',fontWeight:'600'}}>Highest price</label> */}
 
                 <Select
@@ -1267,7 +1274,7 @@ export default function BannerOneSearchInput() {
                       borderColor: state.isFocused ? "grey" : "green",
                     }),
                   }}
-                  placeholder="Highest Price"
+                  placeholder="Price"
                   options={[
                     { value: "chocolate", label: "1 million" },
                     { value: "strawberry", label: "2 million" },
@@ -1279,7 +1286,7 @@ export default function BannerOneSearchInput() {
                   ]}
                 />
               </div>
-              <div className="main-search-input-item location">
+              <div className=" location mt-2 col-lg-4 col-md-12  col-sm-12">
                 {/* <label style={{color:'black',fontWeight:'600'}}>New Production</label> */}
 
                 <Select
@@ -1290,7 +1297,7 @@ export default function BannerOneSearchInput() {
                     }),
                   }}
                   // defaultValue={[colourOptions[2], colourOptions[3]]}
-                  placeholder="New Production"
+                  placeholder="Production"
                   name="colors"
                   options={[
                     { value: "chocolate", label: "Show only new production" },
@@ -1306,34 +1313,7 @@ export default function BannerOneSearchInput() {
                     <button className="button theme-btn" type="submit">Search</button>
                 </div> */}
             </div>
-            <div className="row mt-2 mb-4 ml-2 mr-2">
-              <div className="main-search-input-item">
-                {/* <label style={{color:'black',fontWeight:'600'}}>Keywords</label> */}
 
-                <div className="contact-form-action">
-                  <form action="#">
-                    <div className="form-group mb-0">
-                      <span className="form-icon">
-                        <FiSearch />
-                      </span>
-                      <input
-                        styles={{
-                          height: "40px !important",
-                          border: "1px solid green !important",
-                        }}
-                        className="form-control"
-                        type="text"
-                        placeholder="Keywords"
-                      />
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-              {/* <div className="main-search-input-btn">
-                    <button className="button theme-btn" type="submit">Search</button>
-                </div> */}
-            </div>
             <div className="row mt-3" style={{ justifyContent: "center" }}>
               <div className="main-search-input-btn">
                 <button

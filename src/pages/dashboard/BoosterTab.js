@@ -8,29 +8,53 @@ import {
   FaRegTrashAlt,
   FaRocket,
 } from "react-icons/fa";
-import { url } from "../../environment";
-
+import { url, ImageUrl } from "../../environment";
 const ListingProfile = () => {
-  const [ListingLoader, setListingLoader] = React.useState(false);
-  const [AllListing, setAllListing] = React.useState([]);
-  const [open, setBoastModalOpen] = React.useState(false);
-  const [SelectedListingId, setSelectedListingId] = React.useState("");
+  const [AllArchived, setAllArchived] = React.useState([]);
   const UserID = JSON.parse(localStorage.getItem("user"));
   const [t, i18n] = useTranslation("common");
 
   useEffect(() => {
-    getUserListing();
+    getArchivedPost();
   }, []);
 
-  const handleClickOpen = (e, Id) => {
-    e.preventDefault();
-    setBoastModalOpen(true);
-    // console.log();
-    setSelectedListingId(Id);
+  const getArchivedPost = (id) => {
+    fetch(`${url}/user/getMyPromotedListings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        seller: UserID?.doc?._id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Get Archived", response);
+        if (response.message === "Success") {
+          setAllArchived(
+            response?.doc?.map((item) => ({
+              img: item.images ? ImageUrl + item.images[0] : "",
+              title: item.title,
+              subtitle: item.shortDescription,
+              id: item._id,
+              editTxt: "Archived",
+              editIcon: <FaArchive />,
+              deleteTxt: "Delete",
+              deleteIcon: <FaRegTrashAlt />,
+              cardLink: "#",
+            }))
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const ArchivedPost = (id) => {
-    fetch(`${url}/user/archivePost`, {
+  const unArchivedPost = (id) => {
+    fetch(`${url}/user/unArchivePost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,54 +66,10 @@ const ListingProfile = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log("Archived ", response);
+        console.log("Archived", response);
         if (response.message === "Success") {
-          //   getArchivedPost();
-          //   getUserListing();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getUserListing = () => {
-    setListingLoader(true);
-    fetch(`${url}/user/myListings`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "access-control-allow-origin": "*",
-      },
-      body: JSON.stringify({
-        userid: UserID?.doc?._id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("User Listing", response);
-        if (response.message === "Success") {
-          setAllListing(
-            response?.doc?.map((item) => ({
-              // img: item.images ? ImageUrl + item.images[0] : "",
-              title: item.title,
-              subtitle: item.shortDescription,
-              id: item._id,
-              editTxt: "Archived",
-              editIcon: <FaArchive />,
-              deleteTxt: "Delete",
-              deleteIcon: <FaRegTrashAlt />,
-              cardLink: "/listing-details",
-            }))
-          );
-          //   setListingOtion(
-          //     response?.doc?.map((item) => ({
-          //       value: item._id,
-          //       label: item.title,
-          //     }))
-          //   );
-          setListingLoader(false);
+          // getArchivedPost();
+          // getUserListing();
         }
       })
       .catch((err) => {
@@ -99,19 +79,9 @@ const ListingProfile = () => {
 
   return (
     <>
-      {ListingLoader ? (
-        <div
-          className="col-lg-8 row mt-5 "
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      ) : AllListing?.length > 0 ? (
+      {AllArchived?.length > 0 ? (
         <div className="row">
-          {AllListing?.map((item, i) => {
+          {AllArchived?.map((item, i) => {
             return (
               <div key={i} className="col-lg-4 column-td-6">
                 <div className="card-item">
@@ -136,30 +106,17 @@ const ListingProfile = () => {
                     <div className="rating-row">
                       <div className="edit-info-box">
                         <button
-                          onClick={() => ArchivedPost(item.id)}
+                          // onClick={() => unArchivedPost(item.id)}
                           type="button"
-                          className="theme-btn button-success border-0 mr-1 mb-1"
+                          className="theme-btn button-success border-0 mr-1"
                         >
                           <span className="la">
                             <FaArchive />
                           </span>{" "}
-                          {t("Archived")}
                         </button>
                         <button
                           type="button"
-                          className="theme-btn delete-btn border-0 mr-1"
-                          data-toggle="modal"
-                          data-target=".product-delete-modal"
-                          onClick={(e) => handleClickOpen(e, item.id)}
-                        >
-                          <span className="la">
-                            <FaRocket />
-                          </span>{" "}
-                          {t("Boost")}
-                        </button>
-                        <button
-                          type="button"
-                          className="theme-btn delete-btn border-0 mb-1 mr-1"
+                          className="theme-btn delete-btn border-0"
                           data-toggle="modal"
                           data-target=".product-delete-modal"
                         >
@@ -179,7 +136,7 @@ const ListingProfile = () => {
           className="row two-clmn margin-top-35px margin-bottom-35px text-align-center"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <h2 className="text-align-center">No Listing Found</h2>
+          <h2 className="text-align-center">{t("No Booster Post Found")}</h2>
         </div>
       )}
     </>

@@ -19,25 +19,7 @@ const ButtonGroupCheckbox = ({ options, selected, onChange }) => {
           variant={selected.includes(option.value) ? "contained" : "outlined"}
           color={selected.includes(option.value) ? "primary" : "default"}
           onClick={() => onChange(option.value)}
-          startIcon={
-            option.value === "chocolate" ? (
-              <span style={{ marginLeft: "10px" }}>
-                <BsHouseDoorFill />
-              </span>
-            ) : (
-                <span style={{ marginLeft: "10px" }}>
-                  <FcSalesPerformance />{" "}
-                </span>
-              ) || option.value === "strawberry" ? (
-              <span style={{ marginLeft: "10px" }}>
-                <GiSpookyHouse />
-              </span>
-            ) : (
-              <span style={{ marginLeft: "10px" }}>
-                <FcSalesPerformance />
-              </span>
-            )
-          }
+          startIcon={option.icon}
           sx={{ ml: 2 }}
         >
           {/* <Checkbox checked={selected.includes(option.value)} /> */}

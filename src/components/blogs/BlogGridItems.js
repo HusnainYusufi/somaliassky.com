@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function BlogGridItems({ blitems }) {
+  const DisplayContent = ({ content }) => {
+    return <div dangerouslySetInnerHTML={{ __html: content }} />;
+  };
   return (
     <>
       <div className="row">
@@ -34,7 +37,12 @@ function BlogGridItems({ blitems }) {
                       <Link to="#">{item.likes} Likes</Link>
                     </li>
                   </ul>
-                  <p className="card-sub mt-3">{item.desc}</p>
+                  {/* {item.desc} */}
+                  <div
+                    className="card-sub mt-3"
+                    dangerouslySetInnerHTML={{ __html: item.desc }}
+                  />
+                  {/* <p className="card-sub mt-3">{item.desc}</p> */}
                   <ul className="post-author d-flex align-items-center justify-content-between mt-3">
                     <li>
                       <img src={item.authorImg} alt="Author" />

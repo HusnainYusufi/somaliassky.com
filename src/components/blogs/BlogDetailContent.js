@@ -46,7 +46,11 @@ function BlogDetailContent({ AllBlogs }) {
             </li>
           </ul>
           <h2 className="card-title font-size-26">{AllBlogs.title}</h2>
-          <p className="card-sub mt-3">{t(AllBlogs.desc1)}</p>
+          <div
+            className="card-sub mt-3"
+            dangerouslySetInnerHTML={{ __html: t(AllBlogs.desc1) }}
+          />
+          {/* <p className="card-sub mt-3">{t(AllBlogs.desc1)}</p> */}
           <p className="card-sub mt-3">{t(AllBlogs.desc2)}</p>
 
           <BlogBlockquote

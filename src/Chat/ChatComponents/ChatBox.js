@@ -28,9 +28,10 @@ import { url, ImageUrl } from "../../environment";
 import OfferModal from "../OfferModal";
 import { faker } from "@faker-js/faker";
 import { useEffect } from "react";
-const socket = io.connect("https://05d2-185-249-225-69.eu.ngrok.io", {
+const socket = io.connect("https://api.somaliasky.com", {
   transports: ["websocket"],
   timeout: 20000,
+  reconnectionAttempts: 3,
   path: "/custom",
   forceNew: true,
 });
